@@ -1,9 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"io"
+	"net/http"
 
-// this is a comment
+	"github.com/golang/glog"
+)
+
+func hello(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, "Hello world!")
+}
 
 func main() {
-	fmt.Println("Hello World")
+	http.HandleFunc("/", hello)
+	glog.Info("RUNNING SERVER")
+	http.ListenAndServe(":8000", nil)
+
 }
