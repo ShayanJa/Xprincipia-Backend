@@ -1,6 +1,9 @@
 package main
 
-import "work/xprincipia/xGobackEnd/gin"
+import (
+	"flag"
+	"work/xprincipia/backend/gin"
+)
 
 type LoginForm struct {
 	User     string `form:"user" binding:"required"`
@@ -8,6 +11,13 @@ type LoginForm struct {
 }
 
 func main() {
+
+	//Suppress Parsing Errors
+	flag.Parse()
+	flag.Lookup("logtostderr").Value.Set("true")
+	flag.CommandLine.Parse([]string{})
+
+	//goflag.CommandLine.Parse([]string{})
 
 	// //I like how this is written
 	// router := gin.Default()

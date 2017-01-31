@@ -8,7 +8,7 @@ import (
 )
 
 func indexHandler(c *gin.Context) {
-	glog.Info("Hey")
+	glog.Info("Accesing index Page ...")
 	// Call the HTML method of the Context to render a template
 	c.HTML(
 		// Set the HTTP status to 200 (OK)
@@ -17,7 +17,7 @@ func indexHandler(c *gin.Context) {
 		"index.html",
 		// Pass the data that the page uses (in this case, 'title')
 		gin.H{
-			"title": "Home Page",
+			"title": "XPrincipia",
 		},
 	)
 
