@@ -7,7 +7,7 @@ type User struct {
 	gorm.Model
 	FirstName   string
 	LastName    string
-	PhoneNumber string
+	//PhoneNumber Phone
 	Email       string
 	Address     string
 	Username    string
