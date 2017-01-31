@@ -17,3 +17,5 @@ type User struct {
 	//Comments []gorm.comments
 
 }
+
+//API Functions
