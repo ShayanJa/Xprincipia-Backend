@@ -1,19 +1,26 @@
 package main
 
-import (
-	"io"
-	"net/http"
+import "work/xprincipia/xGobackEnd/gin"
 
-	"github.com/golang/glog"
-)
-
-func hello(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "Hello world!")
+type LoginForm struct {
+	User     string `form:"user" binding:"required"`
+	Password string `form:"password" binding:"required"`
 }
 
 func main() {
-	http.HandleFunc("/", hello)
-	glog.Info("RUNNING SERVER")
-	http.ListenAndServe(":8000", nil)
+
+	// //I like how this is written
+	// router := gin.Default()
+
+	// s := &http.Server{
+	// 	Addr:           ":8080",
+	// 	Handler:        router,
+	// 	ReadTimeout:    10 * time.Second,
+	// 	WriteTimeout:   10 * time.Second,
+	// 	MaxHeaderBytes: 1 << 20,
+	// }
+	// s.ListenAndServe()
+
+	gin.RunRouter()
 
 }
