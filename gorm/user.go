@@ -9,8 +9,11 @@ type User struct {
 	LastName    string
 	PhoneNumber string
 	Email       string
+	Address     string
+	Username    string
 	//Friends   []gorm.Friends
 	//ProblemsPosted []gorm.problem
 	//SolutionsPosted []gorm.solution
 	//Comments []gorm.comments
+
 }
