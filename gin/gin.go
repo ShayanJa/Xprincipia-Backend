@@ -9,6 +9,7 @@ var router *gin.Engine
 func RunRouter() {
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*")
+
 	SetRoutes(router)
 	router.Run(":8080")
 
