@@ -7,9 +7,9 @@ import (
 
 type Comment struct {
     gorm.Model
-    OriginalPoster: gorm.User
+    OriginalPoster: User
     Text: string
-    Replies: []gorm.Comment
+    Replies: []Comment
 }
 
 //API Functions
