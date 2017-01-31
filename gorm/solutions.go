@@ -1,10 +1,7 @@
 package gorm
 
-import (
-	"github.com/jinzhu/gorm"
-)
-
-
 type Solution struct {
-    OriginalPoster: User
+	OriginalPoster User
+	Text           string
+	Rating         int
 }
