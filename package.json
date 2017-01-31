@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "GoBased XPrincipia API",
+  "main": "index.js",
+  "dependencies": {
+    "yaml": "^0.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/xPrincipia/xGObackEnd.git"
+  },
+  "keywords": [
+    "gin",
+    "gorm",
+    "network"
+  ],
+  "author": "Shayan Talebi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/xPrincipia/xGObackEnd/issues"
+  },
+  "homepage": "https://gitlab.com/xPrincipia/xGObackEnd#README"
+}
