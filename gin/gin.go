@@ -12,5 +12,4 @@ func RunRouter() {
 
 	SetRoutes(router)
 	router.Run(":8080")
-
 }

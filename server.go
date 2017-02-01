@@ -14,5 +14,4 @@ func main() {
 
 	//Start HTTP Network
 	gin.RunRouter()
-
 }
