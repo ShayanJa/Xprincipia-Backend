@@ -1,4 +1,6 @@
 {
     "go.gopath":"/Users/Shyshawn/go",
-    "go.goroot": "/usr/local/go"
+    "go.goroot": "/usr/local/go",
+    "go.autocompleteUnimportedPackages": true,
+    "go.coverOnSave": true
 }

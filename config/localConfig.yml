@@ -1,0 +1,23 @@
+default:
+  server:
+    port: 3000
+  database:
+    host: 'localhost'
+    username: 'root'
+    password: ''
+    port: 3306
+development:
+  database:
+    db: 'xPrincipia'
+test:
+  database:
+    db: 'test_db'
+production:
+  server:
+    port: 8000
+  database:
+    db: 'prod_db'
+    user: 'dbuser'
+    password: 'pass'
+  cache:
+    dir: 'static'
