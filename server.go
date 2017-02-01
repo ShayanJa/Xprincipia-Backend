@@ -12,6 +12,8 @@ func main() {
 	flag.Lookup("logtostderr").Value.Set("true")
 	flag.CommandLine.Parse([]string{})
 
+	//initialize DB
+
 	//Start HTTP Network
 	gin.RunRouter()
 }
