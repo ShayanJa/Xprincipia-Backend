@@ -23,4 +23,7 @@ func InitializeDB() {
 	glog.Info("Running DB Migrations...")
 	runMigrations(db)
 
+	glog.Info("Populating DB test data...")
+	populateDBtestData(db)
+
 }
