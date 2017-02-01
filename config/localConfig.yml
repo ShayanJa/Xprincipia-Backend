@@ -3,10 +3,12 @@ default:
     port: 3000
   database:
     host: 'localhost'
-    port: 27017
+    username: 'root'
+    password: ''
+    port: 3306
 development:
   database:
-    db: 'dev_db'
+    db: 'xPrincipia'
 test:
   database:
     db: 'test_db'

@@ -14,6 +14,6 @@ type Solution struct {
 	Comments       []Comment
 }
 
-func getSolutionByID(int id) {
-	db.Where("ID = ?", id).Find(&users)
+func getSolutionByID(id int) {
+	db.Where("ID = ?", id).Find(&User{})
 }
