@@ -1,0 +1,9 @@
+Original Mysql Password
+root@localhost: u7h+hwTKn5E6
+
+LocalDB Credentials:
+
+Username: root
+Password: ""  //blank space
+
+If there is no entry in the db. It would return the same type of empty type
