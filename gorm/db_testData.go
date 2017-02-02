@@ -11,4 +11,7 @@ func populateDBtestData(db *gorm.DB) {
 	solution2 := Solution{}
 	db.Create(&solution2)
 
+	problem1 := Problem{}
+	db.Create(&problem1)
+
 }

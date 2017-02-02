@@ -8,5 +8,5 @@ func SetRoutes(router *gin.Engine) {
 	router.GET("/solutions/ID", getSolutionByIDHandler)
 	router.GET("/solutions/problemID", getSolutionByProblemIDHandler)
 
-	//router.GET("/problems/ID", getProblemByID)
+	router.GET("/problems/ID", getProblemByIDHandler)
 }
