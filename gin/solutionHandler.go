@@ -9,7 +9,7 @@ import (
 	"github.com/golang/glog"
 )
 
-func getSolutionByID(c *gin.Context) {
+func getSolutionByIDHandler(c *gin.Context) {
 	id := c.Query("id")
 	glog.Info("ID sent is: ", id)
 
@@ -23,7 +23,7 @@ func getSolutionByID(c *gin.Context) {
 	c.JSON(http.StatusOK, solution)
 }
 
-func getSolutionByProblemID(c *gin.Context) {
+func getSolutionByProblemIDHandler(c *gin.Context) {
 	id := c.Query("id")
 	glog.Info("ID sent is: ", id)
 
