@@ -1,6 +1,7 @@
 package gorm
 
 import (
+	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
 )
 
@@ -14,6 +15,10 @@ type Solution struct {
 	Comments       []Comment
 }
 
-func getSolutionByID(id int) {
-	db.Where("ID = ?", id).Find(&User{})
+// GetSolutionByID : returns a solution by its id
+func (s *Solution) GetSolutionByID(id int) {
+	err := db.Where("id = ?", id).First(&s)
+	if err == nil {
+		glog.Info("There was an error")
+	}
 }

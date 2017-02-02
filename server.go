@@ -17,8 +17,8 @@ func main() {
 
 	//initialize DB
 	glog.Info("INITALIZING DATABASE...")
-	gorm.InitializeDB()
-	defer gorm.DB.Close()
+	db := gorm.InitializeDB()
+	defer db.Close()
 
 	//Start HTTP Network
 	gin.RunRouter()

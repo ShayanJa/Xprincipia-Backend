@@ -9,16 +9,15 @@ import (
 // db : Package db
 var db *gorm.DB
 
-// DB : Global Database Variable
-var DB = db
-
 // InitializeDB : Creates a DB Connection and runs migrations
-func InitializeDB() {
+func InitializeDB() *gorm.DB {
+
 	//initialize DB
-	db, err := gorm.Open("mysql", "root:Popcan123@/xPrincipia")
+	DB, err := gorm.Open("mysql", "root:Popcan123@/xPrincipia")
 	if err != nil {
 		glog.Error("There was a problem connecting to the database")
 	}
+	db = DB // make the database available to all gorm packages
 
 	glog.Info("Running DB Migrations...")
 	runMigrations(db)
@@ -26,4 +25,5 @@ func InitializeDB() {
 	glog.Info("Populating DB test data...")
 	populateDBtestData(db)
 
+	return db
 }
