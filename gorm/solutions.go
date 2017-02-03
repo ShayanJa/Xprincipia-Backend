@@ -8,7 +8,7 @@ import (
 // Solution : Generic Problem Solution
 type Solution struct {
 	gorm.Model
-	ProblemID      int
+	ProblemID      uint
 	OriginalPoster User
 	Text           string
 	Rating         int

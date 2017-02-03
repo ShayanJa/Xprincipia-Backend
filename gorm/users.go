@@ -5,16 +5,16 @@ import "github.com/jinzhu/gorm"
 //User : ~
 type User struct {
 	gorm.Model
-	FirstName       string `json:"firstName" form:"firstName"`
-	LastName        string `json:"LastName" form:"lastName"`
-	Email           string `json:"email"`
-	Address         string
-	Username        string
-	PhoneNumber     int
-	Friends         []User
-	ProblemsPosted  []Problem
-	SolutionsPosted []Solution
-	Comments        []Comment
+	FirstName   string `json:"firstName" form:"firstName"`
+	LastName    string `json:"LastName" form:"lastName"`
+	Email       string `json:"email"`
+	Address     string
+	Username    string
+	PhoneNumber string
+	// Friends         []User
+	// ProblemsPosted  []Problem
+	// SolutionsPosted []Solution
+	// Comments        []Comment
 }
 
 //LoginForm : ~
@@ -31,6 +31,11 @@ type PasswordResetForm struct {
 //API Functions
 
 //LoginAttempt : Logs everytime someone logs on
-func (l *LoginForm) LoginAttempt() {
+func (l LoginForm) LoginAttempt() {
 	db.Create(l)
+}
+
+// PostProblem : ~
+func (u *User) PostProblem() {
+
 }
