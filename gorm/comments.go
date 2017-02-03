@@ -16,6 +16,7 @@ const SOLUTION = 1
 type Comment struct {
 	gorm.Model
 	Type    int
+	TypeID  uint
 	OP      User
 	Text    string
 	Replies []Comment

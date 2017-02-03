@@ -25,6 +25,7 @@ func (p *Problem) GetProblemByID(id int) {
 
 // MakeComment : ~
 func (p *Problem) MakeComment(c Comment) {
+	c.TypeID = p.ID
 	db.Create(&c)
 	comments := p.Comments
 	comments = append(comments, c)

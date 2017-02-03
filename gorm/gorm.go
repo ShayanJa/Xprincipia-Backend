@@ -13,7 +13,7 @@ var db *gorm.DB
 func InitializeDB() *gorm.DB {
 
 	//initialize DB
-	DB, err := gorm.Open("mysql", "root:Popcan123@/xPrincipia")
+	DB, err := gorm.Open("mysql", "root:Popcan123@/xPrincipia?parseTime=true")
 	if err != nil {
 		glog.Error("There was a problem connecting to the database")
 	}

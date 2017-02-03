@@ -52,6 +52,12 @@ func populateDBtestData(db *gorm.DB) {
 		OP:   shayan,
 		Text: "I understand what you are saying can you elaborate more",
 	}
-	problem.MakeComment(comment)
+	comment1 := Comment{
+		Type: PROBLEM,
+		OP:   shayan,
+		Text: "I just don't understand",
+	}
 
+	problem.MakeComment(comment)
+	problem.MakeComment(comment1)
 }

@@ -15,6 +15,7 @@ func getProblemByIDHandler(c *gin.Context) {
 
 	problem := gorm.Problem{}
 	intID, err := strconv.Atoi(id)
+
 	if err != nil {
 		glog.Error("Unable to convert to int")
 	}
