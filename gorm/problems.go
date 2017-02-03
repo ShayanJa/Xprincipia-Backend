@@ -22,3 +22,11 @@ func (p *Problem) GetProblemByID(id int) {
 		glog.Info("There was an error")
 	}
 }
+
+// MakeComment : ~
+func (p *Problem) MakeComment(c Comment) {
+	db.Create(&c)
+	comments := p.Comments
+	comments = append(comments, c)
+	p.Comments = comments
+}

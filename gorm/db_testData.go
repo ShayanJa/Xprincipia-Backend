@@ -36,7 +36,7 @@ func populateDBtestData(db *gorm.DB) {
 	//Solution Creation
 	solution := Solution{
 		ProblemID:      problem.ID,
-		OriginalPoster: User{},
+		OriginalPoster: jackDaniels,
 		Text:           "The answer here is something very intense",
 		Rating:         10,
 	}
@@ -45,5 +45,13 @@ func populateDBtestData(db *gorm.DB) {
 	// db.Create(&solution1)
 	// solution2 := Solution{}
 	// db.Create(&solution2)
+
+	//Comment Creation
+	comment := Comment{
+		Type: PROBLEM,
+		OP:   shayan,
+		Text: "I understand what you are saying can you elaborate more",
+	}
+	problem.MakeComment(comment)
 
 }
