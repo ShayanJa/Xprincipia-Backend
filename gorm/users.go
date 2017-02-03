@@ -2,7 +2,7 @@ package gorm
 
 import "github.com/jinzhu/gorm"
 
-//User : a normal user on XPrincipia
+//User : ~
 type User struct {
 	gorm.Model
 	FirstName       string `json:"firstName" form:"firstName"`
@@ -17,10 +17,15 @@ type User struct {
 	Comments        []Comment
 }
 
-//LoginForm :LoginForm Struct
+//LoginForm : ~
 type LoginForm struct {
 	Password string `json:"password" form:"password"`
 	Username string `json:"username" form:"username"`
+}
+
+//PasswordResetForm : ~
+type PasswordResetForm struct {
+	Email string `json:"email" form:"email"`
 }
 
 //API Functions
