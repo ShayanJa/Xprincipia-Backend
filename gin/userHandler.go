@@ -1,16 +1,26 @@
 package gin
 
-import "github.com/gin-gonic/gin"
+import (
+	"work/xprincipia/backend/gorm"
+
+	"github.com/gin-gonic/gin"
+	"github.com/golang/glog"
+)
 
 //TODO
-func userLoginHandler(c *gin.Context) {
+func loginHandler(c *gin.Context) {
+
+	loginForm := gorm.LoginForm{}
+
+	c.Bind(&loginForm)
+	glog.Info(loginForm)
+	c.JSON(200, loginForm)
+}
+
+func passwordResetHandler(c *gin.Context) {
 
 }
 
-func userPasswordResetHandler(c *gin.Context) {
-
-}
-
-func userLogoutHandler(c *gin.Context) {
+func logoutHandler(c *gin.Context) {
 
 }

@@ -9,4 +9,8 @@ func SetRoutes(router *gin.Engine) {
 	router.GET("/solutions/problemID", getSolutionByProblemIDHandler)
 
 	router.GET("/problems/ID", getProblemByIDHandler)
+
+	//Login
+	router.POST("/login", loginHandler)
+
 }
