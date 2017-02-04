@@ -30,3 +30,7 @@ func (s *Solution) GetSolutionByProblemID(id int) {
 		glog.Info("There was an error")
 	}
 }
+
+// Upvote : user can upvote on a solution and change it's ranking
+func (s *Solution) Upvote(u User) {
+}

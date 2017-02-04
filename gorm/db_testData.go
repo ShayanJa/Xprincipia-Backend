@@ -1,6 +1,7 @@
 package gorm
 
 import "github.com/jinzhu/gorm"
+import "github.com/golang/glog"
 
 func populateDBtestData(db *gorm.DB) {
 
@@ -40,9 +41,16 @@ func populateDBtestData(db *gorm.DB) {
 		Text:           "The answer here is something very intense",
 		Rating:         10,
 	}
+	glog.Info(solution.OriginalPoster)
 	db.Create(&solution)
-	// solution1 := Solution{}
-	// db.Create(&solution1)
+
+	solution2 := Solution{
+		ProblemID:      problem.ID,
+		OriginalPoster: shayan,
+		Text:           "What we can do is enable users to try a solution",
+		Rating:         10,
+	}
+	db.Create(&solution2)
 	// solution2 := Solution{}
 	// db.Create(&solution2)
 

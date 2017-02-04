@@ -7,10 +7,10 @@ type User struct {
 	gorm.Model
 	FirstName   string `json:"firstName" form:"firstName"`
 	LastName    string `json:"LastName" form:"lastName"`
-	Email       string `json:"email"`
-	Address     string
-	Username    string
-	PhoneNumber string
+	Email       string `json:"email" form:"email"`
+	Address     string `json:"address" form:"address"`
+	Username    string `json:"username" form:"username"`
+	PhoneNumber string `json:"phoneNumber" form:"phoneNumber"`
 	// Friends         []User
 	// ProblemsPosted  []Problem
 	// SolutionsPosted []Solution
