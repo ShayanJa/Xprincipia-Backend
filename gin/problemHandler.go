@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"work/xprincipia/backend/gorm"
 
-	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
+	"gopkg.in/gin-gonic/gin.v1"
 )
 
 func getProblemByIDHandler(c *gin.Context) {

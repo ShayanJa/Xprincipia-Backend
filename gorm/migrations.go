@@ -31,4 +31,7 @@ func runMigrations(db *gorm.DB) {
 	glog.Info("CREATING ADDRESS TABLE...")
 	db.AutoMigrate(&Address{})
 
+	glog.Info("CREATING LOGINATTEMPTS TABLE...")
+	db.AutoMigrate(&LoginForm{})
+
 }
