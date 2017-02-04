@@ -22,7 +22,7 @@ func SetRoutes(router *gin.Engine) {
 	auth := router.Group("/auth")
 	auth.Use(authMiddleware.MiddlewareFunc())
 	{
-		//auth.GET("/hello", helloHandler)
+		auth.GET("/hello", helloHandler)
 		auth.GET("/refresh_token", authMiddleware.RefreshHandler)
 	}
 	router.POST("/login", authMiddleware.LoginHandler)

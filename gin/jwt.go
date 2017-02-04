@@ -7,15 +7,6 @@ import (
 	"gopkg.in/gin-gonic/gin.v1"
 )
 
-// var mySigningKey = []byte("secret")
-
-// var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
-// 	ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
-// 		return mySigningKey, nil
-// 	},
-// 	SigningMethod: jwt.SigningMethodHS256,
-// })
-
 // the jwt middleware
 var authMiddleware = &jwt.GinJWTMiddleware{
 	Realm:      "test zone",

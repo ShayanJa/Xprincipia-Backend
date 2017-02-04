@@ -22,3 +22,8 @@ func indexHandler(c *gin.Context) {
 	)
 
 }
+func helloHandler(c *gin.Context) {
+	c.JSON(200, gin.H{
+		"text": "Hello World.",
+	})
+}
