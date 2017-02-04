@@ -1,18 +1,29 @@
 package gorm
 
-import "github.com/jinzhu/gorm"
-import "github.com/golang/glog"
+import (
+	"github.com/golang/glog"
+	"github.com/jinzhu/gorm"
+	"golang.org/x/crypto/bcrypt"
+)
 
 func populateDBtestData(db *gorm.DB) {
 
+	//HashedPasswords
+	passwordBytes := []byte("Popcan123")
+	hashedShyshawnPassword, err := bcrypt.GenerateFromPassword(passwordBytes, bcrypt.DefaultCost)
+	if err != nil {
+		panic(err)
+	}
+
 	//User Creation
 	shayan := User{
-		FirstName:   "Shayan",
-		LastName:    "Talebi",
-		Email:       "Shay.talebi@gmail.com",
-		Address:     "5515 Malibu Dr",
-		Username:    "Shyshawn",
-		PhoneNumber: "9528075184",
+		FirstName:      "Shayan",
+		LastName:       "Talebi",
+		Email:          "Shay.talebi@gmail.com",
+		Address:        "5515 Malibu Dr",
+		Username:       "Shyshawn",
+		PhoneNumber:    "9528075184",
+		HashedPassword: hashedShyshawnPassword,
 	}
 	db.Create(&shayan)
 

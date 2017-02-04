@@ -1,6 +1,9 @@
 package gorm
 
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/golang/glog"
+	"github.com/jinzhu/gorm"
+)
 
 //User : ~
 type User struct {
@@ -11,7 +14,7 @@ type User struct {
 	Address        string `json:"address" form:"address"`
 	Username       string `json:"username" form:"username"`
 	PhoneNumber    string `json:"phoneNumber" form:"phoneNumber"`
-	HashedPassword string `json:"hashedPassword" form:"hashedPassword"`
+	HashedPassword []byte `json:"hashedPassword" form:"hashedPassword"`
 	// Friends         []User
 	// ProblemsPosted  []Problem
 	// SolutionsPosted []Solution
@@ -31,6 +34,30 @@ type PasswordResetForm struct {
 }
 
 //API Functions
+
+//GetUserByUsername : get user by name
+func (u *User) GetUserByUsername(name string) bool {
+	err := db.Where("username = ?", name).First(&u)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+	if u.ID == 0 {
+		return false
+	}
+	return true
+}
+
+//VerifyUser : Checks db credentials
+func (u *User) VerifyUser(username string, password string) bool {
+	err := db.Where("username = ? AND hashed_password", username, password).First(&u)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+	if u.ID == 0 {
+		return false
+	}
+	return true
+}
 
 //LoginAttempt : Logs everytime someone logs on
 func (l LoginForm) LoginAttempt() {

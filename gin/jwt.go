@@ -2,7 +2,11 @@ package gin
 
 import (
 	"time"
+	"work/xprincipia/backend/gorm"
 
+	"github.com/golang/glog"
+
+	"golang.org/x/crypto/bcrypt"
 	"gopkg.in/appleboy/gin-jwt.v2"
 	"gopkg.in/gin-gonic/gin.v1"
 )
@@ -14,10 +18,18 @@ var authMiddleware = &jwt.GinJWTMiddleware{
 	Timeout:    time.Hour,
 	MaxRefresh: time.Hour,
 	Authenticator: func(userId string, password string, c *gin.Context) (string, bool) {
-		if (userId == "admin" && password == "admin") || (userId == "test" && password == "test") {
-			return userId, true
-		}
+		user := gorm.User{}
+		passwordBytes := []byte(password)
 
+		if user.GetUserByUsername(userId) {
+			hashedPassword := user.HashedPassword
+			err := bcrypt.CompareHashAndPassword(hashedPassword, passwordBytes)
+			if err == nil {
+				glog.Info("USER LOG IN SUCCESSFUL...")
+				return userId, true
+			}
+			glog.Info(err)
+		}
 		return userId, false
 	},
 	Authorizator: func(userId string, c *gin.Context) bool {
