@@ -3,6 +3,7 @@ package gin
 import (
 	"work/xprincipia/backend/gorm"
 
+	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
 )
@@ -11,8 +12,10 @@ import (
 //ADD AUTHENTICATION
 func loginHandler(c *gin.Context) {
 
-	loginForm := gorm.LoginForm{}
+	token := jwt.New(jwt.SigningMethodHS256)
+	glog.Info(token)
 
+	loginForm := gorm.LoginForm{}
 	c.Bind(&loginForm)
 
 	loginForm.LoginAttempt()
