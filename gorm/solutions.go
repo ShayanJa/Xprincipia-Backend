@@ -33,4 +33,5 @@ func (s *Solution) GetSolutionByProblemID(id int) {
 
 // Upvote : user can upvote on a solution and change it's ranking
 func (s *Solution) Upvote(u User) {
+	
 }

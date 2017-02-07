@@ -36,3 +36,13 @@ func getSolutionByProblemIDHandler(c *gin.Context) {
 	solution.GetSolutionByProblemID(intID)
 	c.JSON(http.StatusOK, solution)
 }
+
+func postSolution(c *gin.Context) {
+	//user := gorm.User{}
+	//user.
+
+	//reciever form from front end
+	//form := gorm.SolutionForm{}
+	//c.Bind(&form)
+
+}

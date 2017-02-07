@@ -16,7 +16,7 @@ type User struct {
 	PhoneNumber    string `json:"phoneNumber" form:"phoneNumber"`
 	HashedPassword []byte `json:"hashedPassword" form:"hashedPassword"`
 	// Friends         []User
-	// ProblemsPosted  []Problem
+	ProblemsPosted []Problem
 	// SolutionsPosted []Solution
 	// Comments        []Comment
 	IsDisabled bool
@@ -64,7 +64,24 @@ func (l LoginForm) LoginAttempt() {
 	db.Create(l)
 }
 
-// PostProblem : ~
-func (u *User) PostProblem() {
+// PostProblem : User Auth Required> Post Problem
+func (u *User) PostProblem(text string, description string) {
+	p := Problem{
+		OriginalPoster: *u,
+		Title:          text,
+		Description:    description,
+	}
+	db.Create(&p)
+	u.ProblemsPosted = append(u.ProblemsPosted, p)
+}
 
+//PostSolution : User Auth Required> Post Solution
+func (u *User) PostSolution(p Problem, text string, description string) {
+	s := Solution{
+		ProblemID:      p.ID,
+		OriginalPoster: *u,
+		Text:           text,
+		Rating:         0,
+	}
+	db.Create(s)
 }

@@ -24,6 +24,8 @@ func SetRoutes(router *gin.Engine) {
 	{
 		auth.GET("/hello", helloHandler)
 		auth.GET("/refresh_token", authMiddleware.RefreshHandler)
+		//auth.POST("/problem", postProblem)
+		//auth.POST("/solution", postSolution)
 	}
 	router.POST("/login", authMiddleware.LoginHandler)
 
