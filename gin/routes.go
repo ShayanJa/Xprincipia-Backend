@@ -1,10 +1,32 @@
 package gin
 
-import "github.com/gin-gonic/gin"
+import "gopkg.in/gin-gonic/gin.v1"
 
 // SetRoutes : sets routes for all gin
 func SetRoutes(router *gin.Engine) {
+
+	//Index Routes
 	router.GET("/", indexHandler)
-	router.GET("/solutions/ID", getSolutionByID)
-	router.GET("/solutions/problemID", getSolutionByProblemID)
+
+	//Login Routes
+	//router.POST("/login", loginHandler)
+
+	//Solutions API
+	router.GET("/solutions/ID", getSolutionByIDHandler)
+	router.GET("/solutions/problemID", getSolutionByProblemIDHandler)
+
+	//Problems API
+	router.GET("/problems/ID", getProblemByIDHandler)
+
+	//Authentication Middleware
+	auth := router.Group("/auth")
+	auth.Use(authMiddleware.MiddlewareFunc())
+	{
+		auth.GET("/hello", helloHandler)
+		auth.GET("/refresh_token", authMiddleware.RefreshHandler)
+		//auth.POST("/problem", postProblem)
+		//auth.POST("/solution", postSolution)
+	}
+	router.POST("/login", authMiddleware.LoginHandler)
+
 }

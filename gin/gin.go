@@ -1,15 +1,26 @@
 package gin
 
-import "github.com/gin-gonic/gin"
+import (
+	"os"
+
+	"gopkg.in/gin-gonic/gin.v1"
+)
 
 //Global router
 var router *gin.Engine
 
 // RunRouter : Used to run gin and all of it's endpoints
 func RunRouter() {
-	router := gin.Default()
+	//Get enviromental data
+	port := os.Getenv("ROUTER_PORT")
+
+	//gin router config
+	router := gin.New()
+	router.Use(gin.Logger())
+	router.Use(gin.Recovery())
+
 	router.LoadHTMLGlob("templates/*")
 
 	SetRoutes(router)
-	router.Run(":8080")
+	router.Run(":" + port)
 }

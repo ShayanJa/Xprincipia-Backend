@@ -8,10 +8,10 @@ import (
 // Solution : Generic Problem Solution
 type Solution struct {
 	gorm.Model
-	ProblemID      int
+	ProblemID      uint
 	OriginalPoster User
 	Text           string
-	Rating         int
+	Rank           int
 	Comments       []Comment
 }
 
@@ -29,4 +29,9 @@ func (s *Solution) GetSolutionByProblemID(id int) {
 	if err == nil {
 		glog.Info("There was an error")
 	}
+}
+
+// Upvote : user can upvote on a solution and change it's ranking
+func (s *Solution) Upvote(u User) {
+
 }

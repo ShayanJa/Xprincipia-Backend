@@ -2,13 +2,21 @@ package main
 
 import (
 	"flag"
+	"log"
 	"work/xprincipia/backend/gin"
 	"work/xprincipia/backend/gorm"
 
 	"github.com/golang/glog"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+
+	// Load Enviromental Variables
+	err := godotenv.Load("config/config.env")
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 
 	//Suppress Parsing Errors
 	flag.Parse()
@@ -20,6 +28,17 @@ func main() {
 	db := gorm.InitializeDB()
 	defer db.Close()
 
+	//testing
+	glog.Info("Testing >>>>")
+	y := gorm.RegistrationForm{}
+	y.Username = "jackDanielss"
+	y.Password = "bill"
+	y.Email = "shay.talebi@gmail.com"
+
+	gorm.CreateUser(y)
+	//testing done
+
 	//Start HTTP Network
 	gin.RunRouter()
+
 }

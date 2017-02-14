@@ -5,11 +5,11 @@ import (
 	"strconv"
 	"work/xprincipia/backend/gorm"
 
-	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
+	"gopkg.in/gin-gonic/gin.v1"
 )
 
-func getSolutionByID(c *gin.Context) {
+func getSolutionByIDHandler(c *gin.Context) {
 	id := c.Query("id")
 	glog.Info("ID sent is: ", id)
 
@@ -23,7 +23,7 @@ func getSolutionByID(c *gin.Context) {
 	c.JSON(http.StatusOK, solution)
 }
 
-func getSolutionByProblemID(c *gin.Context) {
+func getSolutionByProblemIDHandler(c *gin.Context) {
 	id := c.Query("id")
 	glog.Info("ID sent is: ", id)
 
@@ -35,4 +35,14 @@ func getSolutionByProblemID(c *gin.Context) {
 
 	solution.GetSolutionByProblemID(intID)
 	c.JSON(http.StatusOK, solution)
+}
+
+func postSolution(c *gin.Context) {
+	//user := gorm.User{}
+	//user.
+
+	//reciever form from front end
+	//form := gorm.SolutionForm{}
+	//c.Bind(&form)
+
 }

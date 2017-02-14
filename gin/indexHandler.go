@@ -3,8 +3,8 @@ package gin
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
+	"gopkg.in/gin-gonic/gin.v1"
 )
 
 func indexHandler(c *gin.Context) {
@@ -21,4 +21,9 @@ func indexHandler(c *gin.Context) {
 		},
 	)
 
+}
+func helloHandler(c *gin.Context) {
+	c.JSON(200, gin.H{
+		"text": "Hello World.",
+	})
 }
