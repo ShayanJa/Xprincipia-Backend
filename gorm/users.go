@@ -65,12 +65,13 @@ func CreateUser(form RegistrationForm) {
 			glog.Error("Bcrypt failed to hash password")
 		}
 
-		x := User{}
-		x.HashedPassword = hashedPassword
-		x.Email = form.Email
-		x.Username = form.Username
+		//Reinitalize user as new user and set it with form details
+		u = User{}
+		u.HashedPassword = hashedPassword
+		u.Email = form.Email
+		u.Username = form.Username
 
-		db.Create(&x)
+		db.Create(&u)
 	} else {
 		glog.Error("Username is already taken")
 	}
