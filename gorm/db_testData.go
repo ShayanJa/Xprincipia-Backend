@@ -7,7 +7,6 @@ import (
 )
 
 func populateDBtestData(db *gorm.DB) {
-
 	//HashedPasswords
 	passwordBytes := []byte("Popcan123")
 	hashedShyshawnPassword, err := bcrypt.GenerateFromPassword(passwordBytes, bcrypt.DefaultCost)
@@ -25,6 +24,16 @@ func populateDBtestData(db *gorm.DB) {
 		PhoneNumber:    "9528075184",
 		HashedPassword: hashedShyshawnPassword,
 	}
+	// //check if db is already populated
+	// u := User{}
+	// dbError := db.Where("username = ?", shayan.Username).First(&u).Value
+	// if dbError == nil {
+	// 	glog.Info("error has occured")
+	// }
+	// if u.Username != "" {
+	// 	return
+	// }
+
 	db.Create(&shayan)
 
 	jackDaniels := User{
@@ -50,7 +59,7 @@ func populateDBtestData(db *gorm.DB) {
 		ProblemID:      problem.ID,
 		OriginalPoster: jackDaniels,
 		Text:           "The answer here is something very intense",
-		Rating:         10,
+		Rank:           10,
 	}
 	glog.Info(solution.OriginalPoster)
 	db.Create(&solution)
@@ -59,7 +68,7 @@ func populateDBtestData(db *gorm.DB) {
 		ProblemID:      problem.ID,
 		OriginalPoster: shayan,
 		Text:           "What we can do is enable users to try a solution",
-		Rating:         10,
+		Rank:           10,
 	}
 	db.Create(&solution2)
 	// solution2 := Solution{}

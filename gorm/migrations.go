@@ -6,11 +6,11 @@ import (
 )
 
 //migrations
-func runMigrations(db *gorm.DB) {
+func runMigrations(db *gorm.DB) bool {
 
 	if db.HasTable(&User{}) {
 		glog.Info("TABLES HAVE ALREADY BEEN CREATED...")
-		return
+		return false
 	}
 
 	glog.Info("CREATING USER TABLE...")
@@ -34,4 +34,5 @@ func runMigrations(db *gorm.DB) {
 	glog.Info("CREATING LOGINATTEMPTS TABLE...")
 	db.AutoMigrate(&LoginForm{})
 
+	return true
 }

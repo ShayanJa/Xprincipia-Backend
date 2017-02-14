@@ -28,6 +28,17 @@ func main() {
 	db := gorm.InitializeDB()
 	defer db.Close()
 
+	//testing
+	glog.Info("Testing >>>>")
+	y := gorm.RegistrationForm{}
+	y.Username = "jackDanielss"
+	y.Password = "bill"
+	y.Email = "shay.talebi@gmail.com"
+
+	gorm.CreateUser(y)
+	//testing done
+
 	//Start HTTP Network
 	gin.RunRouter()
+
 }

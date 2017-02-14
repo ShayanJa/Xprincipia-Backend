@@ -30,10 +30,11 @@ func InitializeDB() *gorm.DB {
 	db = DB // make the database available to all gorm packages
 
 	glog.Info("Running DB Migrations...")
-	runMigrations(db)
+	isDBEmpty := runMigrations(db)
 
-	glog.Info("Populating DB test data...")
-	populateDBtestData(db)
-
+	if isDBEmpty {
+		glog.Info("Populating DB test data...")
+		populateDBtestData(db)
+	}
 	return db
 }
