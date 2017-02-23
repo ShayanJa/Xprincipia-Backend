@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"log"
-	"work/xprincipia/xGObackEnd/gin"
-	"work/xprincipia/xGObackEnd/gorm"
+	"work/xprincipia/backend/gin"
+	"work/xprincipia/backend/gorm"
 
 	"github.com/golang/glog"
 	"github.com/joho/godotenv"
@@ -29,13 +29,13 @@ func main() {
 	defer db.Close()
 
 	//testing
-	glog.Info("Testing >>>>")
-	y := gorm.RegistrationForm{}
-	y.Username = "jackDanielss"
-	y.Password = "bill"
-	y.Email = "shay.talebi@gmail.com"
+	// glog.Info("Testing >>>>")
+	// y := gorm.RegistrationForm{}
+	// y.Username = "jackDanielss"
+	// y.Password = "bill"
+	// y.Email = "shay.talebi@gmail.com"
 
-	gorm.CreateUser(y)
+	// gorm.CreateUser(y)
 	//testing done
 
 	//Start HTTP Network

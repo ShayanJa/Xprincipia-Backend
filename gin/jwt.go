@@ -2,7 +2,7 @@ package gin
 
 import (
 	"time"
-	"work/xprincipia/xGObackend/gorm"
+	"work/xprincipia/backend/gorm"
 
 	"github.com/golang/glog"
 

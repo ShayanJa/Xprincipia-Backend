@@ -2,7 +2,7 @@ package gin
 
 import (
 	"net/http"
-	"work/xprincipia/xGObackend/gorm"
+	"work/xprincipia/backend/gorm"
 
 	"github.com/golang/glog"
 	"gopkg.in/gin-gonic/gin.v1"
