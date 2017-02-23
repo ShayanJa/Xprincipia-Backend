@@ -174,3 +174,30 @@ func (u *User) VoteOnSolution(solutionID uint) {
 	}
 	solution.Rank++
 }
+
+/*
+
+DB bool functions
+
+
+*/
+
+// IsUserinDBbyEmail : checks if a user is in the db
+func IsUserinDBbyEmail(email string) bool {
+	u := User{}
+	db.Where("email = ?", email).First(&u)
+	if u.ID == 0 {
+		return false
+	}
+	return true
+}
+
+// IsUserinDBbyUsername : checks if a user is in the db
+func IsUserinDBbyUsername(username string) bool {
+	u := User{}
+	db.Where("username = ?", username).First(&u)
+	if u.ID == 0 {
+		return false
+	}
+	return true
+}
