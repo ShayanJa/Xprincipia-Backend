@@ -17,7 +17,7 @@ func getSolutionByIDHandler(c *gin.Context) {
 	intID, err := strconv.Atoi(id)
 	uintID := uint(intID)
 	if err != nil {
-		glog.Fatal("hey")
+		glog.Error("There was an error in converting string to integer")
 	}
 
 	solution.GetSolutionByID(uintID)
