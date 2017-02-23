@@ -3,7 +3,7 @@ package gin
 import (
 	"net/http"
 	"strconv"
-	"work/xprincipia/backend/gorm"
+	"work/xprincipia/xGObackend/gorm"
 
 	"github.com/golang/glog"
 	"gopkg.in/gin-gonic/gin.v1"
@@ -15,11 +15,12 @@ func getSolutionByIDHandler(c *gin.Context) {
 
 	solution := gorm.Solution{}
 	intID, err := strconv.Atoi(id)
+	uintID := uint(intID)
 	if err != nil {
 		glog.Fatal("hey")
 	}
 
-	solution.GetSolutionByID(intID)
+	solution.GetSolutionByID(uintID)
 	c.JSON(http.StatusOK, solution)
 }
 
