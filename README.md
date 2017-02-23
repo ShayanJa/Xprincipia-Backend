@@ -12,3 +12,6 @@ Use following command to run server. Port is indicated in LocalConfig.yaml
 ```
 go run server.go 
 ```
+
+For the time being you must also change the imports for gorm and gin to be a folder 
+specifically for your computer
