@@ -20,6 +20,8 @@ type User struct {
 	ProblemsPostedIDs   []Problem
 	SolutionsIDs        []Solution
 	FollowedProblemsIDs []Problem
+	VotedSolutionsIDs   []Solution
+	VotedProblemIDs     []Problem
 	CommentIDs          []Comment
 	IsDisabled          bool
 }
@@ -90,6 +92,14 @@ func (u *User) GetUserByUsername(name string) bool {
 	return true
 }
 
+//GetUserByID : get user by ID
+func (u *User) GetUserByID(id int) {
+	err := db.Where("ID = ?", id).First(&u)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+}
+
 //VerifyUser : Checks db credentials
 func (u *User) VerifyUser(username string, password string) bool {
 	err := db.Where("username = ? AND hashed_password", username, password).First(&u)
@@ -147,10 +157,20 @@ func (u User) getFollowedProblems() []int {
 }
 
 // VoteOnSolution : User votes on a solution to increase it's rank
-func (u *User) VoteOnSolution(solutionID int) {
+func (u *User) VoteOnSolution(solutionID uint) {
 	solution := Solution{}
 	solution.GetSolutionByID(solutionID)
+
 	//Check if user has already voted on this problem.
-	//if so change vote
-	//else add vote
+	//if found look for what problem this is and lower rank on a different solution
+	for _, votedProblem := range u.VotedProblemIDs {
+		for _, votedSolution := range u.VotedSolutionsIDs {
+			if votedProblem.ID == votedSolution.ProblemID {
+				s := Solution{}
+				s.GetSolutionByID(votedSolution.ID)
+				s.Rank--
+			}
+		}
+	}
+	solution.Rank++
 }

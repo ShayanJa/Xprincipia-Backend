@@ -21,8 +21,8 @@ func InitializeDB() *gorm.DB {
 	dbUser := os.Getenv("DB_USER")
 	dbPass := os.Getenv("DB_PASS")
 
-	dbStr := dbUser + ":" + dbPass + "@" + "tcp(" + dbHost + ":" + dbPort + ")" + "/" + dbName + "?charset=utf8&parseTime=true"
 	//initialize DB
+	dbStr := dbUser + ":" + dbPass + "@" + "tcp(" + dbHost + ":" + dbPort + ")" + "/" + dbName + "?charset=utf8&parseTime=true"
 	DB, err := gorm.Open("mysql", dbStr)
 	if err != nil {
 		glog.Error("There was a problem connecting to the database")
