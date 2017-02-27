@@ -16,7 +16,7 @@ type Problem struct {
 }
 
 // GetProblemByID : returns a solution by its id
-func (p *Problem) GetProblemByID(id int) {
+func (p *Problem) GetProblemByID(id uint) {
 	err := db.Where("id = ?", id).First(&p)
 	if err == nil {
 		glog.Info("There was an error")

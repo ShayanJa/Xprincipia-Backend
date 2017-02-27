@@ -140,8 +140,13 @@ func (u *User) PostSolution(p Problem, text string, description string) {
 }
 
 //FollowProblem : User follows a problem, Add problemID to array
-func (u *User) FollowProblem(problemID int) {
-	//u.FollowedProblemsIDs = append(u.FollowedProblemsIDs, problemID)
+func (u *User) FollowProblem(problemID uint) {
+	problem := Problem{}
+	problem.GetProblemByID(problemID)
+
+	u.FollowedProblemsIDs = append(u.FollowedProblemsIDs, problem)
+	db.Save(&u)
+
 }
 
 // getFollowedProblems : returns problemIDs of all problems followed by the user
