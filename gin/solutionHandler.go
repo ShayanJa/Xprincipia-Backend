@@ -15,11 +15,12 @@ func getSolutionByIDHandler(c *gin.Context) {
 
 	solution := gorm.Solution{}
 	intID, err := strconv.Atoi(id)
+	uintID := uint(intID)
 	if err != nil {
-		glog.Fatal("hey")
+		glog.Error("There was an error in converting string to integer")
 	}
 
-	solution.GetSolutionByID(intID)
+	solution.GetSolutionByID(uintID)
 	c.JSON(http.StatusOK, solution)
 }
 
@@ -35,14 +36,4 @@ func getSolutionByProblemIDHandler(c *gin.Context) {
 
 	solution.GetSolutionByProblemID(intID)
 	c.JSON(http.StatusOK, solution)
-}
-
-func postSolution(c *gin.Context) {
-	//user := gorm.User{}
-	//user.
-
-	//reciever form from front end
-	//form := gorm.SolutionForm{}
-	//c.Bind(&form)
-
 }

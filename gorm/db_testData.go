@@ -24,16 +24,6 @@ func populateDBtestData(db *gorm.DB) {
 		PhoneNumber:    "9528075184",
 		HashedPassword: hashedShyshawnPassword,
 	}
-	// //check if db is already populated
-	// u := User{}
-	// dbError := db.Where("username = ?", shayan.Username).First(&u).Value
-	// if dbError == nil {
-	// 	glog.Info("error has occured")
-	// }
-	// if u.Username != "" {
-	// 	return
-	// }
-
 	db.Create(&shayan)
 
 	jackDaniels := User{

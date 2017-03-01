@@ -16,7 +16,7 @@ type Solution struct {
 }
 
 // GetSolutionByID : returns a solution by its id
-func (s *Solution) GetSolutionByID(id int) {
+func (s *Solution) GetSolutionByID(id uint) {
 	err := db.Where("id = ?", id).First(&s)
 	if err == nil {
 		glog.Info("There was an error")
@@ -29,9 +29,4 @@ func (s *Solution) GetSolutionByProblemID(id int) {
 	if err == nil {
 		glog.Info("There was an error")
 	}
-}
-
-// Upvote : user can upvote on a solution and change it's ranking
-func (s *Solution) Upvote(u User) {
-
 }

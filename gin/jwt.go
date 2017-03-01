@@ -33,11 +33,8 @@ var authMiddleware = &jwt.GinJWTMiddleware{
 		return userId, false
 	},
 	Authorizator: func(userId string, c *gin.Context) bool {
-		if userId == "admin" {
-			return true
-		}
-
-		return false
+		//check if this user is in the db based on the jwt
+		return gorm.IsUserinDBbyUsername(userId)
 	},
 	Unauthorized: func(c *gin.Context, code int, message string) {
 		c.JSON(code, gin.H{
