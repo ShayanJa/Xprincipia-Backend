@@ -23,3 +23,17 @@ func getProblemByIDHandler(c *gin.Context) {
 	problem.GetProblemByID(uint(intID))
 	c.JSON(http.StatusOK, problem)
 }
+
+func postProblem(c *gin.Context) {
+	form := gorm.ProblemForm{}
+	c.Bind(&form)
+
+	if form.Description == "" || form.Title == "" {
+		c.Status(400)
+		return
+	}
+
+	gorm.CreateProblem(form)
+	c.Status(http.StatusOK)
+
+}
