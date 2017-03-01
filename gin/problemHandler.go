@@ -20,6 +20,6 @@ func getProblemByIDHandler(c *gin.Context) {
 		glog.Error("Unable to convert to int")
 	}
 
-	problem.GetProblemByID(intID)
+	problem.GetProblemByID(uint(intID))
 	c.JSON(http.StatusOK, problem)
 }
