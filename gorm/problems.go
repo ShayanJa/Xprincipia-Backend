@@ -10,6 +10,7 @@ type Problem struct {
 	gorm.Model
 	OriginalPoster User
 	Title          string
+	Summary		   string
 	Description    string
 	SubProblems    []Problem
 	Comments       []Comment
