@@ -10,8 +10,8 @@ type Problem struct {
 	gorm.Model
 	OriginalPoster User
 	Title          string
-	Summary        string `gorm:"size:10000"`
-	Description    string `gorm:"size:100000"`
+	Summary        string `gorm:"size:1000"`
+	Description    string `gorm:"size:10000"`
 	SubProblems    []Problem
 	Comments       []Comment
 }
