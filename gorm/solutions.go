@@ -45,5 +45,10 @@ func (s *Solution) GetSolutionByProblemID(id int) {
 
 // CreateSolution : Creates solution from solutionForm
 func CreateSolution(form SolutionForm) {
-	// s := Solution{}
+	s := Solution{}
+	s.Title = form.Title
+	s.Summary = form.Summary
+	s.Description = form.Description
+	s.Evidence = form.Evidence
+	db.Create(&s)
 }
