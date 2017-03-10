@@ -21,10 +21,10 @@ type Solution struct {
 
 //SolutionForm : Solution Form
 type SolutionForm struct {
-	Title       string
-	Summary     string
-	Description string
-	Evidence    string
+	Title       string `json:"title" form:"title"`
+	Summary     string `json:"summary" form:"summary"`
+	Description string `json:"description" form:"description"`
+	Evidence    string `json:"evidence" form:"evidence"`
 }
 
 // GetSolutionByID : returns a solution by its id
