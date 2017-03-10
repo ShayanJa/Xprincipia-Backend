@@ -15,6 +15,14 @@ type Solution struct {
 	Comments       []Comment
 }
 
+//SolutionForm : Solution Form
+type SolutionForm struct {
+	Title       string
+	Summary     string
+	Description string
+	Evidence    string
+}
+
 // GetSolutionByID : returns a solution by its id
 func (s *Solution) GetSolutionByID(id uint) {
 	err := db.Where("id = ?", id).First(&s)
@@ -29,4 +37,9 @@ func (s *Solution) GetSolutionByProblemID(id int) {
 	if err == nil {
 		glog.Info("There was an error")
 	}
+}
+
+// CreateSolution : Creates solution from solutionForm
+func CreateSolution(form SolutionForm) {
+
 }
