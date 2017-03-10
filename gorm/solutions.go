@@ -11,6 +11,10 @@ type Solution struct {
 	ProblemID      uint
 	OriginalPoster User
 	Text           string
+	Title          string
+	Summary        string
+	Description    string
+	Evidence       string
 	Rank           int
 	Comments       []Comment
 }
@@ -41,5 +45,5 @@ func (s *Solution) GetSolutionByProblemID(id int) {
 
 // CreateSolution : Creates solution from solutionForm
 func CreateSolution(form SolutionForm) {
-
+	// s := Solution{}
 }
