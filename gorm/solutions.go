@@ -50,5 +50,6 @@ func CreateSolution(form SolutionForm) {
 	s.Summary = form.Summary
 	s.Description = form.Description
 	s.Evidence = form.Evidence
+	s.Rank = 1
 	db.Create(&s)
 }
