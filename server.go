@@ -1,10 +1,10 @@
 package main
 
 import (
+	"app/gin"
+	"app/gorm"
 	"flag"
 	"log"
-	"work/xprincipia/backend/gin"
-	"work/xprincipia/backend/gorm"
 
 	"github.com/golang/glog"
 	"github.com/joho/godotenv"

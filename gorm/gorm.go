@@ -1,8 +1,6 @@
 package gorm
 
 import (
-	"os"
-
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
@@ -15,11 +13,11 @@ var db *gorm.DB
 func InitializeDB() *gorm.DB {
 
 	//Get Enviromental DB Variables
-	dbHost := os.Getenv("DB_HOST")
-	dbPort := os.Getenv("DB_PORT")
-	dbName := os.Getenv("DB_NAME")
-	dbUser := os.Getenv("DB_USER")
-	dbPass := os.Getenv("DB_PASS")
+	dbHost := "localhost"  //os.Getenv("DB_HOST")
+	dbPort := "3306"       //os.Getenv("DB_PORT")
+	dbName := "xPrincipia" //os.Getenv("DB_NAME")
+	dbUser := "root"       //os.Getenv("DB_USER")
+	dbPass := "Popcan123"  //os.Getenv("DB_PASS")
 
 	//initialize DB
 	dbStr := dbUser + ":" + dbPass + "@" + "tcp(" + dbHost + ":" + dbPort + ")" + "/" + dbName + "?charset=utf8&parseTime=true"

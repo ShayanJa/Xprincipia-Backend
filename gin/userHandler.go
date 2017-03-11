@@ -1,8 +1,8 @@
 package gin
 
 import (
+	"app/gorm"
 	"net/http"
-	"work/xprincipia/backend/gorm"
 
 	"github.com/golang/glog"
 	"gopkg.in/gin-gonic/gin.v1"
