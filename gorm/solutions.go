@@ -11,8 +11,20 @@ type Solution struct {
 	ProblemID      uint
 	OriginalPoster User
 	Text           string
+	Title          string
+	Summary        string
+	Description    string
+	Evidence       string
 	Rank           int
 	Comments       []Comment
+}
+
+//SolutionForm : Solution Form
+type SolutionForm struct {
+	Title       string `json:"title" form:"title"`
+	Summary     string `json:"summary" form:"summary"`
+	Description string `json:"description" form:"description"`
+	Evidence    string `json:"evidence" form:"evidence"`
 }
 
 // GetSolutionByID : returns a solution by its id
@@ -29,4 +41,18 @@ func (s *Solution) GetSolutionByProblemID(id int) {
 	if err == nil {
 		glog.Info("There was an error")
 	}
+}
+
+// CreateSolution : Creates solution from solutionForm
+func CreateSolution(form SolutionForm) {
+	s := Solution{}
+
+	//Create Solution object based on solutionForm info
+	s.Title = form.Title
+	s.Summary = form.Summary
+	s.Description = form.Description
+	s.Evidence = form.Evidence
+	s.Rank = 1
+
+	db.Create(&s)
 }

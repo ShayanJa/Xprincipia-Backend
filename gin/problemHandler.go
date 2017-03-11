@@ -27,7 +27,6 @@ func getProblemByIDHandler(c *gin.Context) {
 func postProblem(c *gin.Context) {
 	form := gorm.ProblemForm{}
 	c.Bind(&form)
-
 	if form.Description == "" || form.Title == "" {
 		c.Status(400)
 		return
