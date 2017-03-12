@@ -1,22 +1,20 @@
 package main
 
 import (
-	"app/gin"
-	"app/gorm"
 	"flag"
-	"log"
+	"work/xprincipia/backend/gin"
+	"work/xprincipia/backend/gorm"
 
 	"github.com/golang/glog"
-	"github.com/joho/godotenv"
 )
 
 func main() {
 
 	// Load Enviromental Variables
-	err := godotenv.Load("config/config.env")
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	// err := godotenv.Load("config/config.env")
+	// if err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// }
 
 	//Suppress Parsing Errors
 	flag.Parse()

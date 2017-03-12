@@ -20,29 +20,22 @@ RUN go get golang.org/x/crypto/bcrypt
 RUN go get gopkg.in/appleboy/gin-jwt.v2
 RUN go get gopkg.in/gin-gonic/gin.v1
 
-RUN echo ${GOPATH}
-WORKDIR /go/src/app
+
+# WORKDIR /go/src/app
 # RUN mkdir -p /work/xprincipia/backend
 # WORKDIR go/src/work/xprincipia/backend
 
-ADD . /go/src/app
+ADD . /go/src/work/xprincipia/backend
 
-# WORKDIR /app
+# WORKDIR /appå
 
-RUN ls
-
-# ADD . /go/src/work/xprincipia/backend
-# RUN go install /go/src/app/gin
-# RUN go install /go/src/app/gorm
-
-
-RUN go build ./server.go
+RUN go install work/xprincipia/backend
 # RUN cd /go/bin
 
 # RUN pwd
 
 
-ENTRYPOINT /go/bin/app
+ENTRYPOINT /go/bin/backend
 
 EXPOSE 10000
 

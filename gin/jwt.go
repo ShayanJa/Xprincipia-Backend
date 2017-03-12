@@ -1,8 +1,8 @@
 package gin
 
 import (
-	"app/gorm"
 	"time"
+	"work/xprincipia/backend/gorm"
 
 	"github.com/golang/glog"
 

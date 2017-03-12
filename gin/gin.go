@@ -1,10 +1,6 @@
 package gin
 
-import (
-	"os"
-
-	"gopkg.in/gin-gonic/gin.v1"
-)
+import "gopkg.in/gin-gonic/gin.v1"
 
 //Global router
 var router *gin.Engine
@@ -12,7 +8,7 @@ var router *gin.Engine
 // RunRouter : Used to run gin and all of it's endpoints
 func RunRouter() {
 	//Get enviromental data
-	port := os.Getenv("ROUTER_PORT")
+	port := "10000" //os.Getenv("ROUTER_PORT")
 
 	//gin router config
 	router := gin.New()
