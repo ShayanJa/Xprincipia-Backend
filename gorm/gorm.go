@@ -1,6 +1,10 @@
 package gorm
 
 import (
+	"time"
+
+	"strconv"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
@@ -14,7 +18,7 @@ func InitializeDB() *gorm.DB {
 
 	//Get Enviromental DB Variables
 	dbHost := "localhost"  //os.Getenv("DB_HOST")
-	dbPort := "3306"       //os.Getenv("DB_PORT")
+	dbPort := "4000"       //os.Getenv("DB_PORT")
 	dbName := "xPrincipia" //os.Getenv("DB_NAME")
 	dbUser := "root"       //os.Getenv("DB_USER")
 	dbPass := "Popcan123"  //os.Getenv("DB_PASS")
@@ -22,9 +26,25 @@ func InitializeDB() *gorm.DB {
 	//initialize DB
 	dbStr := dbUser + ":" + dbPass + "@" + "tcp(" + dbHost + ":" + dbPort + ")" + "/" + dbName + "?charset=utf8&parseTime=true"
 	DB, err := gorm.Open("mysql", dbStr)
-	if err != nil {
-		glog.Error("There was a problem connecting to the database")
+
+	//Try connecting to the database 3 more times
+	for i := 1; i < 4; i++ {
+		if err == nil {
+			break
+		}
+		time.Sleep(3000 * time.Millisecond) //sleep for a bit
+		s := strconv.Itoa(i)
+		glog.Error("Trying to Connect to DB...    Attempt " + s)
+
+		DB, err = gorm.Open("mysql", dbStr)
+		// DB, err = gorm.Open("mysql", "root:Popcan123@/xPrincipia?charset=utf8&parseTime=True&loc=Local")
 	}
+
+	//If unable to connect, exit
+	if err != nil {
+		glog.Fatal("There was a problem connecting to the database")
+	}
+
 	db = DB // make the database available to all gorm packages
 
 	glog.Info("Running DB Migrations...")

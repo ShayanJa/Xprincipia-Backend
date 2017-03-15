@@ -15,7 +15,7 @@ func RunRouter() {
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 
-	router.LoadHTMLGlob("templates/*")
+	// router.LoadHTMLGlob("templates/*")
 
 	SetRoutes(router)
 	router.Run(":" + port)
