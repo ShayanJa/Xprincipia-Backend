@@ -39,6 +39,7 @@ ENTRYPOINT /go/bin/backend
 
 EXPOSE 10000
 
+
 # CMD ["go", "run" ,"/go/src/work/xprincipia/backend/server.go"]
 
 # ENTRYPOINT /go/bin/backend

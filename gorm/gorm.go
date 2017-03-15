@@ -18,7 +18,7 @@ func InitializeDB() *gorm.DB {
 
 	//Get Enviromental DB Variables
 	dbHost := "localhost"  //os.Getenv("DB_HOST")
-	dbPort := "4000"       //os.Getenv("DB_PORT")
+	dbPort := "3306"       //os.Getenv("DB_PORT")
 	dbName := "xPrincipia" //os.Getenv("DB_NAME")
 	dbUser := "root"       //os.Getenv("DB_USER")
 	dbPass := "Popcan123"  //os.Getenv("DB_PASS")
