@@ -38,6 +38,8 @@ RUN go install work/xprincipia/backend
 ENTRYPOINT /go/bin/backend
 
 EXPOSE 10000
+EXPOSE 4000
+EXPOSE 3306
 
 
 # CMD ["go", "run" ,"/go/src/work/xprincipia/backend/server.go"]

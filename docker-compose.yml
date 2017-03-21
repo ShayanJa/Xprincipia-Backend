@@ -7,8 +7,8 @@ services:
       environment:
       - MYSQL_ROOT_PASSWORD=Popcan123
       - MYSQL_DATABASE=xPrincipia
-      ports:
-          - "4000:3306"
+      # ports:
+      #     - "4000:3306"
 
   api:
     # image: golang:1.6.1-alpine
@@ -18,10 +18,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - 10000:10000
+      - 4000:4000
     # working_dir: /go/src/work/xPrincipia/backend
     # command: go run server.go
     links:
-      - mysql
+      - mysql:database
+
 
     
   
