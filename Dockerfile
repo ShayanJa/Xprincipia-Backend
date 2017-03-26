@@ -27,19 +27,15 @@ RUN go get gopkg.in/gin-gonic/gin.v1
 
 ADD . /go/src/work/xprincipia/backend
 
-# WORKDIR /appå
 
 RUN go install work/xprincipia/backend
-# RUN cd /go/bin
-
-# RUN pwd
 
 
 ENTRYPOINT /go/bin/backend
 
+# Expose the application on port 10000.
+# This should be the same as in the app.conf file
 EXPOSE 10000
-EXPOSE 4000
-EXPOSE 3306
 
 
 # CMD ["go", "run" ,"/go/src/work/xprincipia/backend/server.go"]
