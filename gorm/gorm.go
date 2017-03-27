@@ -29,6 +29,7 @@ func InitializeDB() *gorm.DB {
 	DB, err := gorm.Open("mysql", dbStr)
 
 	//Try connecting to the database 10 more times
+	//We must wait for the Mysql Service to finish building
 	for i := 1; i < 10; i++ {
 		if err == nil {
 			break

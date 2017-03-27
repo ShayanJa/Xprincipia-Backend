@@ -12,10 +12,7 @@ services:
 
   api:
     # image: golang:1.6.1-alpine
-    build:
-      context: .
-      
-      dockerfile: Dockerfile
+    image: xprincipia/backend
     ports:
       - 10000:10000
     # working_dir: /go/src/work/xPrincipia/backend
