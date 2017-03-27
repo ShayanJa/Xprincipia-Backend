@@ -13,21 +13,15 @@ services:
   api:
     # based off the golang:1.6.1-alpine image
 
-    #Docker hub image
-    image: xprincipia/backend
+    # #Docker hub image
+    # image: xprincipia/backend
 
     # Local host build
-    # build:
-    #   context: .
+    build:
+      context: .
 
-    #   dockerfile: dockerfile
+      dockerfile: dockerfile
     ports:
       - 10000:10000
     links: 
       - mysql
-    restart: always
-
-
-    
-  
-  

@@ -17,8 +17,9 @@ var db *gorm.DB
 func InitializeDB() *gorm.DB {
 
 	//Get Enviromental DB Variables
-	dbHost := "172.19.0.2" //os.Getenv("DB_HOST")
-	//dbHost := "localhost"
+	//dbHost := "172.18.0.2" //Bens Mysql xPrincipia id
+	dbHost := "172.19.0.2" //Shayan's Mysql xPrincipia id
+	//dbHost := "localhost" //os.Getenv("DB_HOST")
 	dbPort := "3306"       //os.Getenv("DB_PORT")
 	dbName := "xPrincipia" //os.Getenv("DB_NAME")
 	dbUser := "root"       //os.Getenv("DB_USER")
@@ -28,6 +29,7 @@ func InitializeDB() *gorm.DB {
 	dbStr := dbUser + ":" + dbPass + "@" + "tcp(" + dbHost + ":" + dbPort + ")" + "/" + dbName + "?charset=utf8&parseTime=true"
 	DB, err := gorm.Open("mysql", dbStr)
 
+	glog.Info(dbStr)
 	//Try connecting to the database 10 more times
 	//We must wait for the Mysql Service to finish building
 	for i := 1; i < 10; i++ {
