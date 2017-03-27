@@ -11,12 +11,18 @@ services:
           - "4000:3306"
 
   api:
-    # image: golang:1.6.1-alpine
+    # based off the golang:1.6.1-alpine image
+
+    #Docker hub image
     image: xprincipia/backend
+
+    # Local host build
+    # build:
+    #   context: .
+
+    #   dockerfile: dockerfile
     ports:
       - 10000:10000
-    # working_dir: /go/src/work/xPrincipia/backend
-    # command: go run server.go
     links: 
       - mysql
 
