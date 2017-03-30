@@ -8,8 +8,8 @@ func SetRoutes(router *gin.Engine) {
 	//Index Routes
 	router.GET("/", indexHandler)
 
-	//Login Routes
-	//router.POST("/login", loginHandler)
+	//Suggestions API
+	router.POST("/suggestions/create", postSuggestion)
 
 	//Solutions API
 	router.GET("/solutions/ID", getSolutionByIDHandler)
@@ -28,5 +28,8 @@ func SetRoutes(router *gin.Engine) {
 		//auth.POST("/solution", postSolution)
 	}
 	router.POST("/login", authMiddleware.LoginHandler)
+
+	//Login Routes
+	//router.POST("/login", loginHandler)
 
 }
