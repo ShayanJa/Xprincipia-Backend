@@ -20,9 +20,9 @@ API
 */
 
 //CreateSuggestion : Creates a question
-func CreateSuggestion(form QuestionForm) {
-	q := Suggestion{}
-	q.Description = form.Description
-	q.Rank = 1
-	db.Create(&q)
+func CreateSuggestion(form SuggestionForm) {
+	s := Suggestion{}
+	s.Description = form.Description
+	s.Rank = 1
+	db.Create(&s)
 }

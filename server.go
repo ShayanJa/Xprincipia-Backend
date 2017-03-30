@@ -28,6 +28,9 @@ func main() {
 	db := gorm.InitializeDB()
 	defer db.Close()
 
+	s := gorm.SuggestionForm{Description: "fucl"}
+	gorm.CreateSuggestion(s)
+
 	//Start HTTP Network
 	gin.RunRouter()
 
