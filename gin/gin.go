@@ -2,6 +2,7 @@ package gin
 
 import (
 	"fmt"
+	"os"
 	"os/exec"
 
 	"github.com/golang/glog"
@@ -14,7 +15,7 @@ var router *gin.Engine
 // RunRouter : Used to run gin and all of it's endpoints
 func RunRouter() {
 	//Get enviromental data
-	port := "10000" //os.Getenv("ROUTER_PORT")
+	port := os.Getenv("ROUTER_PORT")
 
 	//gin router config
 	router := gin.New()
