@@ -1,6 +1,9 @@
 package gorm
 
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/golang/glog"
+	"github.com/jinzhu/gorm"
+)
 
 //Suggestion : Struct containing a question
 type Suggestion struct {
@@ -25,4 +28,12 @@ func CreateSuggestion(form SuggestionForm) {
 	s.Description = form.Description
 	s.Rank = 1
 	db.Create(&s)
+}
+
+//GetSuggestionByID : Returns a Suggestion based on an int ID
+func (s *Suggestion) GetSuggestionByID(id uint) {
+	err := db.Where("id = ?", id).First(&s)
+	if err == nil {
+		glog.Info("There was an error")
+	}
 }

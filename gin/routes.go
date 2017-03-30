@@ -10,7 +10,7 @@ func SetRoutes(router *gin.Engine) {
 
 	//Suggestions API
 	router.POST("/suggestions/create", postSuggestion)
-
+	router.GET("/suggestions/ID", getSuggestion)
 	//Solutions API
 	router.GET("/solutions/ID", getSolutionByIDHandler)
 	router.GET("/solutions/problemID", getSolutionByProblemIDHandler)
