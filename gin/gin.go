@@ -21,9 +21,10 @@ func RunRouter() {
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 
-	// router.LoadHTMLGlob("templates/*")
-
 	SetRoutes(router)
+
+	//Set templates
+	router.LoadHTMLGlob("templates/*")
 
 	// Display LOGO
 	cmd := "cat image.txt"

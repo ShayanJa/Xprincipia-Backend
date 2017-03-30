@@ -18,8 +18,8 @@ func InitializeDB() *gorm.DB {
 
 	//Get Enviromental DB Variables
 	//dbHost := "172.18.0.2" //Bens Mysql xPrincipia id
-	dbHost := "172.19.0.2" //Shayan's Mysql xPrincipia id
-	//dbHost := "localhost" //os.Getenv("DB_HOST")
+	//dbHost := "172.19.0.2" //Shayan's Mysql xPrincipia id
+	dbHost := "localhost"  //os.Getenv("DB_HOST")
 	dbPort := "3306"       //os.Getenv("DB_PORT")
 	dbName := "xPrincipia" //os.Getenv("DB_NAME")
 	dbUser := "root"       //os.Getenv("DB_USER")
