@@ -11,12 +11,15 @@ func SetRoutes(router *gin.Engine) {
 	//Suggestions API
 	router.POST("/suggestions/create", postSuggestion)
 	router.GET("/suggestions/ID", getSuggestion)
+
 	//Solutions API
 	router.GET("/solutions/ID", getSolutionByIDHandler)
 	router.GET("/solutions/problemID", getSolutionByProblemIDHandler)
 	router.POST("/solutions/create", postSolution)
+
 	//Problems API
 	router.GET("/problems/ID", getProblemByIDHandler)
+	router.POST("/problems/create", postProblem)
 
 	//Authentication Middleware
 	auth := router.Group("/auth")

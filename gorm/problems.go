@@ -18,9 +18,9 @@ type Problem struct {
 
 //ProblemForm : form to create problem
 type ProblemForm struct {
-	OriginalPosterid int
-	Title            string
-	Description      string
+	Title       string
+	Summary     string
+	Description string
 }
 
 // GetProblemByID : returns a solution by its id
@@ -54,6 +54,7 @@ func (p *Problem) MakeComment(c Comment) {
 func CreateProblem(form ProblemForm) {
 	p := Problem{}
 	p.Title = form.Title
+	p.Summary = form.Summary
 	p.Description = form.Description
 	db.Create(&p)
 }
