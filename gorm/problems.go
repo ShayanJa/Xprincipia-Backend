@@ -57,3 +57,13 @@ func CreateProblem(form ProblemForm) {
 	p.Description = form.Description
 	db.Create(&p)
 }
+
+//GetAllProblems : Returns all problem objects
+func GetAllProblems() []Problem {
+	p := []Problem{}
+	err := db.Find(&p)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+	return p
+}
