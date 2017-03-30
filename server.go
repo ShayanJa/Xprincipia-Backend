@@ -28,6 +28,10 @@ func main() {
 	db := gorm.InitializeDB()
 	defer db.Close()
 
+	//tests
+	form := gorm.QuestionForm{Description: "fucl"}
+	gorm.CreateQuestion(form)
+
 	//Start HTTP Network
 	gin.RunRouter()
 
