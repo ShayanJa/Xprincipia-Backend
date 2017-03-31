@@ -32,8 +32,8 @@ func CreateQuestion(form QuestionForm) {
 }
 
 //GetQuestionByID : Returns a Suggestion based on an int ID
-func (s *Question) GetQuestionByID(id uint) {
-	err := db.Where("id = ?", id).First(&s)
+func (q *Question) GetQuestionByID(id uint) {
+	err := db.Where("id = ?", id).First(&q)
 	if err == nil {
 		glog.Info("There was an error")
 	}

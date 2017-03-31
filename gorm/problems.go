@@ -59,6 +59,19 @@ func CreateProblem(form ProblemForm) {
 	db.Create(&p)
 }
 
+// UpdateProblem : Updates a problem with problemForm as input
+func (p *Problem) UpdateProblem(form ProblemForm) {
+	err := db.First(&p)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+
+	p.Description = form.Description
+	p.Summary = form.Summary
+	p.Title = form.Title
+	db.Save(&p)
+}
+
 //GetAllProblems : Returns all problem objects
 func GetAllProblems() []Problem {
 	p := []Problem{}
