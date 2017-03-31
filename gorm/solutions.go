@@ -43,6 +43,16 @@ func (s *Solution) GetSolutionByProblemID(id int) {
 	}
 }
 
+//GetAllSolutions : Get all Solutions in db
+func GetAllSolutions() []Solution {
+	s := []Solution{}
+	err := db.Find(&s)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+	return s
+}
+
 // CreateSolution : Creates solution from solutionForm
 func CreateSolution(form SolutionForm) {
 	s := Solution{}
