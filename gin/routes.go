@@ -38,7 +38,7 @@ func SetRoutes(router *gin.Engine) {
 	}
 	router.POST("/login", authMiddleware.LoginHandler)
 
-	//Login Routes
+	router.POST("/register", registerHandler)
 	//router.POST("/login", loginHandler)
 
 }

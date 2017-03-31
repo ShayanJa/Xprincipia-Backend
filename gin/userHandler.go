@@ -29,11 +29,19 @@ func loginHandler(c *gin.Context) {
 func passwordResetHandler(c *gin.Context) {
 
 	passwordResetForm := gorm.PasswordResetForm{}
-
 	c.Bind(&passwordResetForm)
-
+	c.Status(http.StatusOK)
 }
 
 func logoutHandler(c *gin.Context) {
 
+}
+
+func registerHandler(c *gin.Context) {
+	form := gorm.RegistrationForm{}
+	c.Bind(&form)
+
+	glog.Info("REGISTERING USER:  " + form.Username)
+
+	c.Status(http.StatusOK)
 }
