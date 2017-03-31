@@ -56,7 +56,6 @@ func CreateUser(form RegistrationForm) {
 	if err == nil {
 		glog.Info("error has occured")
 	}
-	glog.Info(err)
 	//If username does not exist
 	if u.Username == "" {
 		glog.Info("Username not taken...")

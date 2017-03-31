@@ -42,6 +42,6 @@ func registerHandler(c *gin.Context) {
 	c.Bind(&form)
 
 	glog.Info("REGISTERING USER:  " + form.Username)
-
+	gorm.CreateUser(form)
 	c.Status(http.StatusOK)
 }
