@@ -38,6 +38,10 @@ func getSolutionByProblemIDHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, solution)
 }
 
+func getAllSolutions(c *gin.Context) {
+	c.JSON(http.StatusOK, gorm.GetAllSolutions())
+}
+
 func postSolution(c *gin.Context) {
 	form := gorm.SolutionForm{}
 	c.Bind(&form)
