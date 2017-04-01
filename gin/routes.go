@@ -9,7 +9,7 @@ func SetRoutes(router *gin.Engine) {
 	router.GET("/", indexHandler)
 
 	//Solutions API
-	router.GET("/solutions/ID", getSolutionByIDHandler)
+	router.GET("/solutions/ID", getSolutionByID)
 	router.GET("/solutions/all", getAllSolutions)
 	router.GET("/solutions/problemID", getSolutionByProblemIDHandler)
 	router.POST("/solutions/create", postSolution)
@@ -18,6 +18,7 @@ func SetRoutes(router *gin.Engine) {
 	router.GET("/problems/ID", getProblemByIDHandler)
 	router.GET("/problems/all", getAllProblems)
 	router.POST("/problems/create", postProblem)
+	router.GET("/problems/search")
 
 	//Questions API
 	router.GET("/questions/ID", getProblemByIDHandler)

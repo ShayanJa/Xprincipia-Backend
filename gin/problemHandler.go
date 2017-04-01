@@ -40,3 +40,9 @@ func postProblem(c *gin.Context) {
 	c.Status(http.StatusCreated)
 
 }
+
+func searchProblem(c *gin.Context) {
+	//WIP : Only shows search query based on name
+	id := c.Query("q")
+
+}

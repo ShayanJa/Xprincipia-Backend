@@ -9,7 +9,7 @@ import (
 	"gopkg.in/gin-gonic/gin.v1"
 )
 
-func getSolutionByIDHandler(c *gin.Context) {
+func getSolutionByID(c *gin.Context) {
 	id := c.Query("id")
 	glog.Info("ID sent is: ", id)
 
