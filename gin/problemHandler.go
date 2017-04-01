@@ -45,6 +45,10 @@ func searchProblemDB(c *gin.Context) {
 	//WIP : Only shows search query based on name
 	query := c.Query("q")
 	response := gorm.QueryProblems(query)
+
+	glog.Info("Query value: " + query)
+	glog.Info("length pf Query Response : " + string(len(response)))
+
 	c.JSON(http.StatusOK, response)
 
 }
