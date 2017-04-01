@@ -45,7 +45,7 @@ func getAllSolutions(c *gin.Context) {
 func postSolution(c *gin.Context) {
 	form := gorm.SolutionForm{}
 	c.Bind(&form)
-	glog.Info(form)
+
 	gorm.CreateSolution(form)
 	c.Status(http.StatusOK)
 }

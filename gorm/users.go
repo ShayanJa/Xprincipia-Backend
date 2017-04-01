@@ -81,13 +81,16 @@ func CreateUser(form RegistrationForm) {
 
 //GetUserByUsername : get user by name
 func (u *User) GetUserByUsername(name string) bool {
+	glog.Info("Getting Username : " + name + " ...")
 	err := db.Where("username = ?", name).First(&u)
 	if err == nil {
-		glog.Info("There was an error")
+		glog.Info("There was an error...")
 	}
 	if u.ID == 0 {
+		glog.Info("NO USER BY THAT NAME...")
 		return false
 	}
+	glog.Info("USERNAME FOUND RETURNING " + u.Username)
 	return true
 }
 
@@ -136,6 +139,7 @@ func (u *User) PostSolution(p Problem, text string, description string) {
 		Rank:           0,
 	}
 	db.Create(s)
+	glog.Info("Solution Create!  ID: " + string(s.ID))
 }
 
 //FollowProblem : User follows a problem, Add problemID to array

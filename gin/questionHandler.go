@@ -14,7 +14,7 @@ func postQuestion(c *gin.Context) {
 	c.Bind(&form)
 	glog.Info(form)
 	gorm.CreateQuestion(form)
-	c.Status(http.StatusOK)
+	c.Status(http.StatusCreated)
 }
 
 func getQuestion(c *gin.Context) {

@@ -32,11 +32,11 @@ func postProblem(c *gin.Context) {
 	form := gorm.ProblemForm{}
 	c.Bind(&form)
 	if form.Description == "" || form.Title == "" {
-		c.Status(400)
+		c.Status(http.StatusBadRequest)
 		return
 	}
 
 	gorm.CreateProblem(form)
-	c.Status(http.StatusOK)
+	c.Status(http.StatusCreated)
 
 }
