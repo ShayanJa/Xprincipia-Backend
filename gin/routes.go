@@ -18,7 +18,7 @@ func SetRoutes(router *gin.Engine) {
 	router.GET("/problems/ID", getProblemByIDHandler)
 	router.GET("/problems/all", getAllProblems)
 	router.POST("/problems/create", postProblem)
-	router.GET("/problems/search")
+	router.GET("/problems/search", searchProblemDB)
 
 	//Questions API
 	router.GET("/questions/ID", getProblemByIDHandler)

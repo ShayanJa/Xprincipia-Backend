@@ -82,10 +82,10 @@ func GetAllProblems() []Problem {
 	return p
 }
 
-//QueryProblems : return problems
+//QueryProblems : Return problems that are related to the query String
 func QueryProblems(q string) []Problem {
 	p := []Problem{}
-	err := db.Where("name LIKE ?", q).Find(&p)
+	err := db.Where("title LIKE ?", "%"+q+"%").Find(&p)
 	if err == nil {
 		glog.Info("There was an error")
 	}

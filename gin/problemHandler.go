@@ -41,8 +41,10 @@ func postProblem(c *gin.Context) {
 
 }
 
-func searchProblem(c *gin.Context) {
+func searchProblemDB(c *gin.Context) {
 	//WIP : Only shows search query based on name
-	id := c.Query("q")
+	query := c.Query("q")
+	response := gorm.QueryProblems(query)
+	c.JSON(http.StatusOK, response)
 
 }
