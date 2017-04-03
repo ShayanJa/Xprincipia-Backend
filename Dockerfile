@@ -25,12 +25,14 @@ RUN go get gopkg.in/gin-gonic/gin.v1
 # RUN mkdir -p /work/xprincipia/backend
 # WORKDIR go/src/work/xprincipia/backend
 
+# Add backend folder
 ADD . /go/src/work/xprincipia/backend
 
-
+# Install the Backend
 RUN go install work/xprincipia/backend
 
 
+# # Set the entry point of the container to the application executable
 ENTRYPOINT /go/bin/backend
 
 # Expose the application on port 10000.
@@ -38,15 +40,4 @@ ENTRYPOINT /go/bin/backend
 EXPOSE 10000
 
 
-# CMD ["go", "run" ,"/go/src/work/xprincipia/backend/server.go"]
 
-# ENTRYPOINT /go/bin/backend
-
-# Expose the application on port 8080.
-# This should be the same as in the app.conf file
-# EXPOSE 10000
-
-# # Set the entry point of the container to the application executable
-# ENTRYPOINT /go/bin/basic
-
-# CMD go run /backend/server.go -a | xp
