@@ -130,17 +130,17 @@ func (u *User) PostProblem(text string, description string) {
 	u.ProblemsPostedIDs = append(u.ProblemsPostedIDs, p)
 }
 
-//PostSolution : User Auth Required> Post Solution
-func (u *User) PostSolution(p Problem, text string, description string) {
-	s := Solution{
-		ProblemID:      p.ID,
-		OriginalPoster: *u,
-		Text:           text,
-		Rank:           0,
-	}
-	db.Create(s)
-	glog.Info("Solution Create!  ID: " + string(s.ID))
-}
+// //PostSolution : User Auth Required> Post Solution
+// func (u *User) PostSolution(p Problem, text string, description string) {
+// 	s := Solution{
+// 		ProblemID:      p.ID,
+// 		OriginalPoster: *u,
+// 		Text:           text,
+// 		Rank:           0,
+// 	}
+// 	db.Create(s)
+// 	glog.Info("Solution Create!  ID: " + string(s.ID))
+// }
 
 //FollowProblem : User follows a problem, Add problemID to array
 func (u *User) FollowProblem(problemID uint) {

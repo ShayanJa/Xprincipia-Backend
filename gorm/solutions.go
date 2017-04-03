@@ -10,11 +10,12 @@ type Solution struct {
 	gorm.Model
 	ProblemID      uint
 	OriginalPoster User
-	Text           string
 	Title          string
 	Summary        string
 	Description    string
 	Evidence       string
+	Experiments    string
+	References     string
 	Rank           int
 	Comments       []Comment
 }
@@ -25,6 +26,7 @@ type SolutionForm struct {
 	Summary     string `json:"summary" form:"summary"`
 	Description string `json:"description" form:"description"`
 	Evidence    string `json:"evidence" form:"evidence"`
+	Experiments string `json:"experiments" form:"experiments"`
 }
 
 // GetSolutionByID : returns a solution by its id

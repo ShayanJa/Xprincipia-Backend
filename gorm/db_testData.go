@@ -49,7 +49,7 @@ func populateDBtestData(db *gorm.DB) {
 	solution := Solution{
 		ProblemID:      problem.ID,
 		OriginalPoster: jackDaniels,
-		Text:           "The answer here is something very intense",
+		Title:          "The answer here is something very intense",
 		Rank:           10,
 	}
 	glog.Info(solution.OriginalPoster)
@@ -58,7 +58,7 @@ func populateDBtestData(db *gorm.DB) {
 	solution2 := Solution{
 		ProblemID:      problem.ID,
 		OriginalPoster: shayan,
-		Text:           "What we can do is enable users to try a solution",
+		Title:          "What we can do is enable users to try a solution",
 		Rank:           10,
 	}
 	db.Create(&solution2)

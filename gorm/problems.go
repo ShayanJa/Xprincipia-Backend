@@ -10,17 +10,23 @@ type Problem struct {
 	gorm.Model
 	OriginalPoster User
 	Title          string
+	Field          string
 	Summary        string `gorm:"size:1000"`
 	Description    string `gorm:"size:10000"`
+	Requirements   string
+	References     string
 	SubProblems    []Problem
 	Comments       []Comment
 }
 
 //ProblemForm : form to create problem
 type ProblemForm struct {
-	Title       string
-	Summary     string
-	Description string
+	Title        string
+	Field        string
+	Summary      string
+	Description  string
+	Requirements string
+	References   string
 }
 
 // GetProblemByID : returns a solution by its id

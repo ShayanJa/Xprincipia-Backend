@@ -15,7 +15,6 @@ type Suggestion struct {
 
 //SuggestionForm : Form to make Question Struct
 type SuggestionForm struct {
-	gorm.Model
 	Description string
 }
 
