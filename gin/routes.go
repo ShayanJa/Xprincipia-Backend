@@ -27,6 +27,7 @@ func SetRoutes(router *gin.Engine) {
 
 	//Suggestions API
 	router.GET("/suggestions/ID", getSuggestionByIDHandler)
+	router.GET("/suggestions/all", getAllSuggestions)
 	router.POST("/suggestions/create", postSuggestion)
 
 	//Authentication Middleware

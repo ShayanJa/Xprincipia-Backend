@@ -37,3 +37,13 @@ func (s *Suggestion) GetSuggestionByID(id uint) {
 		glog.Info("There was an error")
 	}
 }
+
+//GetAllSuggestions : get all suggestions
+func GetAllSuggestions() []Suggestion {
+	s := []Suggestion{}
+	err := db.Find(&s)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+	return s
+}
