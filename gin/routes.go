@@ -21,8 +21,8 @@ func SetRoutes(router *gin.Engine) {
 	router.GET("/problems/search", searchProblemDB)
 
 	//Questions API
-	router.GET("/questions/ID", getProblemByIDHandler)
-	router.POST("/questions/create", postProblem)
+	router.GET("/questions/ID", getQuestionByIDHandler)
+	router.POST("/questions/create", postQuestion)
 
 	//Suggestions API
 	router.POST("/suggestions/create", postSuggestion)

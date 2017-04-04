@@ -17,7 +17,7 @@ func postQuestion(c *gin.Context) {
 	c.Status(http.StatusCreated)
 }
 
-func getQuestion(c *gin.Context) {
+func getQuestionByIDHandler(c *gin.Context) {
 	id := c.Query("id")
 	glog.Info("ID sent is: ", id)
 
