@@ -29,15 +29,15 @@ func SetRoutes(router *gin.Engine) {
 	router.POST("/suggestions/create", postSuggestion)
 
 	//Authentication Middleware
-	auth := router.Group("/auth")
-	auth.Use(authMiddleware.MiddlewareFunc())
-	{
-		auth.GET("/hello", helloHandler)
-		auth.GET("/refresh_token", authMiddleware.RefreshHandler)
-		//auth.POST("/problem", postProblem)
-		//auth.POST("/solution", postSolution)
-	}
-	router.POST("/login", authMiddleware.LoginHandler)
+	// auth := router.Group("/auth")
+	// auth.Use(authMiddleware.MiddlewareFunc())
+	// {
+	// 	auth.GET("/hello", helloHandler)
+	// 	auth.GET("/refresh_token", authMiddleware.RefreshHandler)
+	// 	//auth.POST("/problem", postProblem)
+	// 	//auth.POST("/solution", postSolution)
+	// }
+	// router.POST("/login", authMiddleware.LoginHandler)
 
 	router.POST("/register", registerHandler)
 	//router.POST("/login", loginHandler)

@@ -1,7 +1,6 @@
 package gorm
 
 import (
-	"os"
 	"time"
 
 	"strconv"
@@ -18,14 +17,14 @@ var db *gorm.DB
 func InitializeDB() *gorm.DB {
 
 	//Get Enviromental DB Variables
-	//dbHost := "172.18.0.2" //Bens Mysql xPrincipia id
+	dbHost := "172.18.0.2" //Bens Mysql xPrincipia id
 	//dbHost := "172.19.0.2" //Shayan's Mysql xPrincipia id
 
-	dbHost := os.Getenv("DB_HOST")
-	dbPort := os.Getenv("DB_PORT")
-	dbName := os.Getenv("DB_NAME")
-	dbUser := os.Getenv("DB_USER")
-	dbPass := os.Getenv("DB_PASS")
+	// dbHost := //os.Getenv("DB_HOST")
+	dbPort := "3306"       //os.Getenv("DB_PORT")
+	dbName := "xPrincipia" //os.Getenv("DB_NAME")
+	dbUser := "root"       //os.Getenv("DB_USER")
+	dbPass := "Popcan123"  //os.Getenv("DB_PASS")
 
 	//initialize DB
 	dbStr := dbUser + ":" + dbPass + "@" + "tcp(" + dbHost + ":" + dbPort + ")" + "/" + dbName + "?charset=utf8&parseTime=true"
