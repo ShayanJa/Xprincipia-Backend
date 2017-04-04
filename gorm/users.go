@@ -9,8 +9,9 @@ import (
 //User : ~
 type User struct {
 	gorm.Model
-	FirstName           string `json:"firstName" form:"firstName"`
-	LastName            string `json:"LastName" form:"lastName"`
+	// FirstName           string `json:"firstName" form:"firstName"`
+	// LastName            string `json:"LastName" form:"lastName"`
+	FullName            string
 	Email               string `json:"email" form:"email"`
 	Address             string `json:"address" form:"address"`
 	Username            string `json:"username" form:"username"`
@@ -33,6 +34,7 @@ type LoginForm struct {
 
 // RegistrationForm : A registration struct
 type RegistrationForm struct {
+	FullName string `json:"fullName" form:"fullName"`
 	Email    string `json:"email" form:"email"`
 	Username string `json:"username" form:"username"`
 	Password string `json:"password" form:"password"`
