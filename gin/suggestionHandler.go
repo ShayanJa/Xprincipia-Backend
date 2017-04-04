@@ -17,7 +17,7 @@ func postSuggestion(c *gin.Context) {
 	c.Status(http.StatusOK)
 }
 
-func getSuggestion(c *gin.Context) {
+func getSuggestionByIDHandler(c *gin.Context) {
 	id := c.Query("id")
 	glog.Info("Getting Suggestion with ID : ", id)
 
