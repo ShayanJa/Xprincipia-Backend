@@ -28,6 +28,7 @@ type SolutionForm struct {
 	Description string `json:"description" form:"description"`
 	Evidence    string `json:"evidence" form:"evidence"`
 	Experiments string `json:"experiments" form:"experiments"`
+	References  string `json:"references" form:"references"`
 }
 
 // GetSolutionByID : returns a solution by its id
@@ -65,6 +66,8 @@ func CreateSolution(form SolutionForm) {
 	s.Summary = form.Summary
 	s.Description = form.Description
 	s.Evidence = form.Evidence
+	s.Experiments = form.Experiments
+	s.References = form.References
 	s.Rank = 1
 
 	db.Create(&s)
