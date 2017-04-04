@@ -9,8 +9,9 @@ import (
 //User : ~
 type User struct {
 	gorm.Model
-	FirstName           string `json:"firstName" form:"firstName"`
-	LastName            string `json:"LastName" form:"lastName"`
+	// FirstName           string `json:"firstName" form:"firstName"`
+	// LastName            string `json:"LastName" form:"lastName"`
+	FullName            string
 	Email               string `json:"email" form:"email"`
 	Address             string `json:"address" form:"address"`
 	Username            string `json:"username" form:"username"`
@@ -22,7 +23,6 @@ type User struct {
 	FollowedProblemsIDs []Problem
 	VotedSolutionsIDs   []Solution
 	VotedProblemIDs     []Problem
-	CommentIDs          []Comment
 	IsDisabled          bool
 }
 
@@ -34,6 +34,7 @@ type LoginForm struct {
 
 // RegistrationForm : A registration struct
 type RegistrationForm struct {
+	FullName string `json:"fullName" form:"fullName"`
 	Email    string `json:"email" form:"email"`
 	Username string `json:"username" form:"username"`
 	Password string `json:"password" form:"password"`
@@ -56,7 +57,6 @@ func CreateUser(form RegistrationForm) {
 	if err == nil {
 		glog.Info("error has occured")
 	}
-	glog.Info(err)
 	//If username does not exist
 	if u.Username == "" {
 		glog.Info("Username not taken...")
@@ -82,13 +82,16 @@ func CreateUser(form RegistrationForm) {
 
 //GetUserByUsername : get user by name
 func (u *User) GetUserByUsername(name string) bool {
+	glog.Info("Getting Username : " + name + " ...")
 	err := db.Where("username = ?", name).First(&u)
 	if err == nil {
-		glog.Info("There was an error")
+		glog.Info("There was an error...")
 	}
 	if u.ID == 0 {
+		glog.Info("NO USER BY THAT NAME...")
 		return false
 	}
+	glog.Info("USERNAME FOUND RETURNING " + u.Username)
 	return true
 }
 
@@ -128,16 +131,17 @@ func (u *User) PostProblem(text string, description string) {
 	u.ProblemsPostedIDs = append(u.ProblemsPostedIDs, p)
 }
 
-//PostSolution : User Auth Required> Post Solution
-func (u *User) PostSolution(p Problem, text string, description string) {
-	s := Solution{
-		ProblemID:      p.ID,
-		OriginalPoster: *u,
-		Text:           text,
-		Rank:           0,
-	}
-	db.Create(s)
-}
+// //PostSolution : User Auth Required> Post Solution
+// func (u *User) PostSolution(p Problem, text string, description string) {
+// 	s := Solution{
+// 		ProblemID:      p.ID,
+// 		OriginalPoster: *u,
+// 		Text:           text,
+// 		Rank:           0,
+// 	}
+// 	db.Create(s)
+// 	glog.Info("Solution Create!  ID: " + string(s.ID))
+// }
 
 //FollowProblem : User follows a problem, Add problemID to array
 func (u *User) FollowProblem(problemID uint) {

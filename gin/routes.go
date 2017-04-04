@@ -9,7 +9,7 @@ func SetRoutes(router *gin.Engine) {
 	router.GET("/", indexHandler)
 
 	//Solutions API
-	router.GET("/solutions/ID", getSolutionByIDHandler)
+	router.GET("/solutions/ID", getSolutionByID)
 	router.GET("/solutions/all", getAllSolutions)
 	router.GET("/solutions/problemID", getSolutionByProblemIDHandler)
 	router.POST("/solutions/create", postSolution)
@@ -18,14 +18,15 @@ func SetRoutes(router *gin.Engine) {
 	router.GET("/problems/ID", getProblemByIDHandler)
 	router.GET("/problems/all", getAllProblems)
 	router.POST("/problems/create", postProblem)
+	router.GET("/problems/search", searchProblemDB)
 
 	//Questions API
-	router.GET("/questions/ID", getProblemByIDHandler)
-	router.POST("/questions/create", postProblem)
+	router.GET("/questions/ID", getQuestionByIDHandler)
+	router.POST("/questions/create", postQuestion)
 
 	//Suggestions API
+	router.GET("/suggestions/ID", getSuggestionByIDHandler)
 	router.POST("/suggestions/create", postSuggestion)
-	router.GET("/suggestions/ID", getSuggestion)
 
 	//Authentication Middleware
 	auth := router.Group("/auth")
@@ -38,7 +39,7 @@ func SetRoutes(router *gin.Engine) {
 	}
 	router.POST("/login", authMiddleware.LoginHandler)
 
-	//Login Routes
+	router.POST("/register", registerHandler)
 	//router.POST("/login", loginHandler)
 
 }

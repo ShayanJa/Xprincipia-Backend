@@ -32,11 +32,23 @@ func postProblem(c *gin.Context) {
 	form := gorm.ProblemForm{}
 	c.Bind(&form)
 	if form.Description == "" || form.Title == "" {
-		c.Status(400)
+		c.Status(http.StatusBadRequest)
 		return
 	}
 
 	gorm.CreateProblem(form)
-	c.Status(http.StatusOK)
+	c.Status(http.StatusCreated)
+
+}
+
+func searchProblemDB(c *gin.Context) {
+	//WIP : Only shows search query based on name
+	query := c.Query("q")
+	response := gorm.QueryProblems(query)
+
+	glog.Info("Query value: " + query)
+	glog.Info("length pf Query Response : " + string(len(response)))
+
+	c.JSON(http.StatusOK, response)
 
 }

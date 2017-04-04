@@ -10,17 +10,24 @@ type Problem struct {
 	gorm.Model
 	OriginalPoster User
 	Title          string
+	Field          string
 	Summary        string `gorm:"size:1000"`
 	Description    string `gorm:"size:10000"`
+	Requirements   string
+	References     string
 	SubProblems    []Problem
-	Comments       []Comment
+	Suggestions    []Suggestion
+	Questions      []Question
 }
 
 //ProblemForm : form to create problem
 type ProblemForm struct {
-	Title       string
-	Summary     string
-	Description string
+	Title        string
+	Field        string
+	Summary      string
+	Description  string
+	Requirements string
+	References   string
 }
 
 // GetProblemByID : returns a solution by its id
@@ -39,15 +46,6 @@ func (p *Problem) GetProblemBySolutionID(id uint) {
 		glog.Info("There was an error")
 	}
 	p.GetProblemByID(s.ID)
-}
-
-// MakeComment : ~
-func (p *Problem) MakeComment(c Comment) {
-	c.TypeID = p.ID
-	db.Create(&c)
-	comments := p.Comments
-	comments = append(comments, c)
-	p.Comments = comments
 }
 
 //CreateProblem : Creates a problem from a problemForm
@@ -76,6 +74,16 @@ func (p *Problem) UpdateProblem(form ProblemForm) {
 func GetAllProblems() []Problem {
 	p := []Problem{}
 	err := db.Find(&p)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+	return p
+}
+
+//QueryProblems : Return problems that are related to the query String
+func QueryProblems(q string) []Problem {
+	p := []Problem{}
+	err := db.Where("title LIKE ?", "%"+q+"%").Find(&p)
 	if err == nil {
 		glog.Info("There was an error")
 	}
