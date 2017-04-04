@@ -16,7 +16,8 @@ type Problem struct {
 	Requirements   string
 	References     string
 	SubProblems    []Problem
-	Comments       []Comment
+	Suggestions    []Suggestion
+	Questions      []Question
 }
 
 //ProblemForm : form to create problem
@@ -45,15 +46,6 @@ func (p *Problem) GetProblemBySolutionID(id uint) {
 		glog.Info("There was an error")
 	}
 	p.GetProblemByID(s.ID)
-}
-
-// MakeComment : ~
-func (p *Problem) MakeComment(c Comment) {
-	c.TypeID = p.ID
-	db.Create(&c)
-	comments := p.Comments
-	comments = append(comments, c)
-	p.Comments = comments
 }
 
 //CreateProblem : Creates a problem from a problemForm

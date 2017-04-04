@@ -17,7 +17,8 @@ type Solution struct {
 	Experiments    string
 	References     string
 	Rank           int
-	Comments       []Comment
+	Suggestions    []Suggestion
+	Questions      []Question
 }
 
 //SolutionForm : Solution Form

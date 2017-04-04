@@ -22,7 +22,6 @@ type User struct {
 	FollowedProblemsIDs []Problem
 	VotedSolutionsIDs   []Solution
 	VotedProblemIDs     []Problem
-	CommentIDs          []Comment
 	IsDisabled          bool
 }
 
