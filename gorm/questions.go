@@ -38,3 +38,13 @@ func (q *Question) GetQuestionByID(id uint) {
 		glog.Info("There was an error")
 	}
 }
+
+//GetAllQuestions : Return all Questions
+func GetAllQuestions() []Question {
+	q := []Question{}
+	err := db.First(&q)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+	return q
+}
