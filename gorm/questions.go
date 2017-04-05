@@ -42,7 +42,7 @@ func (q *Question) GetQuestionByID(id uint) {
 //GetAllQuestions : Return all Questions
 func GetAllQuestions() []Question {
 	q := []Question{}
-	err := db.First(&q)
+	err := db.Find(&q)
 	if err == nil {
 		glog.Info("There was an error")
 	}
