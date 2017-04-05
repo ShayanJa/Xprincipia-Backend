@@ -76,5 +76,6 @@ func populateDBtestData(db *gorm.DB) {
 		Username:    "Ben Francis",
 		Description: "You could add the fact that entropy is actually increased through abiogenesis through some sort of teleology. Also it could be noted the history of complexity increase in the universe is the dependent variable of a parabolic curve where entropy always increases as the independent variable.",
 	}
+	db.Create(&suggestion1)
 
 }
