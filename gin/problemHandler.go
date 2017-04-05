@@ -37,7 +37,7 @@ func postProblem(c *gin.Context) {
 	}
 
 	gorm.CreateProblem(form)
-	c.Status(http.StatusCreated)
+	c.Status(http.StatusOK)
 
 }
 
