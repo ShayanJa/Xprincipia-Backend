@@ -31,3 +31,7 @@ func getSuggestionByIDHandler(c *gin.Context) {
 	suggestion.GetSuggestionByID(uintID)
 	c.JSON(http.StatusOK, suggestion)
 }
+
+func getAllSuggestions(c *gin.Context) {
+	c.JSON(http.StatusOK, gorm.GetAllSuggestions())
+}

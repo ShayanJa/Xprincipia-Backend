@@ -62,7 +62,20 @@ func populateDBtestData(db *gorm.DB) {
 		Rank:           10,
 	}
 	db.Create(&solution2)
-	// solution2 := Solution{}
-	// db.Create(&solution2)
+
+	solution3 := Solution{
+		ProblemID:      problem.ID,
+		OriginalPoster: shayan,
+		Title:          "Quantum Computation in the Microtubule Tryptophans",
+		Summary:        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ut dolor ante. Duis id pretium metus. Nunc suscipit in ipsum eu condimentum. Fusce nec egestas sapien, id mattis nisl. Curabitur venenatis dui lorem, a rutrum nibh sollicitudin id.",
+		Rank:           10,
+	}
+	db.Create(&solution3)
+
+	suggestion1 := Suggestion{
+		Username:    "Ben Francis",
+		Description: "You could add the fact that entropy is actually increased through abiogenesis through some sort of teleology. Also it could be noted the history of complexity increase in the universe is the dependent variable of a parabolic curve where entropy always increases as the independent variable.",
+	}
+	db.Create(&suggestion1)
 
 }

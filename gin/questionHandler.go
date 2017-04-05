@@ -31,3 +31,7 @@ func getQuestionByIDHandler(c *gin.Context) {
 	question.GetQuestionByID(uintID)
 	c.JSON(http.StatusOK, question)
 }
+
+func getAllQuestions(c *gin.Context) {
+	c.JSON(http.StatusOK, gorm.GetAllQuestions())
+}
