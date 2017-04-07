@@ -45,6 +45,22 @@ func populateDBtestData(db *gorm.DB) {
 	}
 	db.Create(&problem)
 
+	problem2 := Problem{
+		OriginalPoster: shayan,
+		Title:          "How Quantum Cryptology Works",
+		Summary:        "Despite all of the security it offers, quantum cryptology also has a few fundamental flaws. Chief among these flaws is the length under which the system will work: It?s too short.",
+		Description:    "When we use the Internet, we're not always just clicking around and passively taking in information, such as reading news articles or blog posts -- a great deal of our time online involves sending others our own information. Ordering something over the Internet, whether it's a book, a CD or anything else from an online vendor, or signing up for an online account, requires entering in a good deal of sensitive personal information. A typical transaction might include not only our names, e-mail addresses and physical address and phone number, but also passwords and personal identification numbers (PINs).",
+	}
+	db.Create(&problem2)
+
+	problem3 := Problem{
+		OriginalPoster: shayan,
+		Title:          "Naked singularity",
+		Summary:        "In general relativity, a naked singularity is a gravitational singularity without an event horizon. In a black hole, the singularity is completely enclosed by a boundary known as the event horizon, inside which the gravitational force of the singularity is so strong that light cannot escape. Hence, objects inside the event horizon?including the singularity itself?cannot be directly observed. A naked singularity, by contrast, is observable from the outside.",
+		Description:    "The theoretical existence of naked singularities is important because their existence would mean that it would be possible to observe the collapse of an object to infinite density. It would also cause foundational problems for general relativity, because general relativity cannot make predictions about the future evolution of space-time near a singularity. In generic black holes, this is not a problem, as an outside viewer cannot observe the space-time within the event horizon.ome research has suggested that if loop quantum gravity is correct, then naked singularities could exist in nature,[1][2][3] implying that the cosmic censorship hypothesis does not hold. Numerical calculations[4] and some other arguments[5] have also hinted at this possibility.At LIGO, first observation of gravitational waves were detected after the collision two black holes, known as event GW150914. This event did not produce a naked singularity based on observation.[6]",
+	}
+	db.Create(&problem3)
+
 	//Solution Creation
 	solution := Solution{
 		ProblemID:      problem.ID,
