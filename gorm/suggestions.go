@@ -41,7 +41,7 @@ func (s *Suggestion) GetSuggestionByID(id uint) {
 //GetAllSuggestions : get all suggestions
 func GetAllSuggestions() []Suggestion {
 	s := []Suggestion{}
-	err := db.Find(&s)
+	err := db.Order("created_at desc").Find(&s)
 	if err == nil {
 		glog.Info("There was an error")
 	}
