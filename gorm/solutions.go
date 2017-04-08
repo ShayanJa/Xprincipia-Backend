@@ -1,6 +1,8 @@
 package gorm
 
 import (
+	"strconv"
+
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
 )
@@ -24,6 +26,7 @@ type Solution struct {
 
 //SolutionForm : Solution Form
 type SolutionForm struct {
+	ProblemID   string `json:"problemID" form:"problemID"`
 	Title       string `json:"title" form:"title"`
 	Summary     string `json:"summary" form:"summary"`
 	Description string `json:"description" form:"description"`
@@ -67,6 +70,8 @@ func CreateSolution(form SolutionForm) {
 	s := Solution{}
 
 	//Create Solution object based on solutionForm info
+	intID, _ := strconv.Atoi(form.ProblemID)
+	s.ProblemID = uint(intID)
 	s.Title = form.Title
 	s.Summary = form.Summary
 	s.Description = form.Description
