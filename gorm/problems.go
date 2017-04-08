@@ -26,6 +26,7 @@ type Problem struct {
 
 //ProblemForm : form to create problem
 type ProblemForm struct {
+	Username     string
 	ParentID     string
 	Title        string
 	Field        string
@@ -56,6 +57,7 @@ func (p *Problem) GetProblemBySolutionID(id uint) {
 //CreateProblem : Creates a problem from a problemForm
 func CreateProblem(form ProblemForm) {
 	p := Problem{}
+	p.OriginalPosterUsername = form.Username
 	intID, _ := strconv.Atoi(form.ParentID)
 	p.ParentID = intID
 	p.Title = form.Title

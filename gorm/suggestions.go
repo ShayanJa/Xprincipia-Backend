@@ -19,6 +19,7 @@ type Suggestion struct {
 
 //SuggestionForm : Form to make Question Struct
 type SuggestionForm struct {
+	Username    string
 	Type        string
 	TypeID      string
 	Description string
@@ -31,6 +32,7 @@ API
 //CreateSuggestion : Creates a question
 func CreateSuggestion(form SuggestionForm) {
 	s := Suggestion{}
+	s.Username = form.Username
 	intType, _ := strconv.Atoi(form.Type)
 	s.Type = intType
 	intTypeID, _ := strconv.Atoi(form.TypeID)
