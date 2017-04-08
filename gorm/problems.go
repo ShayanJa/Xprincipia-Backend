@@ -8,6 +8,7 @@ import (
 // Problem : User generated problem
 type Problem struct {
 	gorm.Model
+	ParentID               int
 	OriginalPoster         User `gorm:"ForeignKey:OriginalPosterUsername;AssociationForeignKey:Username" json:"originalPoster" form:"originalPoster"`
 	OriginalPosterUsername string
 	Title                  string
@@ -74,10 +75,17 @@ func (p *Problem) UpdateProblem(form ProblemForm) {
 //GetAllProblems : Returns all problem objects
 func GetAllProblems() []Problem {
 	p := []Problem{}
-	err := db.Find(&p)
+	err := db.Where("parent_id < ?", 1).Find(&p)
 	if err == nil {
 		glog.Info("There was an error")
 	}
+	return p
+}
+
+//GetSubProblemByIDs : ~
+func GetSubProblemsByID(parentID int) []Problem {
+	p := []Problem{}
+	db.Where("parent_id = ?", parentID).Find(&p)
 	return p
 }
 
