@@ -8,17 +8,18 @@ import (
 // Solution : Generic Problem Solution
 type Solution struct {
 	gorm.Model
-	ProblemID      uint
-	OriginalPoster User
-	Title          string
-	Summary        string
-	Description    string
-	Evidence       string
-	Experiments    string
-	References     string
-	Rank           int
-	Suggestions    []Suggestion
-	Questions      []Question
+	ProblemID              uint
+	OriginalPoster         User `gorm:"ForeignKey:OriginalPosterUsername;AssociationForeignKey:Username" json:"originalPoster" form:"originalPoster"`
+	OriginalPosterUsername string
+	Title                  string
+	Summary                string
+	Description            string
+	Evidence               string
+	Experiments            string
+	References             string
+	Rank                   int
+	Suggestions            []Suggestion
+	Questions              []Question
 }
 
 //SolutionForm : Solution Form

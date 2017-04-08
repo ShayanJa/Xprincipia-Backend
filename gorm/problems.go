@@ -8,16 +8,17 @@ import (
 // Problem : User generated problem
 type Problem struct {
 	gorm.Model
-	OriginalPoster User
-	Title          string
-	Field          string
-	Summary        string `gorm:"size:1000"`
-	Description    string `gorm:"size:10000"`
-	Requirements   string
-	References     string
-	SubProblems    []Problem
-	Suggestions    []Suggestion
-	Questions      []Question
+	OriginalPoster         User `gorm:"ForeignKey:OriginalPosterUsername;AssociationForeignKey:Username" json:"originalPoster" form:"originalPoster"`
+	OriginalPosterUsername string
+	Title                  string
+	Field                  string
+	Summary                string `gorm:"size:1000"`
+	Description            string `gorm:"size:10000"`
+	Requirements           string
+	References             string
+	SubProblems            []Problem
+	Suggestions            []Suggestion
+	Questions              []Question
 }
 
 //ProblemForm : form to create problem

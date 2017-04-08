@@ -22,6 +22,7 @@ func SetRoutes(router *gin.Engine) {
 
 	//Questions API
 	router.GET("/questions/ID", getQuestionByIDHandler)
+	router.GET("/questions/typeID", getQuestionByTypeIDHandler)
 	router.GET("/questions/all", getAllQuestions)
 	router.POST("/questions/create", postQuestion)
 
