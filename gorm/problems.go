@@ -1,6 +1,8 @@
 package gorm
 
 import (
+	"strconv"
+
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
 )
@@ -24,6 +26,7 @@ type Problem struct {
 
 //ProblemForm : form to create problem
 type ProblemForm struct {
+	ParentID     string
 	Title        string
 	Field        string
 	Summary      string
@@ -53,6 +56,8 @@ func (p *Problem) GetProblemBySolutionID(id uint) {
 //CreateProblem : Creates a problem from a problemForm
 func CreateProblem(form ProblemForm) {
 	p := Problem{}
+	intID, _ := strconv.Atoi(form.ParentID)
+	p.ParentID = intID
 	p.Title = form.Title
 	p.Summary = form.Summary
 	p.Description = form.Description
@@ -82,7 +87,7 @@ func GetAllProblems() []Problem {
 	return p
 }
 
-//GetSubProblemByIDs : ~
+//GetSubProblemsByID : ~
 func GetSubProblemsByID(parentID int) []Problem {
 	p := []Problem{}
 	db.Where("parent_id = ?", parentID).Find(&p)
