@@ -35,3 +35,14 @@ func getSuggestionByIDHandler(c *gin.Context) {
 func getAllSuggestions(c *gin.Context) {
 	c.JSON(http.StatusOK, gorm.GetAllSuggestions())
 }
+
+func getSuggestionByTypeIDHandler(c *gin.Context) {
+	id := c.Query("id")
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+	suggestions := gorm.GetAllSuggestionsByTypeID(1, intID)
+
+	c.JSON(http.StatusOK, suggestions)
+}
