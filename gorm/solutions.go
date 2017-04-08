@@ -26,6 +26,7 @@ type Solution struct {
 
 //SolutionForm : Solution Form
 type SolutionForm struct {
+	Username    string `json:"username" form:"username"`
 	ProblemID   string `json:"problemID" form:"problemID"`
 	Title       string `json:"title" form:"title"`
 	Summary     string `json:"summary" form:"summary"`
@@ -50,7 +51,6 @@ func GetSolutionsByProblemID(id int) []Solution {
 	if err == nil {
 		glog.Info("There was an error")
 	}
-	glog.Info(s)
 	return s
 }
 
@@ -61,7 +61,6 @@ func GetAllSolutions() []Solution {
 	if err == nil {
 		glog.Info("There was an error")
 	}
-	glog.Info(s)
 	return s
 }
 
@@ -72,6 +71,7 @@ func CreateSolution(form SolutionForm) {
 	//Create Solution object based on solutionForm info
 	intID, _ := strconv.Atoi(form.ProblemID)
 	s.ProblemID = uint(intID)
+	s.OriginalPosterUsername = form.Username
 	s.Title = form.Title
 	s.Summary = form.Summary
 	s.Description = form.Description

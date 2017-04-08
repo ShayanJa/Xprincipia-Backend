@@ -22,6 +22,7 @@ type Question struct {
 type QuestionForm struct {
 	Type        string
 	TypeID      string
+	Username    string
 	Description string
 }
 
@@ -36,6 +37,7 @@ func CreateQuestion(form QuestionForm) {
 	q.Type = intType
 	intTypeID, _ := strconv.Atoi(form.TypeID)
 	q.TypeID = intTypeID
+	q.Username = form.Username
 	q.Description = form.Description
 	q.Rank = 1
 	db.Create(&q)
