@@ -8,6 +8,7 @@ import (
 // Problem : User generated problem
 type Problem struct {
 	gorm.Model
+	ParentID               int
 	OriginalPoster         User `gorm:"ForeignKey:OriginalPosterUsername;AssociationForeignKey:Username" json:"originalPoster" form:"originalPoster"`
 	OriginalPosterUsername string
 	Title                  string

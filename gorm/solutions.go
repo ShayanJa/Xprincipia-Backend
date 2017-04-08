@@ -40,12 +40,15 @@ func (s *Solution) GetSolutionByID(id uint) {
 	}
 }
 
-// GetSolutionByProblemID : returns a solution by its id
-func (s *Solution) GetSolutionByProblemID(id int) {
-	err := db.Where("problem_id = ?", id).First(&s)
+// GetSolutionsByProblemID : returns a solution by its id
+func GetSolutionsByProblemID(id int) []Solution {
+	s := []Solution{}
+	err := db.Where("problem_id = ?", id).Find(&s)
 	if err == nil {
 		glog.Info("There was an error")
 	}
+	glog.Info(s)
+	return s
 }
 
 //GetAllSolutions : Get all Solutions in db
@@ -55,6 +58,7 @@ func GetAllSolutions() []Solution {
 	if err == nil {
 		glog.Info("There was an error")
 	}
+	glog.Info(s)
 	return s
 }
 

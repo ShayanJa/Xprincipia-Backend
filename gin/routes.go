@@ -11,7 +11,7 @@ func SetRoutes(router *gin.Engine) {
 	//Solutions API
 	router.GET("/solutions/ID", getSolutionByID)
 	router.GET("/solutions/all", getAllSolutions)
-	router.GET("/solutions/problemID", getSolutionByProblemIDHandler)
+	router.GET("/solutions/problemID", getSolutionsByProblemIDHandler)
 	router.POST("/solutions/create", postSolution)
 
 	//Problems API
