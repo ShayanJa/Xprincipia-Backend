@@ -8,6 +8,8 @@ import (
 //Suggestion : Struct containing a question
 type Suggestion struct {
 	gorm.Model
+	Type        string
+	TypeID      string
 	Username    string
 	Description string
 	Rank        int
@@ -15,6 +17,8 @@ type Suggestion struct {
 
 //SuggestionForm : Form to make Question Struct
 type SuggestionForm struct {
+	Type        string
+	TypeID      string
 	Description string
 }
 
@@ -45,5 +49,16 @@ func GetAllSuggestions() []Suggestion {
 	if err == nil {
 		glog.Info("There was an error")
 	}
+	return s
+}
+
+//GetAllSuggestionsByTypeID :
+func GetAllSuggestionsByTypeID(typeID int, dataType int) []Suggestion {
+	s := []Suggestion{}
+	err := db.Order("created_at desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&s)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+
 	return s
 }
