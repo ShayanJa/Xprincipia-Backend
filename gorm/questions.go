@@ -1,6 +1,8 @@
 package gorm
 
 import (
+	"strconv"
+
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
 )
@@ -18,6 +20,8 @@ type Question struct {
 
 //QuestionForm : Form to make Question Struct
 type QuestionForm struct {
+	Type        string
+	TypeID      string
 	Description string
 }
 
@@ -28,6 +32,10 @@ API
 //CreateQuestion : Creates a question
 func CreateQuestion(form QuestionForm) {
 	q := Question{}
+	intType, _ := strconv.Atoi(form.Type)
+	q.Type = intType
+	intTypeID, _ := strconv.Atoi(form.TypeID)
+	q.TypeID = intTypeID
 	q.Description = form.Description
 	q.Rank = 1
 	db.Create(&q)
