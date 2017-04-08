@@ -61,6 +61,14 @@ func populateDBtestData(db *gorm.DB) {
 	}
 	db.Create(&problem3)
 
+	problem4 := Problem{
+		OriginalPoster: jackDaniels,
+		Title:          "High-yield investment program",
+		Summary:        "A high-yield investment program (HYIP) is a type of Ponzi scheme, an investment scam that promises unsustainably high return on investment by paying previous investors with the money invested by new investors.",
+		Description:    "Operators generally set up a website offering an 'investment program' which promises very high returns, such as 1% per day (3778% APY when returns are compounded every day), disclosing little or no detail about the underlying management, location, or other aspects of how money is to be invested. The U.S. Securities and Exchange Commission (SEC) has said that 'these fraudulent schemes involve the purported issuance, trading, or use of so-called 'prime' bank, 'prime' European bank or 'prime' world bank financial instruments, or other 'high yield investment programs.' (HYIP's) The fraud artists … seek to mislead investors by suggesting that well regarded and financially sound institutions participate in these bogus programs.'[1] In 2010, the Financial Industry Regulatory Authority (FINRA) warned that '[t]he con artists behind HYIPs are experts at using social media — including YouTube, Twitter and Facebook — to lure investors and create the illusion of social consensus that these investments are legitimate'",
+	}
+	db.Create(&problem4)
+
 	//Solution Creation
 	solution := Solution{
 		ProblemID:      problem.ID,
@@ -88,10 +96,34 @@ func populateDBtestData(db *gorm.DB) {
 	}
 	db.Create(&solution3)
 
+	//Create Suggestions
+
 	suggestion1 := Suggestion{
 		Username:    "Ben Francis",
 		Description: "You could add the fact that entropy is actually increased through abiogenesis through some sort of teleology. Also it could be noted the history of complexity increase in the universe is the dependent variable of a parabolic curve where entropy always increases as the independent variable.",
 	}
 	db.Create(&suggestion1)
+
+	//Create questions
+	question1 := Question{
+		Type:        1,
+		TypeID:      1,
+		Description: "What does section 4 mean?",
+	}
+	db.Create(&question1)
+
+	question2 := Question{
+		Type:        1,
+		TypeID:      2,
+		Description: "Why does section 4 mean?",
+	}
+	db.Create(&question2)
+
+	question3 := Question{
+		Type:        1,
+		TypeID:      1,
+		Description: "Because does section 4 mean?",
+	}
+	db.Create(&question3)
 
 }

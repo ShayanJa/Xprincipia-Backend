@@ -8,6 +8,8 @@ import (
 //Question : Struct containing a question
 type Question struct {
 	gorm.Model
+	Type        int
+	TypeID      int
 	Username    string
 	Description string
 	// Answers     []string
@@ -46,5 +48,16 @@ func GetAllQuestions() []Question {
 	if err == nil {
 		glog.Info("There was an error")
 	}
+	return q
+}
+
+//GetAllQuestionsByTypeID :
+func GetAllQuestionsByTypeID(dataType int, typeID int) []Question {
+	q := []Question{}
+	err := db.Order("created_at desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&q)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+
 	return q
 }

@@ -32,6 +32,17 @@ func getQuestionByIDHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, question)
 }
 
+func getQuestionByTypeIDHandler(c *gin.Context) {
+	id := c.Query("id")
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+	questions := gorm.GetAllQuestionsByTypeID(1, intID)
+
+	c.JSON(http.StatusOK, questions)
+}
+
 func getAllQuestions(c *gin.Context) {
 	c.JSON(http.StatusOK, gorm.GetAllQuestions())
 }
