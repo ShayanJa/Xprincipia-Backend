@@ -38,6 +38,7 @@ func populateDBtestData(db *gorm.DB) {
 
 	//Problem Creation
 	problem := Problem{
+		ParentID:       0,
 		OriginalPoster: shayan,
 		Title:          "What causes the emergent phenomena of consciousness?",
 		Summary:        "The name Amazon is said to arise from a war Francisco de Orellana fought with the Tapuyas and other tribes. The women of the tribe fought alongside the men, as was their custom.[3] Orellana derived the name Amazonas from the Amazons of Greek mythology, described by Herodotus and Diodorus.",
@@ -46,6 +47,7 @@ func populateDBtestData(db *gorm.DB) {
 	db.Create(&problem)
 
 	problem2 := Problem{
+		ParentID:       0,
 		OriginalPoster: shayan,
 		Title:          "How Quantum Cryptology Works",
 		Summary:        "Despite all of the security it offers, quantum cryptology also has a few fundamental flaws. Chief among these flaws is the length under which the system will work: It?s too short.",
@@ -55,6 +57,7 @@ func populateDBtestData(db *gorm.DB) {
 
 	problem3 := Problem{
 		OriginalPoster: shayan,
+		ParentID:       1,
 		Title:          "Naked singularity",
 		Summary:        "In general relativity, a naked singularity is a gravitational singularity without an event horizon. In a black hole, the singularity is completely enclosed by a boundary known as the event horizon, inside which the gravitational force of the singularity is so strong that light cannot escape. Hence, objects inside the event horizon?including the singularity itself?cannot be directly observed. A naked singularity, by contrast, is observable from the outside.",
 		Description:    "The theoretical existence of naked singularities is important because their existence would mean that it would be possible to observe the collapse of an object to infinite density. It would also cause foundational problems for general relativity, because general relativity cannot make predictions about the future evolution of space-time near a singularity. In generic black holes, this is not a problem, as an outside viewer cannot observe the space-time within the event horizon.ome research has suggested that if loop quantum gravity is correct, then naked singularities could exist in nature,[1][2][3] implying that the cosmic censorship hypothesis does not hold. Numerical calculations[4] and some other arguments[5] have also hinted at this possibility.At LIGO, first observation of gravitational waves were detected after the collision two black holes, known as event GW150914. This event did not produce a naked singularity based on observation.[6]",
@@ -63,6 +66,7 @@ func populateDBtestData(db *gorm.DB) {
 
 	problem4 := Problem{
 		OriginalPoster: jackDaniels,
+		ParentID:       2,
 		Title:          "High-yield investment program",
 		Summary:        "A high-yield investment program (HYIP) is a type of Ponzi scheme, an investment scam that promises unsustainably high return on investment by paying previous investors with the money invested by new investors.",
 		Description:    "Operators generally set up a website offering an 'investment program' which promises very high returns, such as 1% per day (3778% APY when returns are compounded every day), disclosing little or no detail about the underlying management, location, or other aspects of how money is to be invested. The U.S. Securities and Exchange Commission (SEC) has said that 'these fraudulent schemes involve the purported issuance, trading, or use of so-called 'prime' bank, 'prime' European bank or 'prime' world bank financial instruments, or other 'high yield investment programs.' (HYIP's) The fraud artists … seek to mislead investors by suggesting that well regarded and financially sound institutions participate in these bogus programs.'[1] In 2010, the Financial Industry Regulatory Authority (FINRA) warned that '[t]he con artists behind HYIPs are experts at using social media — including YouTube, Twitter and Facebook — to lure investors and create the illusion of social consensus that these investments are legitimate'",

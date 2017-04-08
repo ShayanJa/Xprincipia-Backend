@@ -28,6 +28,20 @@ func getAllProblems(c *gin.Context) {
 	c.JSON(http.StatusOK, gorm.GetAllProblems())
 }
 
+func getAllSubProblems(c *gin.Context) {
+
+	id := c.Query("id")
+	glog.Info("ID sent is: ", id)
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("Unable to convert to int")
+	}
+
+	problems := gorm.GetSubProblemsByID(intID)
+
+	c.JSON(http.StatusOK, problems)
+}
+
 func postProblem(c *gin.Context) {
 	form := gorm.ProblemForm{}
 	c.Bind(&form)
