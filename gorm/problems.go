@@ -1,6 +1,8 @@
 package gorm
 
 import (
+	"strconv"
+
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
 )
@@ -11,12 +13,12 @@ type Problem struct {
 	ParentID               int
 	OriginalPoster         User `gorm:"ForeignKey:OriginalPosterUsername;AssociationForeignKey:Username" json:"originalPoster" form:"originalPoster"`
 	OriginalPosterUsername string
-	Title                  string
-	Field                  string
-	Summary                string `gorm:"size:1000"`
+	Title                  string `gorm:"size:151"`
+	Field                  string `gorm:"size:151"`
+	Summary                string `gorm:"size:1500"`
 	Description            string `gorm:"size:10000"`
-	Requirements           string
-	References             string
+	Requirements           string `gorm:"size:1500"`
+	References             string `gorm:"size:1500"`
 	SubProblems            []Problem
 	Suggestions            []Suggestion
 	Questions              []Question
@@ -24,6 +26,8 @@ type Problem struct {
 
 //ProblemForm : form to create problem
 type ProblemForm struct {
+	Username     string
+	ParentID     string
 	Title        string
 	Field        string
 	Summary      string
@@ -53,6 +57,9 @@ func (p *Problem) GetProblemBySolutionID(id uint) {
 //CreateProblem : Creates a problem from a problemForm
 func CreateProblem(form ProblemForm) {
 	p := Problem{}
+	p.OriginalPosterUsername = form.Username
+	intID, _ := strconv.Atoi(form.ParentID)
+	p.ParentID = intID
 	p.Title = form.Title
 	p.Summary = form.Summary
 	p.Description = form.Description
@@ -82,7 +89,7 @@ func GetAllProblems() []Problem {
 	return p
 }
 
-//GetSubProblemByIDs : ~
+//GetSubProblemsByID : ~
 func GetSubProblemsByID(parentID int) []Problem {
 	p := []Problem{}
 	db.Where("parent_id = ?", parentID).Find(&p)
