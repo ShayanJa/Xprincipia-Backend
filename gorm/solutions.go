@@ -20,6 +20,7 @@ type Solution struct {
 	Experiments            string `gorm:"size:1500"`
 	References             string `gorm:"size:1500"`
 	Rank                   int
+	PercentRank            float32
 	Suggestions            []Suggestion
 	Questions              []Question
 }
@@ -34,6 +35,12 @@ type SolutionForm struct {
 	Evidence    string `json:"evidence" form:"evidence"`
 	Experiments string `json:"experiments" form:"experiments"`
 	References  string `json:"references" form:"references"`
+}
+
+//SolutionVoteForm : Vote form
+type SolutionVoteForm struct {
+	Username   string `json:"username" form:"username"`
+	SolutionID string `json:"solutionID" form:"soutionID"`
 }
 
 // GetSolutionByID : returns a solution by its id
@@ -81,4 +88,26 @@ func CreateSolution(form SolutionForm) {
 	s.Rank = 1
 
 	db.Create(&s)
+}
+
+//VoteSolution : ~
+func (s *Solution) VoteSolution(id int) {
+	err := db.Where("id = ?", id).Find(&s)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+	s.Rank++
+	db.Model(&s).Update("rank", s.Rank)
+
+	var totalVotes = 0
+	solutions := GetSolutionsByProblemID(int(s.ProblemID))
+	for i := 0; i < len(solutions); i++ {
+		totalVotes += solutions[i].Rank
+	}
+
+	for i := 0; i < len(solutions); i++ {
+		var percentRank = float32(solutions[i].Rank) / float32(totalVotes)
+		db.Model(&solutions[i]).Update("percent_rank", percentRank)
+	}
+
 }

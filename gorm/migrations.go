@@ -28,6 +28,9 @@ func runMigrations(db *gorm.DB) bool {
 	glog.Info("CREATING SUGGESTION TABLE...")
 	db.AutoMigrate(&Suggestion{})
 
+	glog.Info("CREATING VOTE TABLE...")
+	db.AutoMigrate(&Vote{})
+
 	glog.Info("CREATING ADDRESS TABLE...")
 	db.AutoMigrate(&Address{})
 

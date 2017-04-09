@@ -63,8 +63,10 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/suggestions/typeID", getSuggestionByTypeIDHandler)
 		auth.GET("/suggestions/all", getAllSuggestions)
 		auth.POST("/suggestions/create", postSuggestion)
-		//auth.POST("/problem", postProblem)
-		//auth.POST("/solution", postSolution)
+
+		//Vote API
+		auth.POST("/vote/create", postVote)
+
 	}
 	router.POST("/login", authMiddleware.LoginHandler)
 
