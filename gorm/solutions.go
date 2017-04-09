@@ -13,12 +13,12 @@ type Solution struct {
 	ProblemID              uint
 	OriginalPoster         User `gorm:"ForeignKey:OriginalPosterUsername;AssociationForeignKey:Username" json:"originalPoster" form:"originalPoster"`
 	OriginalPosterUsername string
-	Title                  string
-	Summary                string
-	Description            string
-	Evidence               string
-	Experiments            string
-	References             string
+	Title                  string `gorm:"size:151"`
+	Summary                string `gorm:"size:1500"`
+	Description            string `gorm:"size:10000"`
+	Evidence               string `gorm:"size:1500"`
+	Experiments            string `gorm:"size:1500"`
+	References             string `gorm:"size:1500"`
 	Rank                   int
 	Suggestions            []Suggestion
 	Questions              []Question

@@ -13,12 +13,12 @@ type Problem struct {
 	ParentID               int
 	OriginalPoster         User `gorm:"ForeignKey:OriginalPosterUsername;AssociationForeignKey:Username" json:"originalPoster" form:"originalPoster"`
 	OriginalPosterUsername string
-	Title                  string
-	Field                  string
-	Summary                string `gorm:"size:1000"`
+	Title                  string `gorm:"size:151"`
+	Field                  string `gorm:"size:151"`
+	Summary                string `gorm:"size:1500"`
 	Description            string `gorm:"size:10000"`
-	Requirements           string
-	References             string
+	Requirements           string `gorm:"size:1500"`
+	References             string `gorm:"size:1500"`
 	SubProblems            []Problem
 	Suggestions            []Suggestion
 	Questions              []Question
