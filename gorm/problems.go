@@ -19,6 +19,7 @@ type Problem struct {
 	Description            string `gorm:"size:10000"`
 	Requirements           string `gorm:"size:1500"`
 	References             string `gorm:"size:1500"`
+	Rank                   int
 	SubProblems            []Problem
 	Suggestions            []Suggestion
 	Questions              []Question
@@ -104,4 +105,15 @@ func QueryProblems(q string) []Problem {
 		glog.Info("There was an error")
 	}
 	return p
+}
+
+//VoteProblem : ~
+func (p *Problem) VoteProblem(id int) {
+	err := db.Where("id = ?", id).Find(&p)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+	p.Rank++
+	db.Model(&p).Update("rank", p.Rank)
+
 }

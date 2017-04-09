@@ -36,6 +36,12 @@ type SolutionForm struct {
 	References  string `json:"references" form:"references"`
 }
 
+//SolutionVoteForm : Vote form
+type SolutionVoteForm struct {
+	Username   string `json:"username" form:"username"`
+	SolutionID string `json:"solutionID" form:"soutionID"`
+}
+
 // GetSolutionByID : returns a solution by its id
 func (s *Solution) GetSolutionByID(id uint) {
 	err := db.Where("id = ?", id).First(&s)
@@ -81,4 +87,15 @@ func CreateSolution(form SolutionForm) {
 	s.Rank = 1
 
 	db.Create(&s)
+}
+
+//VoteSolution : ~
+func (s *Solution) VoteSolution(id int) {
+	err := db.Where("id = ?", id).Find(&s)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+	s.Rank++
+	db.Model(&s).Update("rank", s.Rank)
+
 }
