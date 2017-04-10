@@ -11,6 +11,8 @@ import (
 //TODO
 //ADD AUTHENTICATION
 func loginHandler(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 
 	//Create jwt Token to authenticate user
 	// token := jwt.New(jwt.SigningMethodHS256)
@@ -38,6 +40,8 @@ func logoutHandler(c *gin.Context) {
 }
 
 func registerHandler(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 	form := gorm.RegistrationForm{}
 	c.Bind(&form)
 

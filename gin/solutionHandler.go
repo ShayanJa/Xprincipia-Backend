@@ -10,6 +10,8 @@ import (
 )
 
 func getSolutionByID(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 	id := c.Query("id")
 	glog.Info("ID sent is: ", id)
 
@@ -25,6 +27,8 @@ func getSolutionByID(c *gin.Context) {
 }
 
 func getSolutionsByProblemIDHandler(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 	id := c.Query("id")
 	glog.Info("ID sent is: ", id)
 
@@ -38,10 +42,14 @@ func getSolutionsByProblemIDHandler(c *gin.Context) {
 }
 
 func getAllSolutions(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 	c.JSON(http.StatusOK, gorm.GetAllSolutions())
 }
 
 func postSolution(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 	form := gorm.SolutionForm{}
 	c.Bind(&form)
 

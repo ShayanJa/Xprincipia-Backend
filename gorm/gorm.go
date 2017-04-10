@@ -17,7 +17,8 @@ var db *gorm.DB
 func InitializeDB() *gorm.DB {
 
 	//Get Enviromental DB Variables
-	dbHost := "172.18.0.2" //Bens Mysql xPrincipia id
+	dbHost := "172.18.0.3" //Servers Mysql xPrincipia id
+	//dbHost := "172.18.0.2" //Bens Mysql xPrincipia id
 	//dbHost := "172.19.0.2" //Shayan's Mysql xPrincipia id
 
 	// dbHost := //os.Getenv("DB_HOST")

@@ -8,6 +8,8 @@ import (
 )
 
 func postVote(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 	form := gorm.VoteForm{}
 	c.Bind(&form)
 	if gorm.CreateVote(form) {
