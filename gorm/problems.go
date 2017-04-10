@@ -20,6 +20,7 @@ type Problem struct {
 	Requirements           string `gorm:"size:1500"`
 	References             string `gorm:"size:1500"`
 	Rank                   int
+	PercentRank            float32
 	SubProblems            []Problem
 	Suggestions            []Suggestion
 	Questions              []Question
@@ -115,5 +116,16 @@ func (p *Problem) VoteProblem(id int) {
 	}
 	p.Rank++
 	db.Model(&p).Update("rank", p.Rank)
+
+	var totalVotes = 0
+	problems := GetSubProblemsByID(int(p.ParentID))
+	for i := 0; i < len(problems); i++ {
+		totalVotes += problems[i].Rank
+	}
+
+	for i := 0; i < len(problems); i++ {
+		var percentRank = float32(problems[i].Rank) / float32(totalVotes)
+		db.Model(&problems[i]).Update("percent_rank", percentRank)
+	}
 
 }
