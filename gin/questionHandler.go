@@ -14,7 +14,7 @@ func postQuestion(c *gin.Context) {
 	c.Bind(&form)
 	glog.Info(form)
 	gorm.CreateQuestion(form)
-	c.Status(http.StatusCreated)
+	c.Status(http.StatusOK)
 }
 
 func getQuestionByIDHandler(c *gin.Context) {
@@ -30,4 +30,19 @@ func getQuestionByIDHandler(c *gin.Context) {
 
 	question.GetQuestionByID(uintID)
 	c.JSON(http.StatusOK, question)
+}
+
+func getQuestionByTypeIDHandler(c *gin.Context) {
+	id := c.Query("id")
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+	questions := gorm.GetAllQuestionsByTypeID(1, intID)
+
+	c.JSON(http.StatusOK, questions)
+}
+
+func getAllQuestions(c *gin.Context) {
+	c.JSON(http.StatusOK, gorm.GetAllQuestions())
 }

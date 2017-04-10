@@ -1,6 +1,8 @@
 package gorm
 
 import (
+	"strconv"
+
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
 )
@@ -8,20 +10,26 @@ import (
 // Problem : User generated problem
 type Problem struct {
 	gorm.Model
-	OriginalPoster User
-	Title          string
-	Field          string
-	Summary        string `gorm:"size:1000"`
-	Description    string `gorm:"size:10000"`
-	Requirements   string
-	References     string
-	SubProblems    []Problem
-	Suggestions    []Suggestion
-	Questions      []Question
+	ParentID               int
+	OriginalPoster         User `gorm:"ForeignKey:OriginalPosterUsername;AssociationForeignKey:Username" json:"originalPoster" form:"originalPoster"`
+	OriginalPosterUsername string
+	Title                  string `gorm:"size:151"`
+	Field                  string `gorm:"size:151"`
+	Summary                string `gorm:"size:1500"`
+	Description            string `gorm:"size:10000"`
+	Requirements           string `gorm:"size:1500"`
+	References             string `gorm:"size:1500"`
+	Rank                   int
+	PercentRank            float32
+	SubProblems            []Problem
+	Suggestions            []Suggestion
+	Questions              []Question
 }
 
 //ProblemForm : form to create problem
 type ProblemForm struct {
+	Username     string
+	ParentID     string
 	Title        string
 	Field        string
 	Summary      string
@@ -51,6 +59,9 @@ func (p *Problem) GetProblemBySolutionID(id uint) {
 //CreateProblem : Creates a problem from a problemForm
 func CreateProblem(form ProblemForm) {
 	p := Problem{}
+	p.OriginalPosterUsername = form.Username
+	intID, _ := strconv.Atoi(form.ParentID)
+	p.ParentID = intID
 	p.Title = form.Title
 	p.Summary = form.Summary
 	p.Description = form.Description
@@ -73,10 +84,17 @@ func (p *Problem) UpdateProblem(form ProblemForm) {
 //GetAllProblems : Returns all problem objects
 func GetAllProblems() []Problem {
 	p := []Problem{}
-	err := db.Find(&p)
+	err := db.Where("parent_id < ?", 1).Find(&p)
 	if err == nil {
 		glog.Info("There was an error")
 	}
+	return p
+}
+
+//GetSubProblemsByID : ~
+func GetSubProblemsByID(parentID int) []Problem {
+	p := []Problem{}
+	db.Where("parent_id = ?", parentID).Find(&p)
 	return p
 }
 
@@ -88,4 +106,26 @@ func QueryProblems(q string) []Problem {
 		glog.Info("There was an error")
 	}
 	return p
+}
+
+//VoteProblem : ~
+func (p *Problem) VoteProblem(id int) {
+	err := db.Where("id = ?", id).Find(&p)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+	p.Rank++
+	db.Model(&p).Update("rank", p.Rank)
+
+	var totalVotes = 0
+	problems := GetSubProblemsByID(int(p.ParentID))
+	for i := 0; i < len(problems); i++ {
+		totalVotes += problems[i].Rank
+	}
+
+	for i := 0; i < len(problems); i++ {
+		var percentRank = float32(problems[i].Rank) / float32(totalVotes)
+		db.Model(&problems[i]).Update("percent_rank", percentRank)
+	}
+
 }

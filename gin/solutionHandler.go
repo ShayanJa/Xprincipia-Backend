@@ -24,18 +24,17 @@ func getSolutionByID(c *gin.Context) {
 	c.JSON(http.StatusOK, solution)
 }
 
-func getSolutionByProblemIDHandler(c *gin.Context) {
+func getSolutionsByProblemIDHandler(c *gin.Context) {
 	id := c.Query("id")
 	glog.Info("ID sent is: ", id)
 
-	solution := gorm.Solution{}
 	intID, err := strconv.Atoi(id)
 	if err != nil {
 		glog.Error("Unable to convert to int")
 	}
 
-	solution.GetSolutionByProblemID(intID)
-	c.JSON(http.StatusOK, solution)
+	solutions := gorm.GetSolutionsByProblemID(intID)
+	c.JSON(http.StatusOK, solutions)
 }
 
 func getAllSolutions(c *gin.Context) {
