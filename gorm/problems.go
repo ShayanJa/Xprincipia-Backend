@@ -20,6 +20,7 @@ type Problem struct {
 	Requirements           string `gorm:"size:1500"`
 	References             string `gorm:"size:1500"`
 	Rank                   int
+	PercentRank            float32
 	SubProblems            []Problem
 	Suggestions            []Suggestion
 	Questions              []Question

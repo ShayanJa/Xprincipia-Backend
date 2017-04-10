@@ -15,7 +15,7 @@ type Vote struct {
 type VoteForm struct {
 	Type     int
 	TypeID   int
-	UserName string
+	Username string
 }
 
 //CreateVote : ~
@@ -24,7 +24,7 @@ func CreateVote(form VoteForm) bool {
 	v := Vote{}
 	v.Type = form.Type
 	v.TypeID = form.TypeID
-	v.Username = form.UserName
+	v.Username = form.Username
 
 	foundVotes := []Vote{}
 	db.Where("username = ? AND type_id = ? AND type = ?", v.Username, v.TypeID, v.Type).Find(&foundVotes)
@@ -39,8 +39,10 @@ func CreateVote(form VoteForm) bool {
 		s := Solution{}
 		s.VoteSolution(v.TypeID)
 	} else {
-		p := Problem{}
-		p.VoteProblem(v.TypeID)
+		if v.Type == 0 {
+			p := Problem{}
+			p.VoteProblem(v.TypeID)
+		}
 	}
 	return true
 
