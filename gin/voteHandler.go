@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"work/xprincipia/backend/gorm"
 
-	"gopkg.in/gin-gonic/gin.v1"
+	"github.com/gin-gonic/gin"
 )
 
 func postVote(c *gin.Context) {

@@ -17,8 +17,9 @@ RUN go get github.com/go-sql-driver/mysql
 RUN go get github.com/jinzhu/gorm 
 RUN go get github.com/joho/godotenv 
 RUN go get golang.org/x/crypto/bcrypt
-RUN go get gopkg.in/appleboy/gin-jwt.v2
-RUN go get gopkg.in/gin-gonic/gin.v1
+RUN go get github.com/appleboy/gin-jwt
+RUN go get github.com/gin-gonic/gin
+RUN go get github.com/itsjamie/gin-cors
 
 
 # WORKDIR /go/src/app

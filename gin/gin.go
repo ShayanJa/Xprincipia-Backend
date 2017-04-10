@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
-	"gopkg.in/gin-gonic/gin.v1"
+	"github.com/itsjamie/gin-cors"
 )
 
 //Global router
@@ -19,6 +21,16 @@ func RunRouter() {
 
 	//gin router config
 	router := gin.New()
+	router.Use(cors.Middleware(cors.Config{
+		Origins:         "*",
+		Methods:         "GET, PUT, POST, DELETE",
+		RequestHeaders:  "Origin, Authorization, Content-Type",
+		ExposedHeaders:  "",
+		MaxAge:          50 * time.Second,
+		Credentials:     true,
+		ValidateHeaders: false,
+	}))
+
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 
