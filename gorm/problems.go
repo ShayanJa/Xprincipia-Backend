@@ -65,6 +65,8 @@ func CreateProblem(form ProblemForm) {
 	p.Title = form.Title
 	p.Summary = form.Summary
 	p.Description = form.Description
+	p.References = form.References
+	p.Requirements = form.Requirements
 	db.Create(&p)
 }
 
