@@ -63,8 +63,11 @@ func CreateProblem(form ProblemForm) {
 	intID, _ := strconv.Atoi(form.ParentID)
 	p.ParentID = intID
 	p.Title = form.Title
+	p.Field = form.Field
 	p.Summary = form.Summary
 	p.Description = form.Description
+	p.References = form.References
+	p.Requirements = form.Requirements
 	db.Create(&p)
 }
 
