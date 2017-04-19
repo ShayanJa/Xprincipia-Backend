@@ -19,7 +19,8 @@ func RunRouter() {
 	//Get enviromental data
 	port := os.Getenv("ROUTER_PORT")
 
-	//gin router config
+	// Gin router config
+	// Accept CORS Headers 
 	router := gin.New()
 	router.Use(cors.Middleware(cors.Config{
 		Origins:         "*",
