@@ -17,7 +17,7 @@ var authMiddleware = &jwt.GinJWTMiddleware{
 	Timeout:    time.Hour,
 	MaxRefresh: time.Hour,
 	Authenticator: func(userId string, password string, c *gin.Context) (string, bool) {
-		// c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
+		//  
 		user := gorm.User{}
 		passwordBytes := []byte(password)
 
@@ -33,7 +33,7 @@ var authMiddleware = &jwt.GinJWTMiddleware{
 		return userId, false
 	},
 	Authorizator: func(userId string, c *gin.Context) bool {
-		// c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
+		//  
 		//check if this user is in the db based on the jwt
 		return gorm.IsUserinDBbyUsername(userId)
 	},

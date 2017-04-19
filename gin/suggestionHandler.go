@@ -10,8 +10,6 @@ import (
 )
 
 func postSuggestion(c *gin.Context) {
-	c.Header("Access-Control-Allow-Origin", "*")
-	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 	form := gorm.SuggestionForm{}
 	c.Bind(&form)
 	glog.Info(form)
@@ -20,8 +18,6 @@ func postSuggestion(c *gin.Context) {
 }
 
 func getSuggestionByIDHandler(c *gin.Context) {
-	c.Header("Access-Control-Allow-Origin", "*")
-	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 	id := c.Query("id")
 	glog.Info("Getting Suggestion with ID : ", id)
 
@@ -37,14 +33,10 @@ func getSuggestionByIDHandler(c *gin.Context) {
 }
 
 func getAllSuggestions(c *gin.Context) {
-	c.Header("Access-Control-Allow-Origin", "*")
-	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 	c.JSON(http.StatusOK, gorm.GetAllSuggestions())
 }
 
 func getSuggestionByTypeIDHandler(c *gin.Context) {
-	c.Header("Access-Control-Allow-Origin", "*")
-	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 	id := c.Query("id")
 	intID, err := strconv.Atoi(id)
 	if err != nil {
