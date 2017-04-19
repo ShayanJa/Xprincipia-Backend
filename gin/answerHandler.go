@@ -43,6 +43,5 @@ func getAnswersByQuestionIDHandler(c *gin.Context) {
 		glog.Error("There was an error in converting string to integer")
 	}
 	answers := gorm.GetAllAnswersByQuestionID(intID)
-
 	c.JSON(http.StatusOK, answers)
 }
