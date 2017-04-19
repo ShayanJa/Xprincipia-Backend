@@ -6,32 +6,38 @@ import "github.com/gin-gonic/gin"
 func SetRoutes(router *gin.Engine) {
 
 	// //Index Routes
-	// router.GET("/", indexHandler)
+	router.GET("/", indexHandler)
 
-	// //Solutions API
-	// router.GET("/solutions/ID", getSolutionByID)
-	// router.GET("/solutions/all", getAllSolutions)
-	// router.GET("/solutions/problemID", getSolutionsByProblemIDHandler)
-	// router.POST("/solutions/create", postSolution)
+	//Solutions API
+	router.GET("/solutions/ID", getSolutionByID)
+	router.GET("/solutions/all", getAllSolutions)
+	router.GET("/solutions/problemID", getSolutionsByProblemIDHandler)
+	router.POST("/solutions/create", postSolution)
 
-	// //Problems API
-	// router.GET("/problems/ID", getProblemByIDHandler)
-	// router.GET("/problems/all", getAllProblems)
-	// router.GET("/problems/subproblems", getAllSubProblems)
-	// router.POST("/problems/create", postProblem)
-	// router.GET("/problems/search", searchProblemDB)
+	//Problems API
+	router.GET("/problems/ID", getProblemByIDHandler)
+	router.GET("/problems/all", getAllProblems)
+	router.GET("/problems/subproblems", getAllSubProblems)
+	router.POST("/problems/create", postProblem)
+	router.GET("/problems/search", searchProblemDB)
 
-	// //Questions API
-	// router.GET("/questions/ID", getQuestionByIDHandler)
-	// router.GET("/questions/typeID", getQuestionByTypeIDHandler)
-	// router.GET("/questions/all", getAllQuestions)
-	// router.POST("/questions/create", postQuestion)
+	//Questions API
+	router.GET("/questions/ID", getQuestionByIDHandler)
+	router.GET("/questions/typeID", getQuestionByTypeIDHandler)
+	router.GET("/questions/all", getAllQuestions)
+	router.POST("/questions/create", postQuestion)
 
-	// //Suggestions API
-	// router.GET("/suggestions/ID", getSuggestionByIDHandler)
-	// router.GET("/suggestions/typeID", getSuggestionByTypeIDHandler)
-	// router.GET("/suggestions/all", getAllSuggestions)
-	// router.POST("/suggestions/create", postSuggestion)
+	//Suggestions API
+	router.GET("/suggestions/ID", getSuggestionByIDHandler)
+	router.GET("/suggestions/typeID", getSuggestionByTypeIDHandler)
+	router.GET("/suggestions/all", getAllSuggestions)
+	router.POST("/suggestions/create", postSuggestion)
+
+	//Answers API
+	router.GET("/answers/ID", getAnswerByIDHandler)
+	router.GET("/answers/typeID", getAnswersByTypeIDHandler)
+	router.GET("/answers/all", getAllAnswers)
+	router.POST("/answers/create", postAnswer)
 
 	// //Authentication Middleware
 	auth := router.Group("/auth")
@@ -63,6 +69,12 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/suggestions/typeID", getSuggestionByTypeIDHandler)
 		auth.GET("/suggestions/all", getAllSuggestions)
 		auth.POST("/suggestions/create", postSuggestion)
+
+		//Answers API
+		auth.GET("/answers/ID", getAnswerByIDHandler)
+		auth.GET("/answers/typeID", getAnswersByTypeIDHandler)
+		auth.GET("/answers/all", getAllAnswers)
+		auth.POST("/answers/create", postAnswer)
 
 		//Vote API
 		auth.POST("/vote/create", postVote)

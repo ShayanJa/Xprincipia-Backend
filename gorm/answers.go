@@ -30,8 +30,8 @@ API
 */
 
 //CreateAnswer : Creates a question
-func CreateAnswer(form SuggestionForm) {
-	a := Suggestion{}
+func CreateAnswer(form AnswerForm) {
+	a := Answer{}
 	a.Username = form.Username
 	intType, _ := strconv.Atoi(form.Type)
 	a.Type = intType
