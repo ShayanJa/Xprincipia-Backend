@@ -10,8 +10,7 @@ import (
 //Answer : Struct containing a question
 type Answer struct {
 	gorm.Model
-	Type        int
-	TypeID      int
+	QuestionID  int
 	Username    string
 	Description string
 	Rank        int
@@ -20,8 +19,7 @@ type Answer struct {
 //AnswerForm : Form to make Question Struct
 type AnswerForm struct {
 	Username    string
-	Type        string
-	TypeID      string
+	QuestionID  string
 	Description string
 }
 
@@ -33,10 +31,8 @@ API
 func CreateAnswer(form AnswerForm) {
 	a := Answer{}
 	a.Username = form.Username
-	intType, _ := strconv.Atoi(form.Type)
-	a.Type = intType
-	intTypeID, _ := strconv.Atoi(form.TypeID)
-	a.TypeID = intTypeID
+	intQuestionID, _ := strconv.Atoi(form.QuestionID)
+	a.QuestionID = intQuestionID
 	a.Description = form.Description
 	a.Rank = 1
 	db.Create(&a)
@@ -60,10 +56,10 @@ func GetAllAnswers() []Answer {
 	return a
 }
 
-//GetAllAnswersByTypeID :
-func GetAllAnswersByTypeID(dataType int, typeID int) []Answer {
+//GetAllAnswersByQuestionID :
+func GetAllAnswersByQuestionID(questionID int) []Answer {
 	a := []Answer{}
-	err := db.Order("created_at desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&a)
+	err := db.Order("created_at desc").Where("question_id = ?", questionID).Find(&a)
 	if err == nil {
 		glog.Info("There was an error")
 	}

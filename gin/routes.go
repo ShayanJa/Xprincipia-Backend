@@ -35,7 +35,7 @@ func SetRoutes(router *gin.Engine) {
 
 	//Answers API
 	router.GET("/answers/ID", getAnswerByIDHandler)
-	router.GET("/answers/typeID", getAnswersByTypeIDHandler)
+	router.GET("/answers/typeID", getAnswersByQuestionIDHandler)
 	router.GET("/answers/all", getAllAnswers)
 	router.POST("/answers/create", postAnswer)
 
@@ -72,7 +72,7 @@ func SetRoutes(router *gin.Engine) {
 
 		//Answers API
 		auth.GET("/answers/ID", getAnswerByIDHandler)
-		auth.GET("/answers/typeID", getAnswersByTypeIDHandler)
+		auth.GET("/answers/typeID", getAnswersByQuestionIDHandler)
 		auth.GET("/answers/all", getAllAnswers)
 		auth.POST("/answers/create", postAnswer)
 
