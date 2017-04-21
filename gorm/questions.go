@@ -15,7 +15,8 @@ type Question struct {
 	Username    string
 	Description string
 	// Answers     []string
-	Rank int
+	Rank        int
+	PercentRank float32
 }
 
 //QuestionForm : Form to make Question Struct
@@ -61,7 +62,7 @@ func GetAllQuestions() []Question {
 	return q
 }
 
-//GetAllQuestionsByTypeID :
+//GetAllQuestionsByTypeID : Use typeID because questions are for both problems and solutions
 func GetAllQuestionsByTypeID(dataType int, typeID int) []Question {
 	q := []Question{}
 	err := db.Order("created_at desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&q)
@@ -70,4 +71,26 @@ func GetAllQuestionsByTypeID(dataType int, typeID int) []Question {
 	}
 
 	return q
+}
+
+//VoteQuestion : ~
+func (q *Question) VoteQuestion(id int) {
+	err := db.Where("id = ?", id).Find(&q)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+	q.Rank++
+	db.Model(&q).Update("rank", q.Rank)
+
+	var totalVotes = 0
+	questions := GetAllQuestionsByTypeID(q.Type, q.TypeID)
+	for i := 0; i < len(questions); i++ {
+		totalVotes += questions[i].Rank
+	}
+
+	for i := 0; i < len(questions); i++ {
+		var percentRank = float32(questions[i].Rank) / float32(totalVotes)
+		db.Model(&questions[i]).Update("percent_rank", percentRank)
+	}
+
 }

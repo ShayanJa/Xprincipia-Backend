@@ -39,12 +39,21 @@ func SetRoutes(router *gin.Engine) {
 	router.GET("/answers/all", getAllAnswers)
 	router.POST("/answers/create", postAnswer)
 
+	//Comments API
+	router.GET("/comments/ID", getCommentByIDHandler)
+	router.GET("/comments/questionID", getCommentsBySuggestionIDHandler)
+	router.GET("/comments/all", getAllComments)
+	router.POST("/comments/create", postComment)
+
+	router.POST("/vote/create", postVote)
+
 	// //Authentication Middleware
 	auth := router.Group("/auth")
 	auth.Use(authMiddleware.MiddlewareFunc())
 	{
 		auth.GET("/hello", helloHandler)
 		auth.GET("/refresh_token", authMiddleware.RefreshHandler)
+
 		//Solutions API
 		auth.GET("/solutions/ID", getSolutionByID)
 		auth.GET("/solutions/all", getAllSolutions)
@@ -75,6 +84,12 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/answers/questionID", getAnswersByQuestionIDHandler)
 		auth.GET("/answers/all", getAllAnswers)
 		auth.POST("/answers/create", postAnswer)
+
+		//Comments API
+		auth.GET("/comments/ID", getCommentByIDHandler)
+		auth.GET("/comments/questionID", getCommentsBySuggestionIDHandler)
+		auth.GET("/comments/all", getAllComments)
+		auth.POST("/comments/create", postComment)
 
 		//Vote API
 		auth.POST("/vote/create", postVote)

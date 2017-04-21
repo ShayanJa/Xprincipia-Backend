@@ -42,6 +42,16 @@ func CreateVote(form VoteForm) bool {
 		if v.Type == 0 {
 			p := Problem{}
 			p.VoteProblem(v.TypeID)
+		} else {
+			if v.Type == 2 {
+				q := Question{}
+				q.VoteQuestion(v.TypeID)
+			} else {
+				if v.Type == 3 {
+					s := Suggestion{}
+					s.VoteSuggestion(v.TypeID)
+				}
+			}
 		}
 	}
 	return true
