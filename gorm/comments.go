@@ -14,6 +14,7 @@ type Comment struct {
 	Username     string
 	Description  string
 	Rank         int
+	PercentRank  float32
 }
 
 //CommentForm : Form to make Question Struct
@@ -39,8 +40,8 @@ func CreateComment(form CommentForm) {
 }
 
 //GetAnswerByID : Returns a Suggestion based on an int ID
-func (a *Comment) GetAnswerByID(id uint) {
-	err := db.Where("id = ?", id).First(&a)
+func (c *Comment) GetAnswerByID(id uint) {
+	err := db.Where("id = ?", id).First(&c)
 	if err == nil {
 		glog.Info("There was an error")
 	}
@@ -65,4 +66,26 @@ func GetAllCommentsBySuggestionID(suggestionID int) []Comment {
 	}
 
 	return c
+}
+
+//VoteComment : ~
+func (c *Comment) VoteComment(id int) {
+	err := db.Where("id = ?", id).Find(&c)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+	c.Rank++
+	db.Model(&c).Update("rank", c.Rank)
+
+	var totalVotes = 0
+	comments := GetAllCommentsBySuggestionID(c.SuggestionID)
+	for i := 0; i < len(comments); i++ {
+		totalVotes += comments[i].Rank
+	}
+
+	for i := 0; i < len(comments); i++ {
+		var percentRank = float32(comments[i].Rank) / float32(totalVotes)
+		db.Model(&comments[i]).Update("percent_rank", percentRank)
+	}
+
 }

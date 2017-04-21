@@ -50,6 +50,17 @@ func CreateVote(form VoteForm) bool {
 				if v.Type == 3 {
 					s := Suggestion{}
 					s.VoteSuggestion(v.TypeID)
+				} else {
+					if v.Type == 4 {
+						a := Answer{}
+						a.VoteAnswer(v.TypeID)
+					} else {
+						if v.Type == 5 {
+							c := Comment{}
+							c.VoteComment(v.TypeID)
+
+						}
+					}
 				}
 			}
 		}

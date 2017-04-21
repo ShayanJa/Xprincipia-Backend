@@ -14,6 +14,7 @@ type Answer struct {
 	Username    string
 	Description string
 	Rank        int
+	PercentRank float32
 }
 
 //AnswerForm : Form to make Question Struct
@@ -65,4 +66,26 @@ func GetAllAnswersByQuestionID(questionID int) []Answer {
 	}
 
 	return a
+}
+
+//VoteAnswer : ~
+func (a *Answer) VoteAnswer(id int) {
+	err := db.Where("id = ?", id).Find(&a)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+	a.Rank++
+	db.Model(&a).Update("rank", a.Rank)
+
+	var totalVotes = 0
+	answers := GetAllAnswersByQuestionID(a.QuestionID)
+	for i := 0; i < len(answers); i++ {
+		totalVotes += answers[i].Rank
+	}
+
+	for i := 0; i < len(answers); i++ {
+		var percentRank = float32(answers[i].Rank) / float32(totalVotes)
+		db.Model(&answers[i]).Update("percent_rank", percentRank)
+	}
+
 }
