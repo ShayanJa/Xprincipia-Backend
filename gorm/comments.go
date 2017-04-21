@@ -59,7 +59,7 @@ func GetAllComments() []Comment {
 //GetAllCommentsBySuggestionID :
 func GetAllCommentsBySuggestionID(suggestionID int) []Comment {
 	c := []Comment{}
-	err := db.Order("created_at desc").Where("question_id = ?", suggestionID).Find(&c)
+	err := db.Order("created_at desc").Where("suggestion_id = ?", suggestionID).Find(&c)
 	if err == nil {
 		glog.Info("There was an error")
 	}

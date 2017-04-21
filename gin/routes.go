@@ -87,7 +87,7 @@ func SetRoutes(router *gin.Engine) {
 
 		//Comments API
 		auth.GET("/comments/ID", getCommentByIDHandler)
-		auth.GET("/comments/questionID", getCommentsBySuggestionIDHandler)
+		auth.GET("/comments/suggestionID", getCommentsBySuggestionIDHandler)
 		auth.GET("/comments/all", getAllComments)
 		auth.POST("/comments/create", postComment)
 
