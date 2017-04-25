@@ -72,6 +72,13 @@ func GetAllSuggestionsByTypeID(dataType int, typeID int) []Suggestion {
 	return s
 }
 
+//DeleteSuggestionByID : //DELETE
+func DeleteSuggestionByID(id int) {
+	s := Suggestion{}
+	s.GetSuggestionByID(uint(id))
+	db.Delete(&s)
+}
+
 //VoteSuggestion : ~
 func (s *Suggestion) VoteSuggestion(id int) {
 	err := db.Where("id = ?", id).Find(&s)

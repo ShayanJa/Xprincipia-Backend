@@ -52,5 +52,5 @@ func deleteAnswerByIDHandler(c *gin.Context) {
 	if err != nil {
 		glog.Error("There was an error in converting string to integer")
 	}
-	gorm.DeleteAnswerByAnswerID(intID)
+	gorm.DeleteAnswerByID(intID)
 }

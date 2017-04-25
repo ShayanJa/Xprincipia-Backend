@@ -28,7 +28,7 @@ func getCommentByIDHandler(c *gin.Context) {
 		glog.Error("There was an error in converting string to integer")
 	}
 
-	comment.GetAnswerByID(uintID)
+	comment.GetCommentByID(uintID)
 	c.JSON(http.StatusOK, comment)
 }
 
@@ -44,4 +44,13 @@ func getCommentsBySuggestionIDHandler(c *gin.Context) {
 	}
 	comments := gorm.GetAllCommentsBySuggestionID(intID)
 	c.JSON(http.StatusOK, comments)
+}
+
+func deleteCommentByIDHandler(c *gin.Context) {
+	id := c.Query("id")
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+	gorm.DeleteCommentByID(intID)
 }

@@ -111,6 +111,13 @@ func QueryProblems(q string) []Problem {
 	return p
 }
 
+//DeleteProblemByID : //DELETE
+func DeleteProblemByID(id int) {
+	p := Problem{}
+	p.GetProblemByID(uint(id))
+	db.Delete(&p)
+}
+
 //VoteProblem : ~
 func (p *Problem) VoteProblem(id int) {
 	err := db.Where("id = ?", id).Find(&p)

@@ -68,8 +68,8 @@ func GetAllAnswersByQuestionID(questionID int) []Answer {
 	return a
 }
 
-//DeleteAnswerByAnswerID : //DELETE
-func DeleteAnswerByAnswerID(id int) {
+//DeleteAnswerByID : //DELETE
+func DeleteAnswerByID(id int) {
 	a := Answer{}
 	a.GetAnswerByID(uint(id))
 	db.Delete(&a)

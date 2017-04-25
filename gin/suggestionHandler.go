@@ -46,3 +46,12 @@ func getSuggestionByTypeIDHandler(c *gin.Context) {
 
 	c.JSON(http.StatusOK, suggestions)
 }
+
+func deleteSuggestionByIDHandler(c *gin.Context) {
+	id := c.Query("id")
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+	gorm.DeleteSuggestionByID(intID)
+}

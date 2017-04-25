@@ -90,6 +90,13 @@ func CreateSolution(form SolutionForm) {
 	db.Create(&s)
 }
 
+//DeleteSolutionByID : //DELETE
+func DeleteSolutionByID(id int) {
+	s := Solution{}
+	s.GetSolutionByID(uint(id))
+	db.Delete(&s)
+}
+
 //VoteSolution : ~
 func (s *Solution) VoteSolution(id int) {
 	err := db.Where("id = ?", id).Find(&s)

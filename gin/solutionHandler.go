@@ -10,7 +10,7 @@ import (
 )
 
 func getSolutionByID(c *gin.Context) {
-	
+
 	id := c.Query("id")
 	glog.Info("ID sent is: ", id)
 
@@ -43,10 +43,19 @@ func getAllSolutions(c *gin.Context) {
 }
 
 func postSolution(c *gin.Context) {
-	
+
 	form := gorm.SolutionForm{}
 	c.Bind(&form)
 
 	gorm.CreateSolution(form)
 	c.Status(http.StatusOK)
+}
+
+func deleteSolutionByIDHandler(c *gin.Context) {
+	id := c.Query("id")
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+	gorm.DeleteSolutionByID(intID)
 }

@@ -73,6 +73,13 @@ func GetAllQuestionsByTypeID(dataType int, typeID int) []Question {
 	return q
 }
 
+//DeleteQuestionByID : //DELETE
+func DeleteQuestionByID(id int) {
+	q := Question{}
+	q.GetQuestionByID(uint(id))
+	db.Delete(&q)
+}
+
 //VoteQuestion : ~
 func (q *Question) VoteQuestion(id int) {
 	err := db.Where("id = ?", id).Find(&q)

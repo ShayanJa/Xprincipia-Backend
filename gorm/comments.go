@@ -39,8 +39,8 @@ func CreateComment(form CommentForm) {
 	db.Create(&c)
 }
 
-//GetAnswerByID : Returns a Suggestion based on an int ID
-func (c *Comment) GetAnswerByID(id uint) {
+//GetCommentByID : Returns a Suggestion based on an int ID
+func (c *Comment) GetCommentByID(id uint) {
 	err := db.Where("id = ?", id).First(&c)
 	if err == nil {
 		glog.Info("There was an error")
@@ -66,6 +66,13 @@ func GetAllCommentsBySuggestionID(suggestionID int) []Comment {
 	}
 
 	return c
+}
+
+//DeleteCommentByID : //DELETE
+func DeleteCommentByID(id int) {
+	c := Comment{}
+	c.GetCommentByID(uint(id))
+	db.Delete(&c)
 }
 
 //VoteComment : ~

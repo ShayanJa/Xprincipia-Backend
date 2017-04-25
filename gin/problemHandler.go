@@ -66,3 +66,12 @@ func searchProblemDB(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 
 }
+
+func deleteProblemByIDHandler(c *gin.Context) {
+	id := c.Query("id")
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+	gorm.DeleteProblemByID(intID)
+}
