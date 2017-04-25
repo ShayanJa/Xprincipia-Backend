@@ -47,7 +47,7 @@ func (a *Answer) GetAnswerByID(id uint) {
 	}
 }
 
-//GetAllAnswers : get all suggestions
+//GetAllAnswers : get all suggestions //READ
 func GetAllAnswers() []Answer {
 	a := []Answer{}
 	err := db.Order("created_at desc").Find(&a)
@@ -57,7 +57,7 @@ func GetAllAnswers() []Answer {
 	return a
 }
 
-//GetAllAnswersByQuestionID :
+//GetAllAnswersByQuestionID : //READ
 func GetAllAnswersByQuestionID(questionID int) []Answer {
 	a := []Answer{}
 	err := db.Order("created_at desc").Where("question_id = ?", questionID).Find(&a)
@@ -66,6 +66,13 @@ func GetAllAnswersByQuestionID(questionID int) []Answer {
 	}
 
 	return a
+}
+
+//DeleteAnswerByAnswerID : //DELETE
+func DeleteAnswerByAnswerID(id int) {
+	a := Answer{}
+	a.GetAnswerByID(uint(id))
+	db.Delete(&a)
 }
 
 //VoteAnswer : ~

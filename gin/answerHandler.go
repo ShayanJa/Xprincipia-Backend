@@ -45,3 +45,12 @@ func getAnswersByQuestionIDHandler(c *gin.Context) {
 	answers := gorm.GetAllAnswersByQuestionID(intID)
 	c.JSON(http.StatusOK, answers)
 }
+
+func deleteAnswerByIDHandler(c *gin.Context) {
+	id := c.Query("id")
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+	gorm.DeleteAnswerByAnswerID(intID)
+}

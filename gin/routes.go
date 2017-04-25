@@ -38,6 +38,7 @@ func SetRoutes(router *gin.Engine) {
 	router.GET("/answers/questionID", getAnswersByQuestionIDHandler)
 	router.GET("/answers/all", getAllAnswers)
 	router.POST("/answers/create", postAnswer)
+	router.DELETE("/answers/ID", deleteAnswerByIDHandler)
 
 	//Comments API
 	router.GET("/comments/ID", getCommentByIDHandler)
@@ -84,6 +85,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/answers/questionID", getAnswersByQuestionIDHandler)
 		auth.GET("/answers/all", getAllAnswers)
 		auth.POST("/answers/create", postAnswer)
+		auth.DELETE("/answers/ID", deleteAnswerByIDHandler)
 
 		//Comments API
 		auth.GET("/comments/ID", getCommentByIDHandler)
