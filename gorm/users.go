@@ -131,28 +131,6 @@ func (u *User) PostProblem(text string, description string) {
 	u.ProblemsPostedIDs = append(u.ProblemsPostedIDs, p)
 }
 
-// //PostSolution : User Auth Required> Post Solution
-// func (u *User) PostSolution(p Problem, text string, description string) {
-// 	s := Solution{
-// 		ProblemID:      p.ID,
-// 		OriginalPoster: *u,
-// 		Text:           text,
-// 		Rank:           0,
-// 	}
-// 	db.Create(s)
-// 	glog.Info("Solution Create!  ID: " + string(s.ID))
-// }
-
-//FollowProblem : User follows a problem, Add problemID to array
-func (u *User) FollowProblem(problemID uint) {
-	problem := Problem{}
-	problem.GetProblemByID(problemID)
-
-	u.FollowedProblemsIDs = append(u.FollowedProblemsIDs, problem)
-	db.Save(&u)
-
-}
-
 // getFollowedProblems : returns problemIDs of all problems followed by the user
 //TODO:
 //THis doesn't work right
@@ -163,6 +141,13 @@ func (u User) getFollowedProblems() []int {
 		glog.Error("Unable to retrieve users followed problems")
 	}
 	return followedProblems
+}
+
+//GetAllVotedSolutions :
+func (u *User) GetAllVotedSolutions() []Solution {
+	solutions := []Solution{}
+	db.Where("original_poster_username = ?", u.Username).Find(&solutions)
+	return solutions
 }
 
 // VoteOnSolution : User votes on a solution to increase it's rank
