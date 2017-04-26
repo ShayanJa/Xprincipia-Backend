@@ -42,7 +42,7 @@ func getSuggestionByTypeIDHandler(c *gin.Context) {
 	if err != nil {
 		glog.Error("There was an error in converting string to integer")
 	}
-	suggestions := gorm.GetAllSuggestionsByTypeID(1, intID)
+	suggestions := gorm.GetAllSuggestionsByTypeID(0, intID)
 
 	c.JSON(http.StatusOK, suggestions)
 }

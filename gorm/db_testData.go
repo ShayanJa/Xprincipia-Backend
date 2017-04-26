@@ -4,6 +4,7 @@ import (
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
+	"work/xprincipia/backend/util"
 )
 
 func populateDBtestData(db *gorm.DB) {
@@ -139,21 +140,23 @@ func populateDBtestData(db *gorm.DB) {
 
 	//Create questions
 	question1 := Question{
-		Type:        1,
-		TypeID:      1,
-		Description: "What does section 4 mean?",
+		Type:        util.PROBLEM,
+		TypeID:      2,
+		Description: "How can we bind ourselves with computers?",
 	}
 	db.Create(&question1)
 
 	question2 := Question{
-		Type:        1,
+		Username:    "Shyshawn",
+		Type:        util.PROBLEM,
 		TypeID:      2,
 		Description: "Why does section 4 mean?",
 	}
 	db.Create(&question2)
 
 	question3 := Question{
-		Type:        1,
+		Username:    "Shyshawn",
+		Type:        util.PROBLEM,
 		TypeID:      1,
 		Description: "Because does section 4 mean?",
 	}

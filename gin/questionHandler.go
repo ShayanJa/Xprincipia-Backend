@@ -38,7 +38,7 @@ func getQuestionByTypeIDHandler(c *gin.Context) {
 	if err != nil {
 		glog.Error("There was an error in converting string to integer")
 	}
-	questions := gorm.GetAllQuestionsByTypeID(1, intID)
+	questions := gorm.GetAllQuestionsByTypeID(0, intID)
 
 	c.JSON(http.StatusOK, questions)
 }
