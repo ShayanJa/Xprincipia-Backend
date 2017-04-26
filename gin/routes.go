@@ -12,6 +12,7 @@ func SetRoutes(router *gin.Engine) {
 	router.GET("/users/createdSolutions", getAllCreatedSolutions)
 	router.GET("/users/followedSolutions", getAllFollowedSolutions)
 	router.GET("/users/createdProblems", getAllCreatedProblems)
+	router.GET("/users/followedProblems", getAllFollowedProblems)
 
 	//Solutions API
 	router.GET("/solutions/ID", getSolutionByID)
@@ -64,6 +65,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/users/createdSolutions", getAllCreatedSolutions)
 		auth.GET("/users/followedSolutions", getAllFollowedSolutions)
 		auth.GET("/users/createdProblems", getAllCreatedProblems)
+		auth.GET("/users/followedProblems", getAllFollowedProblems)
 
 		//Solutions API
 		auth.GET("/solutions/ID", getSolutionByID)

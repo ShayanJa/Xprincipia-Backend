@@ -168,11 +168,26 @@ func (u *User) GetAllFollowedSolutions() []Solution {
 	for index, vote := range votes {
 		s := Solution{}
 		s.GetSolutionByID(uint(vote.TypeID))
-		glog.Info(s)
 		solutions[index] = s
 
 	}
 	return solutions[:len(votes)]
+}
+
+//GetAllFollowedProblems :
+func (u *User) GetAllFollowedProblems() []Problem {
+	votes := []Vote{}
+	db.Where("type = ? AND username = ?", util.PROBLEM, u.Username).Find(&votes)
+
+	var problems [100]Problem
+	//this needs to be fixed. to be dynamic
+	for index, vote := range votes {
+		p := Problem{}
+		p.GetProblemByID(uint(vote.TypeID))
+		problems[index] = p
+
+	}
+	return problems[:len(votes)]
 }
 
 // VoteOnSolution : User votes on a solution to increase it's rank
