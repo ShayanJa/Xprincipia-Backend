@@ -50,3 +50,40 @@ func TestGetSolutionsByProblemID(t *testing.T) {
 	assert.Equal(t, actualResult, expectedResult, "The should be 3 solutions with the same values")
 
 }
+
+func TestGetAllSolutions(t *testing.T) {
+
+	db := SetupTestingDB()
+	defer db.Close()
+
+	actualResult := gorm.GetAllSolutions()
+	expectedResult := []gorm.Solution{}
+	s := gorm.Solution{}
+	s.GetSolutionByID(1)
+	expectedResult = append(expectedResult, s)
+	s = gorm.Solution{}
+	s.GetSolutionByID(2)
+	expectedResult = append(expectedResult, s)
+	s = gorm.Solution{}
+	s.GetSolutionByID(3)
+	expectedResult = append(expectedResult, s)
+	s = gorm.Solution{}
+	s.GetSolutionByID(4)
+	expectedResult = append(expectedResult, s)
+
+	assert.Equal(t, actualResult, expectedResult, "The should be 4 solutions with the same values as expected")
+
+}
+
+//TODO
+func TestVoteSolution(t *testing.T) {
+	//TODO
+	db := SetupTestingDB()
+	defer db.Close()
+}
+
+func DeleteSolutionByID(t *testing.T) {
+	//TODO
+	db := SetupTestingDB()
+	defer db.Close()
+}
