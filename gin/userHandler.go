@@ -45,3 +45,13 @@ func registerHandler(c *gin.Context) {
 	gorm.CreateUser(form)
 	c.Status(http.StatusOK)
 }
+
+func getAllVotedSolutions(c *gin.Context) {
+	username := c.Query("username")
+	glog.Info("ID sent is: ", username)
+
+	u := gorm.User{}
+	u.GetUserByUsername(username)
+	c.JSON(http.StatusOK, u.GetAllVotedSolutions())
+
+}
