@@ -1,1 +1,16 @@
 package util
+
+const (
+	//PROBLEM :
+	PROBLEM = 0
+	//SOLUTION :
+	SOLUTION = 1
+	//QUESTION :
+	QUESTION = 2
+	//SUGGESTION :
+	SUGGESTION = 3
+	//ANSWER :
+	ANSWER = 4
+	//COMMENT :
+	COMMENT = 5
+)

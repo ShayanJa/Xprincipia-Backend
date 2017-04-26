@@ -9,7 +9,8 @@ func SetRoutes(router *gin.Engine) {
 	router.GET("/", indexHandler)
 
 	//User API
-	router.GET("/users/followedSolutions", getAllVotedSolutions)
+	router.GET("/users/createdSolutions", getAllCreatedSolutions)
+	router.GET("/users/followedSolutions", getAllFollowedSolutions)
 
 	//Solutions API
 	router.GET("/solutions/ID", getSolutionByID)
@@ -59,7 +60,8 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/refresh_token", authMiddleware.RefreshHandler)
 
 		//User API
-		auth.GET("/users/followedProblems", getAllVotedSolutions)
+		auth.GET("/users/createdSolutions", getAllCreatedSolutions)
+		// auth.GET("/users/followedSolutions", getAllFollowedSolutions)
 
 		//Solutions API
 		auth.GET("/solutions/ID", getSolutionByID)

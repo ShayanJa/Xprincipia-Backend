@@ -46,12 +46,21 @@ func registerHandler(c *gin.Context) {
 	c.Status(http.StatusOK)
 }
 
-func getAllVotedSolutions(c *gin.Context) {
+func getAllCreatedSolutions(c *gin.Context) {
 	username := c.Query("username")
 	glog.Info("ID sent is: ", username)
 
 	u := gorm.User{}
 	u.GetUserByUsername(username)
-	c.JSON(http.StatusOK, u.GetAllVotedSolutions())
+	c.JSON(http.StatusOK, u.GetAllCreatedSolutions())
 
+}
+
+func getAllFollowedSolutions(c *gin.Context) {
+	username := c.Query("username")
+	glog.Info("ID sent is: ", username)
+
+	u := gorm.User{}
+	u.GetUserByUsername(username)
+	c.JSON(http.StatusOK, u.GetAllFollowedSolutions())
 }

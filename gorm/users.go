@@ -4,6 +4,7 @@ import (
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
+	"work/xprincipia/backend/util"
 )
 
 //User : ~
@@ -143,11 +144,28 @@ func (u User) getFollowedProblems() []int {
 	return followedProblems
 }
 
-//GetAllVotedSolutions :
-func (u *User) GetAllVotedSolutions() []Solution {
+//GetAllCreatedSolutions :
+func (u *User) GetAllCreatedSolutions() []Solution {
 	solutions := []Solution{}
 	db.Where("original_poster_username = ?", u.Username).Find(&solutions)
 	return solutions
+}
+
+//GetAllFollowedSolutions :
+func (u *User) GetAllFollowedSolutions() []Solution {
+	votes := []Vote{}
+	db.Where("type = ? AND username = ?", util.SOLUTION, u.Username).Find(&votes)
+
+	var solutions [100]Solution
+	//this needs to be fixed. to be dynamic
+	for index, vote := range votes {
+		s := Solution{}
+		s.GetSolutionByID(uint(vote.TypeID))
+		glog.Info(s)
+		solutions[index] = s
+
+	}
+	return solutions[:len(votes)]
 }
 
 // VoteOnSolution : User votes on a solution to increase it's rank
