@@ -20,7 +20,7 @@ func RunRouter() {
 	port := os.Getenv("ROUTER_PORT")
 
 	// Gin router config
-	// Accept CORS Headers 
+	// Accept CORS Headers
 	router := gin.New()
 	router.Use(cors.Middleware(cors.Config{
 		Origins:         "*",
@@ -41,7 +41,7 @@ func RunRouter() {
 	router.LoadHTMLGlob("templates/*")
 
 	// Display LOGO
-	cmd := "cat image.txt"
+	cmd := "cat util/logo.txt"
 	out, err := exec.Command("bash", "-c", cmd).Output()
 	if err != nil {
 		glog.Info(fmt.Sprintf("Failed to execute command: %s", cmd))
