@@ -1,27 +1,15 @@
 package tests
 
 import (
-	database "github.com/jinzhu/gorm"
-	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
-	"log"
 	"testing"
 	"work/xprincipia/backend/gorm"
 )
 
-func setupTestingDB() *database.DB {
-	err := godotenv.Load("../config/config.env")
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-	db := gorm.InitializeDB()
-	return db
-}
-
 //test Solutions api
 func TestGetSolutionByID(t *testing.T) {
 
-	db := setupTestingDB()
+	db := SetupTestingDB()
 	defer db.Close()
 
 	actualResult := gorm.Solution{}
@@ -35,4 +23,5 @@ func TestGetSolutionByID(t *testing.T) {
 
 	assert.Equal(t, actualResult.ProblemID, expectedResult.ProblemID, "the problem ID's should be the same")
 	assert.Equal(t, actualResult.OriginalPosterUsername, expectedResult.OriginalPosterUsername, "the OriginalPosterUsername's should be the same")
+	assert.Equal(t, actualResult.Title, expectedResult.Title, "the Title's should be the same")
 }
