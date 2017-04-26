@@ -64,3 +64,13 @@ func getAllFollowedSolutions(c *gin.Context) {
 	u.GetUserByUsername(username)
 	c.JSON(http.StatusOK, u.GetAllFollowedSolutions())
 }
+
+func getAllCreatedProblems(c *gin.Context) {
+	username := c.Query("username")
+	glog.Info("ID sent is: ", username)
+
+	u := gorm.User{}
+	u.GetUserByUsername(username)
+	c.JSON(http.StatusOK, u.GetAllCreatedProblems())
+
+}

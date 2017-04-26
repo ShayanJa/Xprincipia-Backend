@@ -151,6 +151,13 @@ func (u *User) GetAllCreatedSolutions() []Solution {
 	return solutions
 }
 
+//GetAllCreatedProblems :
+func (u *User) GetAllCreatedProblems() []Problem {
+	problems := []Problem{}
+	db.Where("original_poster_username = ?", u.Username).Find(&problems)
+	return problems
+}
+
 //GetAllFollowedSolutions :
 func (u *User) GetAllFollowedSolutions() []Solution {
 	votes := []Vote{}
