@@ -100,3 +100,7 @@ func TestGetAllProblems(t *testing.T) {
 	assert.Equal(t, actualResult, expectedResult, "The should be 5 problems with the same values as expected")
 
 }
+
+func GetSubProblemsByID(t *testing.T) {
+
+}

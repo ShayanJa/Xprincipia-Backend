@@ -42,7 +42,7 @@ type ProblemForm struct {
 func (p *Problem) GetProblemByID(id uint) {
 	err := db.Where("id = ?", id).First(&p)
 	if err == nil {
-		glog.Info("There was an error")
+		glog.Error("There was an error")
 	}
 }
 
@@ -50,7 +50,7 @@ func (p *Problem) GetProblemByID(id uint) {
 func (p *Problem) GetProblemByTitle(title string) {
 	err := db.Where("title = ?", title).First(&p)
 	if err == nil {
-		glog.Info("There was an error")
+		glog.Error("There was an error")
 	}
 }
 
@@ -73,7 +73,7 @@ func CreateProblem(form ProblemForm) {
 func (p *Problem) UpdateProblem(form ProblemForm) {
 	err := db.First(&p)
 	if err == nil {
-		glog.Info("There was an error")
+		glog.Error("There was an error")
 	}
 
 	p.Description = form.Description
@@ -87,7 +87,7 @@ func GetAllProblems() []Problem {
 	p := []Problem{}
 	err := db.Where("parent_id < ?", 1).Find(&p)
 	if err == nil {
-		glog.Info("There was an error")
+		glog.Error("There was an error")
 	}
 	return p
 }
@@ -120,7 +120,7 @@ func DeleteProblemByID(id int) {
 func (p *Problem) VoteProblem(id int) {
 	err := db.Where("id = ?", id).Find(&p)
 	if err == nil {
-		glog.Info("There was an error")
+		glog.Error("There was an error")
 	}
 	p.Rank++
 	db.Model(&p).Update("rank", p.Rank)

@@ -86,7 +86,7 @@ func (u *User) GetUserByUsername(name string) bool {
 	glog.Info("Getting Username : " + name + " ...")
 	err := db.Where("username = ?", name).First(&u)
 	if err == nil {
-		glog.Info("There was an error...")
+		glog.Error("There was an error...")
 	}
 	if u.ID == 0 {
 		glog.Info("NO USER BY THAT NAME...")
@@ -100,7 +100,7 @@ func (u *User) GetUserByUsername(name string) bool {
 func (u *User) GetUserByID(id int) {
 	err := db.Where("ID = ?", id).First(&u)
 	if err == nil {
-		glog.Info("There was an error")
+		glog.Error("There was an error")
 	}
 }
 
@@ -108,7 +108,7 @@ func (u *User) GetUserByID(id int) {
 func (u *User) VerifyUser(username string, password string) bool {
 	err := db.Where("username = ? AND hashed_password", username, password).First(&u)
 	if err == nil {
-		glog.Info("There was an error")
+		glog.Error("There was an error")
 	}
 	if u.ID == 0 {
 		return false
@@ -119,29 +119,6 @@ func (u *User) VerifyUser(username string, password string) bool {
 //LoginAttempt : Logs everytime someone logs on
 func (l LoginForm) LoginAttempt() {
 	db.Create(l)
-}
-
-// PostProblem : User Auth Required> Post Problem
-func (u *User) PostProblem(text string, description string) {
-	p := Problem{
-		OriginalPoster: *u,
-		Title:          text,
-		Description:    description,
-	}
-	db.Create(&p)
-	u.ProblemsPostedIDs = append(u.ProblemsPostedIDs, p)
-}
-
-// getFollowedProblems : returns problemIDs of all problems followed by the user
-//TODO:
-//THis doesn't work right
-func (u User) getFollowedProblems() []int {
-	var followedProblems []int
-	err := db.Where("followed_problems = ?").Find(&followedProblems)
-	if err == nil {
-		glog.Error("Unable to retrieve users followed problems")
-	}
-	return followedProblems
 }
 
 //GetAllCreatedSolutions :
@@ -186,25 +163,6 @@ func (u *User) GetAllFollowedProblems() []Problem {
 
 	}
 	return problems
-}
-
-// VoteOnSolution : User votes on a solution to increase it's rank
-func (u *User) VoteOnSolution(solutionID uint) {
-	solution := Solution{}
-	solution.GetSolutionByID(solutionID)
-
-	//Check if user has already voted on this problem.
-	//if found look for what problem this is and lower rank on a different solution
-	for _, votedProblem := range u.VotedProblemIDs {
-		for _, votedSolution := range u.VotedSolutionsIDs {
-			if votedProblem.ID == votedSolution.ProblemID {
-				s := Solution{}
-				s.GetSolutionByID(votedSolution.ID)
-				s.Rank--
-			}
-		}
-	}
-	solution.Rank++
 }
 
 /*
