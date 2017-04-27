@@ -73,3 +73,30 @@ func TestCreateProblem_GetProblemByTitle_DeleteProblem(t *testing.T) {
 	assert.NotEqual(t, form.Field, actualResult.Field, "Field's should not be the same")
 	assert.NotEqual(t, form.Summary, actualResult.Summary, "Summary's should not be the same")
 }
+
+func TestGetAllProblems(t *testing.T) {
+
+	db := SetupTestingDB()
+	defer db.Close()
+
+	actualResult := gorm.GetAllProblems()
+	expectedResult := []gorm.Problem{}
+	p := gorm.Problem{}
+	p.GetProblemByID(1)
+	expectedResult = append(expectedResult, p)
+	p = gorm.Problem{}
+	p.GetProblemByID(2)
+	expectedResult = append(expectedResult, p)
+	p = gorm.Problem{}
+	p.GetProblemByID(3)
+	expectedResult = append(expectedResult, p)
+	p = gorm.Problem{}
+	p.GetProblemByID(4)
+	expectedResult = append(expectedResult, p)
+	p = gorm.Problem{}
+	p.GetProblemByID(5)
+	expectedResult = append(expectedResult, p)
+
+	assert.Equal(t, actualResult, expectedResult, "The should be 5 problems with the same values as expected")
+
+}
