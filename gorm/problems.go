@@ -46,14 +46,12 @@ func (p *Problem) GetProblemByID(id uint) {
 	}
 }
 
-// GetProblemBySolutionID : returns a solution by its id
-func (p *Problem) GetProblemBySolutionID(id uint) {
-	s := Solution{}
-	err := db.Where("id = ?", id).First(&s)
+//GetProblemByTitle :
+func (p *Problem) GetProblemByTitle(title string) {
+	err := db.Where("title = ?", title).First(&p)
 	if err == nil {
 		glog.Info("There was an error")
 	}
-	p.GetProblemByID(s.ID)
 }
 
 //CreateProblem : Creates a problem from a problemForm
