@@ -44,11 +44,11 @@ func getSuggestionByTypeIDHandler(c *gin.Context) {
 
 	intID, err := strconv.Atoi(id)
 	if err != nil {
-		glog.Error("There was an error in converting string to integer")
+		glog.Error("There was an error in converting string to integer for id")
 	}
 	intDataType, err := strconv.Atoi(dataType)
 	if err != nil {
-		glog.Error("There was an error in converting string to integer")
+		glog.Error("There was an error in converting string to integer for datatype")
 	}
 	suggestions := gorm.GetAllSuggestionsByTypeID(intDataType, intID)
 
