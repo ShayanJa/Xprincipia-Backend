@@ -38,11 +38,19 @@ func getAllSuggestions(c *gin.Context) {
 
 func getSuggestionByTypeIDHandler(c *gin.Context) {
 	id := c.Query("id")
+	dataType := c.Query("dataType")
+	glog.Info("ID: ", id)
+	glog.Info("dataType: ", dataType)
+
 	intID, err := strconv.Atoi(id)
 	if err != nil {
 		glog.Error("There was an error in converting string to integer")
 	}
-	suggestions := gorm.GetAllSuggestionsByTypeID(0, intID)
+	intDataType, err := strconv.Atoi(dataType)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+	suggestions := gorm.GetAllSuggestionsByTypeID(intDataType, intID)
 
 	c.JSON(http.StatusOK, suggestions)
 }
