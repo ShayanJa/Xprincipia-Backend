@@ -43,6 +43,9 @@ func getAllSubProblems(c *gin.Context) {
 }
 
 func postProblem(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
+
 	form := gorm.ProblemForm{}
 	c.Bind(&form)
 	if form.Description == "" || form.Title == "" {

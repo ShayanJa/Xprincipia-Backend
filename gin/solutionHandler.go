@@ -43,6 +43,8 @@ func getAllSolutions(c *gin.Context) {
 }
 
 func postSolution(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 
 	form := gorm.SolutionForm{}
 	c.Bind(&form)
