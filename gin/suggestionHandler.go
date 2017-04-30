@@ -17,6 +17,7 @@ func postSuggestion(c *gin.Context) {
 	c.Bind(&form)
 	glog.Info(form)
 	gorm.CreateSuggestion(form)
+
 	c.Status(http.StatusOK)
 }
 

@@ -41,6 +41,7 @@ func CreateSuggestion(form SuggestionForm) {
 	s.Description = form.Description
 	s.Rank = 1
 	db.Create(&s)
+	return
 }
 
 //GetSuggestionByID : Returns a Suggestion based on an int ID
