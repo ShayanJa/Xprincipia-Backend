@@ -45,9 +45,11 @@ func registerHandler(c *gin.Context) {
 	err := gorm.CreateUser(form)
 	if err != nil {
 		glog.Error(err)
-		c.JSON(http.StatusBadRequest, err)
+		// c.JSON(http.StatusBadRequest, gin.H{"Error": err.Error()})
+		c.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
+
 	c.Status(http.StatusOK)
 }
 
