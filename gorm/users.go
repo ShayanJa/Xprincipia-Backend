@@ -1,6 +1,7 @@
 package gorm
 
 import (
+	"errors"
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
@@ -46,17 +47,32 @@ type PasswordResetForm struct {
 	Email string `json:"email" form:"email"`
 }
 
+//ErrorTypes
+var ErrFormSubmission = errors.New("Form was incomplete")
+
 //API Functions
 
-// CreateUser : check if user is already created,
+// CreateUser : Validate form fields and check if user is already created,
 // if not use RegistrationForm to populate a new one
-func CreateUser(form RegistrationForm) {
+func CreateUser(form RegistrationForm) error {
+
+	//Validate register form
+	switch {
+	case form.Username == "":
+		return errors.New("Username Field is empty")
+	case form.Email == "":
+		return errors.New("Email Field is empty")
+	case form.FullName == "":
+		return errors.New("FullName Field is empty")
+	case len(form.Password) < 8:
+		return errors.New("Password must be longer than 8")
+	}
 
 	//check DB if Username is already taken
 	u := User{}
 	err := db.Where("username = ?", form.Username).First(&u).Value
 	if err == nil {
-		glog.Info("error has occured")
+		glog.Error("error has occured")
 	}
 	//If username does not exist
 	if u.Username == "" {
@@ -73,12 +89,13 @@ func CreateUser(form RegistrationForm) {
 		u.HashedPassword = hashedPassword
 		u.Email = form.Email
 		u.Username = form.Username
+		u.FullName = form.FullName
 
 		db.Create(&u)
 	} else {
-		glog.Error("Username is already taken")
+		return errors.New("Username is already taken")
 	}
-
+	return nil
 }
 
 //GetUserByUsername : get user by name
