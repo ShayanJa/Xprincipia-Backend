@@ -35,37 +35,28 @@ func CreateVote(form VoteForm) bool {
 	}
 	db.Create(&v)
 
-	//Change solution rank
-	if v.Type == util.SOLUTION {
+	//Check type of vote
+	switch {
+	case v.Type == util.SOLUTION:
 		s := Solution{}
 		s.VoteSolution(v.TypeID)
-	} else {
-		if v.Type == util.PROBLEM {
-			p := Problem{}
-			p.VoteProblem(v.TypeID)
-		} else {
-			if v.Type == util.QUESTION {
-				q := Question{}
-				q.VoteQuestion(v.TypeID)
-			} else {
-				if v.Type == util.SUGGESTION {
-					s := Suggestion{}
-					s.VoteSuggestion(v.TypeID)
-				} else {
-					if v.Type == util.ANSWER {
-						a := Answer{}
-						a.VoteAnswer(v.TypeID)
-					} else {
-						if v.Type == util.COMMENT {
-							c := Comment{}
-							c.VoteComment(v.TypeID)
-
-						}
-					}
-				}
-			}
-		}
+	case v.Type == util.PROBLEM:
+		p := Problem{}
+		p.VoteProblem(v.TypeID)
+	case v.Type == util.QUESTION:
+		q := Question{}
+		q.VoteQuestion(v.TypeID)
+	case v.Type == util.SUGGESTION:
+		s := Suggestion{}
+		s.VoteSuggestion(v.TypeID)
+	case v.Type == util.ANSWER:
+		a := Answer{}
+		a.VoteAnswer(v.TypeID)
+	case v.Type == util.COMMENT:
+		c := Comment{}
+		c.VoteComment(v.TypeID)
 	}
+
 	return true
 
 }

@@ -47,8 +47,8 @@ type PasswordResetForm struct {
 	Email string `json:"email" form:"email"`
 }
 
-//ErrorTypes
-var ErrFormSubmission = errors.New("Form was incomplete")
+// //ErrorTypes
+// var ErrFormSubmission = errors.New("Form was incomplete")
 
 //API Functions
 
