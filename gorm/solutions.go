@@ -54,7 +54,7 @@ func (s *Solution) GetSolutionByID(id uint) {
 // GetSolutionsByProblemID : returns a solution by its id
 func GetSolutionsByProblemID(id int) []Solution {
 	s := []Solution{}
-	err := db.Where("problem_id = ?", id).Find(&s)
+	err := db.Where("problem_id = ?", id).Order("rank desc").Find(&s)
 	if err == nil {
 		glog.Info("There was an error")
 	}

@@ -61,7 +61,7 @@ func CreateProblem(form ProblemForm) error {
 	//Handle form Field Errors
 	switch {
 	case form.Title == "":
-		return errors.New("Title is empty")
+		return errors.New("Title is empty: Please fill in field")
 	case form.Summary == "":
 		return errors.New("Summary is empty: Please fill in field")
 	}
@@ -104,10 +104,11 @@ func GetAllProblems() []Problem {
 	return p
 }
 
-//GetSubProblemsByID : ~
+//GetSubProblemsByID : Get all subproblems to a parent ID,
+//add order them by highest rank
 func GetSubProblemsByID(parentID int) []Problem {
 	p := []Problem{}
-	db.Where("parent_id = ?", parentID).Find(&p)
+	db.Where("parent_id = ?", parentID).Order("rank desc").Find(&p)
 	return p
 }
 
