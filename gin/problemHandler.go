@@ -25,7 +25,7 @@ func getProblemByIDHandler(c *gin.Context) {
 }
 
 func getAllProblems(c *gin.Context) {
-	c.JSON(http.StatusOK, gorm.GetAllProblems())
+	c.JSON(http.StatusOK, gorm.GetAllProblems(0))
 }
 
 func getAllSubProblems(c *gin.Context) {
@@ -62,7 +62,7 @@ func postProblem(c *gin.Context) {
 func searchProblemDB(c *gin.Context) {
 	//WIP : Only shows search query based on name
 	query := c.Query("q")
-	response := gorm.QueryProblems(query)
+	response := gorm.QueryProblems(query, 1)
 
 	glog.Info("Query value: " + query)
 	glog.Info("length pf Query Response : " + string(len(response)))

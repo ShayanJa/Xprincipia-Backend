@@ -6,6 +6,7 @@ import (
 	"errors"
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
+	"work/xprincipia/backend/util"
 )
 
 // Problem : User generated problem
@@ -95,9 +96,9 @@ func (p *Problem) UpdateProblem(form ProblemForm) {
 }
 
 //GetAllProblems : Returns all problem objects
-func GetAllProblems() []Problem {
+func GetAllProblems(pageNumber int) []Problem {
 	p := []Problem{}
-	err := db.Where("parent_id < ?", 1).Find(&p)
+	err := db.Where("parent_id < ?", 1).Where("id > ? AND id < ?", util.PAGINGCONSTANT*pageNumber, util.PAGINGCONSTANT*(1+pageNumber)).Find(&p)
 	if err == nil {
 		glog.Error("There was an error")
 	}
@@ -113,9 +114,9 @@ func GetSubProblemsByID(parentID int) []Problem {
 }
 
 //QueryProblems : Return problems that are related to the query String
-func QueryProblems(q string) []Problem {
+func QueryProblems(q string, pageNumber int) []Problem {
 	p := []Problem{}
-	err := db.Where("title LIKE ?", "%"+q+"%").Find(&p)
+	err := db.Where("title LIKE ?", "%"+q+"%").Where("id > ? AND id < ?", util.PAGINGCONSTANT*pageNumber, util.PAGINGCONSTANT*(1+pageNumber)).Find(&p)
 	if err == nil {
 		glog.Info("There was an error")
 	}

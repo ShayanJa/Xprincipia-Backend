@@ -1,16 +1,18 @@
 package util
 
 const (
-	//PROBLEM :
+	//PROBLEM : int def of prob
 	PROBLEM = 0
-	//SOLUTION :
+	//SOLUTION : int def of solution
 	SOLUTION = 1
-	//QUESTION :
+	//QUESTION : int def of question
 	QUESTION = 2
-	//SUGGESTION :
+	//SUGGESTION : int def of suggestion
 	SUGGESTION = 3
-	//ANSWER :
+	//ANSWER : int def of answer
 	ANSWER = 4
-	//COMMENT :
+	//COMMENT : int def of comment
 	COMMENT = 5
+	//PAGINGCONSTANT : Number of items on page
+	PAGINGCONSTANT = 10
 )
