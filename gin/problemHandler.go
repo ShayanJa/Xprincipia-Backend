@@ -48,12 +48,12 @@ func postProblem(c *gin.Context) {
 
 	form := gorm.ProblemForm{}
 	c.Bind(&form)
-	if form.Description == "" || form.Title == "" {
-		c.Status(http.StatusBadRequest)
-		return
-	}
 
-	gorm.CreateProblem(form)
+	err := gorm.CreateProblem(form)
+	if err != nil {
+		glog.Error(err)
+		c.JSON(http.StatusBadRequest, err.Error())
+	}
 	c.Status(http.StatusOK)
 
 }

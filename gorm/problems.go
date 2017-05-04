@@ -3,6 +3,7 @@ package gorm
 import (
 	"strconv"
 
+	"errors"
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
 )
@@ -55,7 +56,17 @@ func (p *Problem) GetProblemByTitle(title string) {
 }
 
 //CreateProblem : Creates a problem from a problemForm
-func CreateProblem(form ProblemForm) {
+func CreateProblem(form ProblemForm) error {
+
+	//Handle form Field Errors
+	switch {
+	case form.Title == "":
+		return errors.New("Title is empty")
+	case form.Summary == "":
+		return errors.New("Summary is empty")
+	}
+
+	//Create Problem with Form Items
 	p := Problem{}
 	p.OriginalPosterUsername = form.Username
 	intID, _ := strconv.Atoi(form.ParentID)
@@ -67,6 +78,7 @@ func CreateProblem(form ProblemForm) {
 	p.References = form.References
 	p.Requirements = form.Requirements
 	db.Create(&p)
+	return nil
 }
 
 // UpdateProblem : Updates a problem with problemForm as input
