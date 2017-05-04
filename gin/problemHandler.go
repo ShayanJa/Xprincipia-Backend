@@ -53,6 +53,7 @@ func postProblem(c *gin.Context) {
 	if err != nil {
 		glog.Error(err)
 		c.JSON(http.StatusBadRequest, err.Error())
+		return
 	}
 	c.Status(http.StatusOK)
 
