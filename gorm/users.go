@@ -189,6 +189,14 @@ func DeleteUserByID(id int) {
 	db.Delete(&u)
 }
 
+//DisableUser : disables user
+func DisableUser(id int) {
+	u := User{}
+	u.GetUserByID(id)
+	u.IsDisabled = true
+	db.Model(&u).Update("is_disabled", u.IsDisabled)
+}
+
 /*
 
 DB bool functions
