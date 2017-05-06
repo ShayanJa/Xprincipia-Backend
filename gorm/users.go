@@ -34,6 +34,11 @@ type LoginForm struct {
 	Username string `json:"username" form:"username"`
 }
 
+//LoginAttempt : Logs everytime someone logs on
+func (l LoginForm) LoginAttempt() {
+	db.Create(l)
+}
+
 // RegistrationForm : A registration struct
 type RegistrationForm struct {
 	FullName string `json:"fullName" form:"fullName"`
@@ -133,11 +138,6 @@ func (u *User) VerifyUser(username string, password string) bool {
 	return true
 }
 
-//LoginAttempt : Logs everytime someone logs on
-func (l LoginForm) LoginAttempt() {
-	db.Create(l)
-}
-
 //GetAllCreatedSolutions :
 func (u *User) GetAllCreatedSolutions() []Solution {
 	solutions := []Solution{}
@@ -180,6 +180,13 @@ func (u *User) GetAllFollowedProblems() []Problem {
 
 	}
 	return problems
+}
+
+//DeleteUserByID : //DELETE
+func DeleteUserByID(id int) {
+	u := User{}
+	u.GetUserByID(id)
+	db.Delete(&u)
 }
 
 /*
