@@ -1,13 +1,11 @@
 package gin
 
 import (
+	"github.com/gin-gonic/gin"
+	"github.com/golang/glog"
 	"net/http"
 	"strconv"
 	"work/xprincipia/backend/gorm"
-
-	"errors"
-	"github.com/gin-gonic/gin"
-	"github.com/golang/glog"
 )
 
 func postQuestion(c *gin.Context) {
@@ -19,11 +17,11 @@ func postQuestion(c *gin.Context) {
 	glog.Info(form)
 
 	// Check Token Validity
-	token := c.Request.Header["Authorization"]
-	username := form.Username
-
-	if !gorm.CheckLoginAttempt(username, token[0]) {
-		c.JSON(401, errors.New("Invalid Token"))
+	err := gorm.CheckToken(form.Username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
 	}
 
 	gorm.CreateQuestion(form)
@@ -73,10 +71,11 @@ func deleteQuestionByIDHandler(c *gin.Context) {
 	c.Bind(&form)
 
 	// Check Token Validity
-	token := c.Request.Header["Authorization"]
-	username := form.Username
-	if !gorm.CheckLoginAttempt(username, token[0]) {
-		c.JSON(401, errors.New("InvalidToken"))
+	err := gorm.CheckToken(form.Username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
 	}
 
 	gorm.DeleteQuestionByID(form)

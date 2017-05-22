@@ -15,9 +15,16 @@ func postSuggestion(c *gin.Context) {
 
 	form := gorm.SuggestionForm{}
 	c.Bind(&form)
-	glog.Info(form)
-	gorm.CreateSuggestion(form)
 
+	// Check Token Validity
+	err := gorm.CheckToken(form.Username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
+	}
+
+	gorm.CreateSuggestion(form)
 	c.Status(http.StatusOK)
 }
 

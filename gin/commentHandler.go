@@ -15,7 +15,15 @@ func postComment(c *gin.Context) {
 
 	form := gorm.CommentForm{}
 	c.Bind(&form)
-	glog.Info(form)
+
+	// Check Token Validity
+	err := gorm.CheckToken(form.Username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
+	}
+
 	gorm.CreateComment(form)
 	c.Status(http.StatusOK)
 }
@@ -50,6 +58,7 @@ func getCommentsBySuggestionIDHandler(c *gin.Context) {
 }
 
 func deleteCommentByIDHandler(c *gin.Context) {
+	//TODO: change to delete form
 	id := c.Query("id")
 	intID, err := strconv.Atoi(id)
 	if err != nil {

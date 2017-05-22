@@ -1,6 +1,10 @@
 package gorm
 
-import "github.com/jinzhu/gorm"
+import (
+	"errors"
+	"github.com/golang/glog"
+	"github.com/jinzhu/gorm"
+)
 
 type LoginAttempt struct {
 	gorm.Model
@@ -18,18 +22,23 @@ func CreateLoginAttempt(username string, token string) {
 	l := LoginAttempt{}
 	l.Username = username
 	l.Token = token
-	if CheckLoginAttempt(username, token) {
+	err := CheckToken(username, token)
+	if err != nil {
+		glog.Error(err)
 		return
 	}
+
+	//else create db Entry
 	db.Create(&l)
+
 }
 
 // CheckLoginAttempt : Check for table entry
-func CheckLoginAttempt(username string, token string) bool {
+func CheckToken(username string, token string) error {
 	l := LoginAttempt{}
 	db.Where(" username = ? AND token = ? ", username, token).Find(&l)
 	if l.ID == 0 {
-		return false
+		return errors.New("Invalid Token")
 	}
-	return true
+	return nil
 }

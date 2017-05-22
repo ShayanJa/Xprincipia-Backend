@@ -16,6 +16,15 @@ func postAnswer(c *gin.Context) {
 	form := gorm.AnswerForm{}
 	c.Bind(&form)
 	glog.Info(form)
+
+	// Check Token Validity
+	err := gorm.CheckToken(form.Username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
+	}
+
 	gorm.CreateAnswer(form)
 	c.Status(http.StatusOK)
 }
