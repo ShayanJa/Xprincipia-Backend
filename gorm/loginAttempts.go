@@ -2,7 +2,7 @@ package gorm
 
 import (
 	"errors"
-	"github.com/golang/glog"
+
 	"github.com/jinzhu/gorm"
 )
 
@@ -22,11 +22,6 @@ func CreateLoginAttempt(username string, token string) {
 	l := LoginAttempt{}
 	l.Username = username
 	l.Token = token
-	err := CheckToken(username, token)
-	if err != nil {
-		glog.Error(err)
-		return
-	}
 
 	//else create db Entry
 	db.Create(&l)
