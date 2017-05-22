@@ -59,10 +59,8 @@ func getAllQuestions(c *gin.Context) {
 }
 
 func deleteQuestionByIDHandler(c *gin.Context) {
-	id := c.Query("id")
-	intID, err := strconv.Atoi(id)
-	if err != nil {
-		glog.Error("There was an error in converting string to integer")
-	}
-	gorm.DeleteQuestionByID(intID)
+	form := gorm.QuestionDeleteForm{}
+	c.Bind(&form)
+
+	gorm.DeleteQuestionByID(form)
 }
