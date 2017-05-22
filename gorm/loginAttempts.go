@@ -22,7 +22,6 @@ func CreateLoginAttempt(username string, token string) {
 		return
 	}
 	db.Create(&l)
-	return
 }
 
 // CheckLoginAttempt : Check for table entry

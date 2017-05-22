@@ -108,6 +108,9 @@ func SetRoutes(router *gin.Engine) {
 		//Vote API
 		auth.POST("/vote/create", postVote)
 
+		//save Token API
+		auth.POST("/saveToken", saveToken)
+
 	}
 	router.POST("/login", authMiddleware.LoginHandler)
 

@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"work/xprincipia/backend/gorm"
 
+	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
 )
@@ -17,12 +18,12 @@ func postQuestion(c *gin.Context) {
 	c.Bind(&form)
 	glog.Info(form)
 
+	// Check Token Validity
 	token := c.Request.Header["Authorization"]
 	username := form.Username
 
-	glog.Info(token)
 	if !gorm.CheckLoginAttempt(username, token[0]) {
-		return
+		c.JSON(401, errors.New("Invalid Token"))
 	}
 
 	gorm.CreateQuestion(form)
@@ -70,6 +71,13 @@ func getAllQuestions(c *gin.Context) {
 func deleteQuestionByIDHandler(c *gin.Context) {
 	form := gorm.QuestionDeleteForm{}
 	c.Bind(&form)
+
+	// Check Token Validity
+	token := c.Request.Header["Authorization"]
+	username := form.Username
+	if !gorm.CheckLoginAttempt(username, token[0]) {
+		c.JSON(401, errors.New("InvalidToken"))
+	}
 
 	gorm.DeleteQuestionByID(form)
 }

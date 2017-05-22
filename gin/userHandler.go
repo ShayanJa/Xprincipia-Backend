@@ -90,3 +90,11 @@ func getAllFollowedProblems(c *gin.Context) {
 	u.GetUserByUsername(username)
 	c.JSON(http.StatusOK, u.GetAllFollowedProblems())
 }
+
+func saveToken(c *gin.Context) {
+	form := gorm.LoginAttemptForm{}
+	c.Bind(&form)
+
+	gorm.CreateLoginAttempt(form.Username, form.Token)
+	c.Status(http.StatusOK)
+}
