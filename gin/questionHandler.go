@@ -16,8 +16,17 @@ func postQuestion(c *gin.Context) {
 	form := gorm.QuestionForm{}
 	c.Bind(&form)
 	glog.Info(form)
+
+	token := c.Request.Header["Authorization"]
+	username := form.Username
+
+	glog.Info(token)
+	if !gorm.CheckLoginAttempt(username, token[0]) {
+		return
+	}
+
 	gorm.CreateQuestion(form)
-	c.JSON(http.StatusOK, "")
+	c.Status(http.StatusOK)
 }
 
 func getQuestionByIDHandler(c *gin.Context) {

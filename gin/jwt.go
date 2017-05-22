@@ -36,6 +36,7 @@ var authMiddleware = &jwt.GinJWTMiddleware{
 	Authorizator: func(userId string, c *gin.Context) bool {
 		// c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 		//check if this user is in the db based on the jwt
+
 		return gorm.IsUserinDBbyUsername(userId)
 	},
 	Unauthorized: func(c *gin.Context, code int, message string) {

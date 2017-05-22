@@ -38,7 +38,7 @@ func runMigrations(db *gorm.DB) bool {
 	db.AutoMigrate(&Vote{})
 
 	glog.Info("CREATING LOGINATTEMPTS TABLE...")
-	db.AutoMigrate(&LoginForm{})
+	db.AutoMigrate(&LoginAttempt{})
 
 	return true
 }
