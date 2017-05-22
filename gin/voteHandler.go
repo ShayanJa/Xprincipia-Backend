@@ -21,6 +21,7 @@ func postVote(c *gin.Context) {
 		c.JSON(401, err.Error())
 		return
 	}
+
 	if gorm.CreateVote(form) {
 		c.Status(http.StatusOK)
 		return
