@@ -15,3 +15,9 @@ go run server.go
 
 For the time being you must also change the imports for gorm and gin to be a folder 
 specifically for your computer
+
+
+run tests with 
+```
+go test ./tests
+```

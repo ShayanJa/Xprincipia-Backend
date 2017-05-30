@@ -9,12 +9,13 @@ import (
 	"github.com/golang/glog"
 )
 
-func postSuggestion(c *gin.Context) {
+func postAnswer(c *gin.Context) {
 	c.Header("Access-Control-Allow-Origin", "*")
 	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 
-	form := gorm.SuggestionForm{}
+	form := gorm.AnswerForm{}
 	c.Bind(&form)
+	glog.Info(form)
 
 	// Check Token Validity
 	err := gorm.CheckToken(form.Username, c.Request.Header["Authorization"][0])
@@ -24,53 +25,44 @@ func postSuggestion(c *gin.Context) {
 		return
 	}
 
-	gorm.CreateSuggestion(form)
+	gorm.CreateAnswer(form)
 	c.Status(http.StatusOK)
 }
 
-func getSuggestionByIDHandler(c *gin.Context) {
+func getAnswerByIDHandler(c *gin.Context) {
 	id := c.Query("id")
 	glog.Info("Getting Suggestion with ID : ", id)
 
-	suggestion := gorm.Suggestion{}
+	answer := gorm.Answer{}
 	intID, err := strconv.Atoi(id)
 	uintID := uint(intID)
 	if err != nil {
 		glog.Error("There was an error in converting string to integer")
 	}
 
-	suggestion.GetSuggestionByID(uintID)
-	c.JSON(http.StatusOK, suggestion)
+	answer.GetAnswerByID(uintID)
+	c.JSON(http.StatusOK, answer)
 }
 
-func getAllSuggestions(c *gin.Context) {
-	c.JSON(http.StatusOK, gorm.GetAllSuggestions())
+func getAllAnswers(c *gin.Context) {
+	c.JSON(http.StatusOK, gorm.GetAllAnswers())
 }
 
-func getSuggestionByTypeIDHandler(c *gin.Context) {
-	id := c.Query("id")
-	dataType := c.Query("dataType")
-	glog.Info("ID: ", id)
-	glog.Info("dataType: ", dataType)
-
-	intID, err := strconv.Atoi(id)
-	if err != nil {
-		glog.Error("There was an error in converting string to integer for id")
-	}
-	intDataType, err := strconv.Atoi(dataType)
-	if err != nil {
-		glog.Error("There was an error in converting string to integer for datatype")
-	}
-	suggestions := gorm.GetAllSuggestionsByTypeID(intDataType, intID)
-
-	c.JSON(http.StatusOK, suggestions)
-}
-
-func deleteSuggestionByIDHandler(c *gin.Context) {
+func getAnswersByQuestionIDHandler(c *gin.Context) {
 	id := c.Query("id")
 	intID, err := strconv.Atoi(id)
 	if err != nil {
 		glog.Error("There was an error in converting string to integer")
 	}
-	gorm.DeleteSuggestionByID(intID)
+	answers := gorm.GetAllAnswersByQuestionID(intID)
+	c.JSON(http.StatusOK, answers)
+}
+
+func deleteAnswerByIDHandler(c *gin.Context) {
+	id := c.Query("id")
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+	gorm.DeleteAnswerByID(intID)
 }

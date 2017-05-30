@@ -25,17 +25,26 @@ func runMigrations(db *gorm.DB) bool {
 	glog.Info("CREATING QUESTION TABLE...")
 	db.AutoMigrate(&Question{})
 
+	glog.Info("CREATING ANSWER TABLE...")
+	db.AutoMigrate(&Answer{})
+
 	glog.Info("CREATING SUGGESTION TABLE...")
 	db.AutoMigrate(&Suggestion{})
+
+	glog.Info("CREATING COMMENT TABLE...")
+	db.AutoMigrate(&Comment{})
+
+	glog.Info("CREATING FREEFORM TABLE...")
+	db.AutoMigrate(&FreeForm{})
+
+	glog.Info("CREATING PRO TABLE...")
+	db.AutoMigrate(&Pro{})
 
 	glog.Info("CREATING VOTE TABLE...")
 	db.AutoMigrate(&Vote{})
 
-	glog.Info("CREATING ADDRESS TABLE...")
-	db.AutoMigrate(&Address{})
-
 	glog.Info("CREATING LOGINATTEMPTS TABLE...")
-	db.AutoMigrate(&LoginForm{})
+	db.AutoMigrate(&LoginAttempt{})
 
 	return true
 }

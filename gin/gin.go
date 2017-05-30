@@ -3,7 +3,6 @@ package gin
 import (
 	"fmt"
 	"os/exec"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
@@ -18,14 +17,15 @@ func RunRouter() {
 	//Get enviromental data
 	port := "10000" //os.Getenv("ROUTER_PORT")
 
-	//gin router config
+	// Gin router config
+	// Accept CORS Headers
 	router := gin.New()
 	router.Use(cors.Middleware(cors.Config{
-		Origins:         "*",
-		Methods:         "GET, PUT, POST, DELETE",
-		RequestHeaders:  "Origin, Authorization, Content-Type",
-		ExposedHeaders:  "",
-		MaxAge:          50 * time.Second,
+		Origins:        "*",
+		Methods:        "GET, POST, PUT, DELETE",
+		RequestHeaders: "Origin, Authorization, Content-Type",
+		ExposedHeaders: "",
+		// MaxAge:          50 * time.Second,
 		Credentials:     true,
 		ValidateHeaders: false,
 	}))
@@ -39,7 +39,7 @@ func RunRouter() {
 	// router.LoadHTMLGlob("templates/*")
 
 	// Display LOGO
-	cmd := "cat image.txt"
+	cmd := "cat util/logo.txt"
 	out, err := exec.Command("bash", "-c", cmd).Output()
 	if err != nil {
 		glog.Info(fmt.Sprintf("Failed to execute command: %s", cmd))

@@ -1,9 +1,11 @@
 package gorm
 
 import (
+	"errors"
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
+	"work/xprincipia/backend/util"
 )
 
 //User : ~
@@ -32,6 +34,11 @@ type LoginForm struct {
 	Username string `json:"username" form:"username"`
 }
 
+//LoginAttempt : Logs everytime someone logs on
+func (l LoginForm) LoginAttempt() {
+	db.Create(l)
+}
+
 // RegistrationForm : A registration struct
 type RegistrationForm struct {
 	FullName string `json:"fullName" form:"fullName"`
@@ -45,17 +52,32 @@ type PasswordResetForm struct {
 	Email string `json:"email" form:"email"`
 }
 
+// //ErrorTypes
+// var ErrFormSubmission = errors.New("Form was incomplete")
+
 //API Functions
 
-// CreateUser : check if user is already created,
+// CreateUser : Validate form fields and check if user is already created,
 // if not use RegistrationForm to populate a new one
-func CreateUser(form RegistrationForm) {
+func CreateUser(form RegistrationForm) error {
+
+	//Validate register form
+	switch {
+	case form.Username == "":
+		return errors.New("Username Field is empty")
+	case form.Email == "":
+		return errors.New("Email Field is empty")
+	case form.FullName == "":
+		return errors.New("FullName Field is empty")
+	case len(form.Password) < 8:
+		return errors.New("Password must be longer than 8")
+	}
 
 	//check DB if Username is already taken
 	u := User{}
 	err := db.Where("username = ?", form.Username).First(&u).Value
 	if err == nil {
-		glog.Info("error has occured")
+		glog.Error("error has occured")
 	}
 	//If username does not exist
 	if u.Username == "" {
@@ -72,12 +94,13 @@ func CreateUser(form RegistrationForm) {
 		u.HashedPassword = hashedPassword
 		u.Email = form.Email
 		u.Username = form.Username
+		u.FullName = form.FullName
 
 		db.Create(&u)
 	} else {
-		glog.Error("Username is already taken")
+		return errors.New("Username is already taken")
 	}
-
+	return nil
 }
 
 //GetUserByUsername : get user by name
@@ -85,7 +108,7 @@ func (u *User) GetUserByUsername(name string) bool {
 	glog.Info("Getting Username : " + name + " ...")
 	err := db.Where("username = ?", name).First(&u)
 	if err == nil {
-		glog.Info("There was an error...")
+		glog.Error("There was an error...")
 	}
 	if u.ID == 0 {
 		glog.Info("NO USER BY THAT NAME...")
@@ -99,7 +122,7 @@ func (u *User) GetUserByUsername(name string) bool {
 func (u *User) GetUserByID(id int) {
 	err := db.Where("ID = ?", id).First(&u)
 	if err == nil {
-		glog.Info("There was an error")
+		glog.Error("There was an error")
 	}
 }
 
@@ -107,7 +130,7 @@ func (u *User) GetUserByID(id int) {
 func (u *User) VerifyUser(username string, password string) bool {
 	err := db.Where("username = ? AND hashed_password", username, password).First(&u)
 	if err == nil {
-		glog.Info("There was an error")
+		glog.Error("There was an error")
 	}
 	if u.ID == 0 {
 		return false
@@ -115,73 +138,63 @@ func (u *User) VerifyUser(username string, password string) bool {
 	return true
 }
 
-//LoginAttempt : Logs everytime someone logs on
-func (l LoginForm) LoginAttempt() {
-	db.Create(l)
+//GetAllCreatedSolutions :
+func (u *User) GetAllCreatedSolutions() []Solution {
+	solutions := []Solution{}
+	db.Where("original_poster_username = ?", u.Username).Find(&solutions)
+	return solutions
 }
 
-// PostProblem : User Auth Required> Post Problem
-func (u *User) PostProblem(text string, description string) {
-	p := Problem{
-		OriginalPoster: *u,
-		Title:          text,
-		Description:    description,
+//GetAllCreatedProblems :
+func (u *User) GetAllCreatedProblems() []Problem {
+	problems := []Problem{}
+	db.Where("original_poster_username = ?", u.Username).Find(&problems)
+	return problems
+}
+
+//GetAllFollowedSolutions :
+func (u *User) GetAllFollowedSolutions() []Solution {
+	votes := []Vote{}
+	db.Where("type = ? AND username = ?", util.SOLUTION, u.Username).Find(&votes)
+
+	var solutions [100]Solution
+	for index, vote := range votes {
+		s := Solution{}
+		s.GetSolutionByID(uint(vote.TypeID))
+		solutions[index] = s
+
 	}
-	db.Create(&p)
-	u.ProblemsPostedIDs = append(u.ProblemsPostedIDs, p)
+	return solutions[:len(votes)]
 }
 
-// //PostSolution : User Auth Required> Post Solution
-// func (u *User) PostSolution(p Problem, text string, description string) {
-// 	s := Solution{
-// 		ProblemID:      p.ID,
-// 		OriginalPoster: *u,
-// 		Text:           text,
-// 		Rank:           0,
-// 	}
-// 	db.Create(s)
-// 	glog.Info("Solution Create!  ID: " + string(s.ID))
-// }
+//GetAllFollowedProblems :
+func (u *User) GetAllFollowedProblems() []Problem {
+	votes := []Vote{}
+	db.Where("type = ? AND username = ?", util.PROBLEM, u.Username).Find(&votes)
 
-//FollowProblem : User follows a problem, Add problemID to array
-func (u *User) FollowProblem(problemID uint) {
-	problem := Problem{}
-	problem.GetProblemByID(problemID)
+	problems := []Problem{}
+	for _, vote := range votes {
+		p := Problem{}
+		p.GetProblemByID(uint(vote.TypeID))
+		problems = append(problems, p)
 
-	u.FollowedProblemsIDs = append(u.FollowedProblemsIDs, problem)
-	db.Save(&u)
-
-}
-
-// getFollowedProblems : returns problemIDs of all problems followed by the user
-//TODO:
-//THis doesn't work right
-func (u User) getFollowedProblems() []int {
-	var followedProblems []int
-	err := db.Where("followed_problems = ?").Find(&followedProblems)
-	if err == nil {
-		glog.Error("Unable to retrieve users followed problems")
 	}
-	return followedProblems
+	return problems
 }
 
-// VoteOnSolution : User votes on a solution to increase it's rank
-func (u *User) VoteOnSolution(solutionID uint) {
-	solution := Solution{}
-	solution.GetSolutionByID(solutionID)
+//DeleteUserByID : //DELETE
+func DeleteUserByID(id int) {
+	u := User{}
+	u.GetUserByID(id)
+	db.Delete(&u)
+}
 
-	//Check if user has already voted on this problem.
-	//if found look for what problem this is and lower rank on a different solution
-	for _, votedProblem := range u.VotedProblemIDs {
-		for _, votedSolution := range u.VotedSolutionsIDs {
-			if votedProblem.ID == votedSolution.ProblemID {
-				s := Solution{}
-				s.GetSolutionByID(votedSolution.ID)
-				s.Rank--
-			}
-		}
-	}
-	solution.Rank++
+//DisableUser : disables user
+func DisableUser(id int) {
+	u := User{}
+	u.GetUserByID(id)
+	u.IsDisabled = true
+	db.Model(&u).Update("is_disabled", u.IsDisabled)
 }
 
 /*

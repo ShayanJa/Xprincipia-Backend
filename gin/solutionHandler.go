@@ -10,6 +10,7 @@ import (
 )
 
 func getSolutionByID(c *gin.Context) {
+
 	id := c.Query("id")
 	glog.Info("ID sent is: ", id)
 
@@ -42,9 +43,30 @@ func getAllSolutions(c *gin.Context) {
 }
 
 func postSolution(c *gin.Context) {
+
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
+
 	form := gorm.SolutionForm{}
 	c.Bind(&form)
 
+	// Check Token Validity
+	err := gorm.CheckToken(form.Username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
+	}
+
 	gorm.CreateSolution(form)
 	c.Status(http.StatusOK)
+}
+
+func deleteSolutionByIDHandler(c *gin.Context) {
+	id := c.Query("id")
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+	gorm.DeleteSolutionByID(intID)
 }

@@ -9,11 +9,11 @@ import (
 	"github.com/golang/glog"
 )
 
-func postSuggestion(c *gin.Context) {
+func postComment(c *gin.Context) {
 	c.Header("Access-Control-Allow-Origin", "*")
 	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 
-	form := gorm.SuggestionForm{}
+	form := gorm.CommentForm{}
 	c.Bind(&form)
 
 	// Check Token Validity
@@ -24,53 +24,45 @@ func postSuggestion(c *gin.Context) {
 		return
 	}
 
-	gorm.CreateSuggestion(form)
+	gorm.CreateComment(form)
 	c.Status(http.StatusOK)
 }
 
-func getSuggestionByIDHandler(c *gin.Context) {
+func getCommentByIDHandler(c *gin.Context) {
 	id := c.Query("id")
 	glog.Info("Getting Suggestion with ID : ", id)
 
-	suggestion := gorm.Suggestion{}
+	comment := gorm.Comment{}
 	intID, err := strconv.Atoi(id)
 	uintID := uint(intID)
 	if err != nil {
 		glog.Error("There was an error in converting string to integer")
 	}
 
-	suggestion.GetSuggestionByID(uintID)
-	c.JSON(http.StatusOK, suggestion)
+	comment.GetCommentByID(uintID)
+	c.JSON(http.StatusOK, comment)
 }
 
-func getAllSuggestions(c *gin.Context) {
-	c.JSON(http.StatusOK, gorm.GetAllSuggestions())
+func getAllComments(c *gin.Context) {
+	c.JSON(http.StatusOK, gorm.GetAllComments())
 }
 
-func getSuggestionByTypeIDHandler(c *gin.Context) {
-	id := c.Query("id")
-	dataType := c.Query("dataType")
-	glog.Info("ID: ", id)
-	glog.Info("dataType: ", dataType)
-
-	intID, err := strconv.Atoi(id)
-	if err != nil {
-		glog.Error("There was an error in converting string to integer for id")
-	}
-	intDataType, err := strconv.Atoi(dataType)
-	if err != nil {
-		glog.Error("There was an error in converting string to integer for datatype")
-	}
-	suggestions := gorm.GetAllSuggestionsByTypeID(intDataType, intID)
-
-	c.JSON(http.StatusOK, suggestions)
-}
-
-func deleteSuggestionByIDHandler(c *gin.Context) {
+func getCommentsBySuggestionIDHandler(c *gin.Context) {
 	id := c.Query("id")
 	intID, err := strconv.Atoi(id)
 	if err != nil {
 		glog.Error("There was an error in converting string to integer")
 	}
-	gorm.DeleteSuggestionByID(intID)
+	comments := gorm.GetAllCommentsBySuggestionID(intID)
+	c.JSON(http.StatusOK, comments)
+}
+
+func deleteCommentByIDHandler(c *gin.Context) {
+	//TODO: change to delete form
+	id := c.Query("id")
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+	gorm.DeleteCommentByID(intID)
 }

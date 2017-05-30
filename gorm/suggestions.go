@@ -15,6 +15,7 @@ type Suggestion struct {
 	Username    string
 	Description string
 	Rank        int
+	PercentRank float32
 }
 
 //SuggestionForm : Form to make Question Struct
@@ -40,6 +41,7 @@ func CreateSuggestion(form SuggestionForm) {
 	s.Description = form.Description
 	s.Rank = 1
 	db.Create(&s)
+	return
 }
 
 //GetSuggestionByID : Returns a Suggestion based on an int ID
@@ -69,4 +71,33 @@ func GetAllSuggestionsByTypeID(dataType int, typeID int) []Suggestion {
 	}
 
 	return s
+}
+
+//DeleteSuggestionByID : //DELETE
+func DeleteSuggestionByID(id int) {
+	s := Suggestion{}
+	s.GetSuggestionByID(uint(id))
+	db.Delete(&s)
+}
+
+//VoteSuggestion : ~
+func (s *Suggestion) VoteSuggestion(id int) {
+	err := db.Where("id = ?", id).Find(&s)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+	s.Rank++
+	db.Model(&s).Update("rank", s.Rank)
+
+	var totalVotes = 0
+	suggestions := GetAllSuggestionsByTypeID(s.Type, s.TypeID)
+	for i := 0; i < len(suggestions); i++ {
+		totalVotes += suggestions[i].Rank
+	}
+
+	for i := 0; i < len(suggestions); i++ {
+		var percentRank = float32(suggestions[i].Rank) / float32(totalVotes)
+		db.Model(&suggestions[i]).Update("percent_rank", percentRank)
+	}
+
 }

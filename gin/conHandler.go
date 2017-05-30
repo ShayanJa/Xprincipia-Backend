@@ -9,11 +9,11 @@ import (
 	"github.com/golang/glog"
 )
 
-func postSuggestion(c *gin.Context) {
+func postCon(c *gin.Context) {
 	c.Header("Access-Control-Allow-Origin", "*")
 	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 
-	form := gorm.SuggestionForm{}
+	form := gorm.ConForm{}
 	c.Bind(&form)
 
 	// Check Token Validity
@@ -24,30 +24,30 @@ func postSuggestion(c *gin.Context) {
 		return
 	}
 
-	gorm.CreateSuggestion(form)
+	gorm.CreateCon(form)
 	c.Status(http.StatusOK)
 }
 
-func getSuggestionByIDHandler(c *gin.Context) {
+func getConByIDHandler(c *gin.Context) {
 	id := c.Query("id")
-	glog.Info("Getting Suggestion with ID : ", id)
+	glog.Info("Getting Con with ID : ", id)
 
-	suggestion := gorm.Suggestion{}
+	con := gorm.Con{}
 	intID, err := strconv.Atoi(id)
 	uintID := uint(intID)
 	if err != nil {
 		glog.Error("There was an error in converting string to integer")
 	}
 
-	suggestion.GetSuggestionByID(uintID)
-	c.JSON(http.StatusOK, suggestion)
+	con.GetConByID(uintID)
+	c.JSON(http.StatusOK, con)
 }
 
-func getAllSuggestions(c *gin.Context) {
-	c.JSON(http.StatusOK, gorm.GetAllSuggestions())
+func getAllCons(c *gin.Context) {
+	c.JSON(http.StatusOK, gorm.GetAllCons())
 }
 
-func getSuggestionByTypeIDHandler(c *gin.Context) {
+func getConByTypeIDHandler(c *gin.Context) {
 	id := c.Query("id")
 	dataType := c.Query("dataType")
 	glog.Info("ID: ", id)
@@ -61,16 +61,16 @@ func getSuggestionByTypeIDHandler(c *gin.Context) {
 	if err != nil {
 		glog.Error("There was an error in converting string to integer for datatype")
 	}
-	suggestions := gorm.GetAllSuggestionsByTypeID(intDataType, intID)
+	cons := gorm.GetAllConsByTypeID(intDataType, intID)
 
-	c.JSON(http.StatusOK, suggestions)
+	c.JSON(http.StatusOK, cons)
 }
 
-func deleteSuggestionByIDHandler(c *gin.Context) {
-	id := c.Query("id")
-	intID, err := strconv.Atoi(id)
-	if err != nil {
-		glog.Error("There was an error in converting string to integer")
-	}
-	gorm.DeleteSuggestionByID(intID)
-}
+// func deleteConByIDHandler(c *gin.Context) {
+// 	id := c.Query("id")
+// 	intID, err := strconv.Atoi(id)
+// 	if err != nil {
+// 		glog.Error("There was an error in converting string to integer")
+// 	}
+// 	gorm.DeleteConByID(intID)
+// }

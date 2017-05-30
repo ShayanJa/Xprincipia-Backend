@@ -1,12 +1,11 @@
 package gin
 
 import (
+	"github.com/gin-gonic/gin"
+	"github.com/golang/glog"
 	"net/http"
 	"strconv"
 	"work/xprincipia/backend/gorm"
-
-	"github.com/gin-gonic/gin"
-	"github.com/golang/glog"
 )
 
 func getProblemByIDHandler(c *gin.Context) {
@@ -42,14 +41,26 @@ func getAllSubProblems(c *gin.Context) {
 }
 
 func postProblem(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
+
 	form := gorm.ProblemForm{}
 	c.Bind(&form)
-	if form.Description == "" || form.Title == "" {
-		c.Status(http.StatusBadRequest)
+
+	// Check Token Validity
+	err := gorm.CheckToken(form.Username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
 		return
 	}
 
-	gorm.CreateProblem(form)
+	err = gorm.CreateProblem(form)
+	if err != nil {
+		glog.Error(err)
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
 	c.Status(http.StatusOK)
 
 }
@@ -68,4 +79,16 @@ func searchProblemDB(c *gin.Context) {
 
 	c.JSON(http.StatusOK, response)
 
+}
+
+func deleteProblemByIDHandler(c *gin.Context) {
+
+	//TODO use a form Here instead of query
+	id := c.Query("id")
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+
+	gorm.DeleteProblemByID(intID)
 }
