@@ -15,7 +15,6 @@ type Question struct {
 	TypeID      int
 	Username    string
 	Description string
-	// Answers     []string
 	Rank        int
 	PercentRank float32
 }

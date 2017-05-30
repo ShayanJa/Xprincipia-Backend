@@ -13,6 +13,8 @@ const (
 	ANSWER = 4
 	//COMMENT : int def of comment
 	COMMENT = 5
+	//FREEFORM : int def of freeform
+	FREEFORM = 6
 	//PAGINGCONSTANT : Number of items on page
 	PAGINGCONSTANT = 10
 )

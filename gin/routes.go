@@ -111,6 +111,12 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/freeForms/all", getAllFreeForms)
 		auth.POST("/freeForms/create", postFreeForm)
 
+		//Pro API
+		auth.GET("/pros/ID", getFreeFormByIDHandler)
+		auth.GET("/pros/typeID", getFreeFormByTypeIDHandler)
+		auth.GET("/pros/all", getAllFreeForms)
+		auth.POST("/pros/create", postFreeForm)
+
 		//Vote API
 		auth.POST("/vote/create", postVote)
 

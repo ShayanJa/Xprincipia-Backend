@@ -165,7 +165,7 @@ func populateDBtestData(db *gorm.DB) {
 	freeForm1 := FreeForm{
 		Username:    "Shyshawn",
 		Type:        util.PROBLEM,
-		TypeID:      1,
+		TypeID:      6,
 		Description: "Because does section 4 mean?",
 	}
 	db.Create(&freeForm1)
