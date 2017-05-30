@@ -25,7 +25,6 @@ func postPro(c *gin.Context) {
 	}
 
 	gorm.CreatePro(form)
-	c.Status(http.StatusOK)
 }
 
 func getProByIDHandler(c *gin.Context) {
