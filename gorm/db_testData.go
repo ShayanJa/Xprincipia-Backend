@@ -170,4 +170,13 @@ func populateDBtestData(db *gorm.DB) {
 	}
 	db.Create(&freeForm1)
 
+	//Create freeForms
+	pro1 := Pro{
+		Username:    "Shyshawn",
+		Type:        util.SOLUTION,
+		TypeID:      6,
+		Description: "Because does section 4 mean?",
+	}
+	db.Create(&pro1)
+
 }
