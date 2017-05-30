@@ -66,11 +66,11 @@ func getProByTypeIDHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, pros)
 }
 
-func deleteProByIDHandler(c *gin.Context) {
-	id := c.Query("id")
-	intID, err := strconv.Atoi(id)
-	if err != nil {
-		glog.Error("There was an error in converting string to integer")
-	}
-	gorm.DeleteProByID(intID)
-}
+// func deleteProByIDHandler(c *gin.Context) {
+// 	id := c.Query("id")
+// 	intID, err := strconv.Atoi(id)
+// 	if err != nil {
+// 		glog.Error("There was an error in converting string to integer")
+// 	}
+// 	gorm.DeleteProByID(intID)
+// }
