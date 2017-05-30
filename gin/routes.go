@@ -117,6 +117,12 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/pros/all", getAllPros)
 		auth.POST("/pros/create", postPro)
 
+		//Pro API
+		auth.GET("/cons/ID", getConByIDHandler)
+		auth.GET("/cons/typeID", getConByTypeIDHandler)
+		auth.GET("/cons/all", getAllCons)
+		auth.POST("/cons/create", postCon)
+
 		//Vote API
 		auth.POST("/vote/create", postVote)
 
