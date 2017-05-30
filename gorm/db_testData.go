@@ -131,7 +131,6 @@ func populateDBtestData(db *gorm.DB) {
 	db.Create(&solution4)
 
 	//Create Suggestions
-
 	suggestion1 := Suggestion{
 		Username:    "Ben Francis",
 		Description: "You could add the fact that entropy is actually increased through abiogenesis through some sort of teleology. Also it could be noted the history of complexity increase in the universe is the dependent variable of a parabolic curve where entropy always increases as the independent variable.",
@@ -161,5 +160,14 @@ func populateDBtestData(db *gorm.DB) {
 		Description: "Because does section 4 mean?",
 	}
 	db.Create(&question3)
+
+	//Create freeForms
+	freeForm1 := FreeForm{
+		Username:    "Shyshawn",
+		Type:        util.PROBLEM,
+		TypeID:      1,
+		Description: "Because does section 4 mean?",
+	}
+	db.Create(&freeForm1)
 
 }
