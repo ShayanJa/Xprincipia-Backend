@@ -89,3 +89,39 @@ func deleteProblemByIDHandler(c *gin.Context) {
 
 	gorm.DeleteProblemByID(intID)
 }
+
+func updateProblemByIDHandler(c *gin.Context) {
+	// Recieve problem Id
+	id := c.Query("id")
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+
+	// Recieve update problem info
+	form := gorm.ProblemForm{}
+	c.Bind(&form)
+
+	// Check Token Validity
+	err = gorm.CheckToken(form.Username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
+	}
+
+	// Get problem in db
+	p := gorm.Problem{}
+	p.GetProblemByID(uint(intID))
+
+	// Check if user is actually op
+	if p.OriginalPosterUsername != form.Username {
+		glog.Info("nope")
+		c.JSON(401, err.Error())
+		return
+	}
+
+	//update problem
+	p.UpdateProblem(form)
+
+}
