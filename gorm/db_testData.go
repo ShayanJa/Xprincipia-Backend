@@ -3,7 +3,6 @@ package gorm
 import (
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
-	"work/xprincipia/backend/util"
 )
 
 func populateDBtestData(db *gorm.DB) {
