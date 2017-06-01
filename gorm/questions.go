@@ -90,6 +90,17 @@ func DeleteQuestionByID(form QuestionDeleteForm) error {
 	return errors.New("UnAuthorized User")
 }
 
+// UpdateQuestion : Updates a problem with problemForm as input
+func (q *Question) UpdateQuestion(form QuestionForm) {
+	err := db.First(&q)
+	if err == nil {
+		glog.Error("There was an error")
+	}
+
+	q.Description = form.Description
+	db.Save(&q)
+}
+
 //VoteQuestion : ~
 func (q *Question) VoteQuestion(id int) {
 	err := db.Where("id = ?", id).Find(&q)

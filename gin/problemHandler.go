@@ -116,7 +116,6 @@ func updateProblemByIDHandler(c *gin.Context) {
 
 	// Check if user is actually op
 	if p.OriginalPosterUsername != form.Username {
-		glog.Info("nope")
 		c.JSON(401, err.Error())
 		return
 	}
