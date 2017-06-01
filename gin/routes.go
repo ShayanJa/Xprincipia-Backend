@@ -93,7 +93,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/suggestions/typeID", getSuggestionByTypeIDHandler)
 		auth.GET("/suggestions/all", getAllSuggestions)
 		auth.POST("/suggestions/create", postSuggestion)
-		auth.POST("/suggestions/update", updateSuggestionyIDHandler)
+		auth.PUT("/suggestions/update", updateSuggestionyIDHandler)
 
 		//Answers API
 		auth.GET("/answers/ID", getAnswerByIDHandler)
