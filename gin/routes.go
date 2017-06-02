@@ -126,11 +126,11 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/cons/all", getAllCons)
 		auth.POST("/cons/create", postCon)
 
-		//Learn Content API
-		auth.GET("/learnItems/ID", getLearnContentByIDHandler)
-		auth.GET("/learnItems/typeID", getLearnContentByTypeIDHandler)
-		auth.GET("/learnItems/all", getAllLearnContents)
-		auth.POST("/learnItems/create", postLearnContent)
+		//Learn Item API
+		auth.GET("/learnItems/ID", getLearnItemByIDHandler)
+		auth.GET("/learnItems/typeID", getLearnItemByTypeIDHandler)
+		auth.GET("/learnItems/all", getAllLearnItems)
+		auth.POST("/learnItems/create", postLearnItem)
 
 		//Resource API
 		auth.GET("/resouces/ID", getResourceByIDHandler)

@@ -8,8 +8,8 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-//LearnContent : Struct containing a learnContent
-type LearnContent struct {
+//LearnItem : Struct containing a learnItem
+type LearnItem struct {
 	gorm.Model
 	Type        int
 	TypeID      int
@@ -19,16 +19,16 @@ type LearnContent struct {
 	PercentRank float32
 }
 
-//LearnContentForm : Form to make LearnContent Struct
-type LearnContentForm struct {
+//LearnLearnItemForm : Form to make LearnItem Struct
+type LearnItemForm struct {
 	Type        string
 	TypeID      string
 	Username    string
 	Description string
 }
 
-//LearnContentDeleteForm : ~
-type LearnContentDeleteForm struct {
+//LearnItemDeleteForm : ~
+type LearnItemDeleteForm struct {
 	Username string
 	ID       int
 }
@@ -37,9 +37,9 @@ type LearnContentDeleteForm struct {
 API
 */
 
-//CreateLearnContent : Creates a learnContent
-func CreateLearnContent(form LearnContentForm) {
-	l := LearnContent{}
+//CreateLearnItem : Creates a learnItem
+func CreateLearnItem(form LearnItemForm) {
+	l := LearnItem{}
 	intType, _ := strconv.Atoi(form.Type)
 	l.Type = intType
 	intTypeID, _ := strconv.Atoi(form.TypeID)
@@ -50,17 +50,17 @@ func CreateLearnContent(form LearnContentForm) {
 	db.Create(&l)
 }
 
-//GetLearnContentByID : Returns a Suggestion based on an int ID
-func (l *LearnContent) GetLearnContentByID(id uint) {
+//GetLearnItemByID : Returns a Suggestion based on an int ID
+func (l *LearnItem) GetLearnItemByID(id uint) {
 	err := db.Where("id = ?", id).First(&l)
 	if err == nil {
 		glog.Info("There was an error")
 	}
 }
 
-//GetAllLearnContents : Return all LearnContents
-func GetAllLearnContents() []LearnContent {
-	l := []LearnContent{}
+//GetAllLearnItems : Return all LearnItems
+func GetAllLearnItems() []LearnItem {
+	l := []LearnItem{}
 	err := db.Order("created_at desc").Find(&l)
 	if err == nil {
 		glog.Info("There was an error")
@@ -68,9 +68,9 @@ func GetAllLearnContents() []LearnContent {
 	return l
 }
 
-//GetAllLearnContentsByTypeID : Use typeID because questions are for both problems and solutions
-func GetAllLearnContentsByTypeID(dataType int, typeID int) []LearnContent {
-	l := []LearnContent{}
+//GetAllLearnItemsByTypeID : Use typeID because questions are for both problems and solutions
+func GetAllLearnItemsByTypeID(dataType int, typeID int) []LearnItem {
+	l := []LearnItem{}
 	err := db.Order("created_at desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&l)
 	if err == nil {
 		glog.Info("There was an error")
@@ -79,10 +79,10 @@ func GetAllLearnContentsByTypeID(dataType int, typeID int) []LearnContent {
 	return l
 }
 
-//DeleteLearnContentByID : //DELETE
-func DeleteLearnContentByID(form LearnContentDeleteForm) error {
-	l := LearnContent{}
-	l.GetLearnContentByID(uint(form.ID))
+//DeleteLearnItemByID : //DELETE
+func DeleteLearnItemByID(form LearnItemDeleteForm) error {
+	l := LearnItem{}
+	l.GetLearnItemByID(uint(form.ID))
 	if l.Username == form.Username {
 		db.Delete(&l)
 		return nil
@@ -90,8 +90,19 @@ func DeleteLearnContentByID(form LearnContentDeleteForm) error {
 	return errors.New("UnAuthorized User")
 }
 
-//VoteLearnContent : ~
-func (l *LearnContent) VoteLearnContent(id int) {
+// UpdateLearnItem : Updates a problem with problemForm as input
+func (l *LearnItem) UpdateLearnItem(form LearnItemForm) {
+	err := db.First(&l)
+	if err == nil {
+		glog.Error("There was an error")
+	}
+
+	l.Description = form.Description
+	db.Save(&l)
+}
+
+//VoteLearnItem : ~
+func (l *LearnItem) VoteLearnItem(id int) {
 	err := db.Where("id = ?", id).Find(&l)
 	if err == nil {
 		glog.Info("There was an error")
@@ -100,7 +111,7 @@ func (l *LearnContent) VoteLearnContent(id int) {
 	db.Model(&l).Update("rank", l.Rank)
 
 	var totalVotes = 0
-	questions := GetAllLearnContentsByTypeID(l.Type, l.TypeID)
+	questions := GetAllLearnItemsByTypeID(l.Type, l.TypeID)
 	for i := 0; i < len(questions); i++ {
 		totalVotes += questions[i].Rank
 	}

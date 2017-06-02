@@ -9,11 +9,11 @@ import (
 	"github.com/golang/glog"
 )
 
-func postLearnContent(c *gin.Context) {
+func postLearnItem(c *gin.Context) {
 	c.Header("Access-Control-Allow-Origin", "*")
 	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 
-	form := gorm.LearnContentForm{}
+	form := gorm.LearnItemForm{}
 	c.Bind(&form)
 
 	// Check Token Validity
@@ -24,29 +24,29 @@ func postLearnContent(c *gin.Context) {
 		return
 	}
 
-	gorm.CreateLearnContent(form)
+	gorm.CreateLearnItem(form)
 }
 
-func getLearnContentByIDHandler(c *gin.Context) {
+func getLearnItemByIDHandler(c *gin.Context) {
 	id := c.Query("id")
-	glog.Info("Getting LearnContent with ID : ", id)
+	glog.Info("Getting LearnItem with ID : ", id)
 
-	l := gorm.LearnContent{}
+	l := gorm.LearnItem{}
 	intID, err := strconv.Atoi(id)
 	uintID := uint(intID)
 	if err != nil {
 		glog.Error("There was an error in converting string to integer")
 	}
 
-	l.GetLearnContentByID(uintID)
+	l.GetLearnItemByID(uintID)
 	c.JSON(http.StatusOK, l)
 }
 
-func getAllLearnContents(c *gin.Context) {
-	c.JSON(http.StatusOK, gorm.GetAllLearnContents())
+func getAllLearnItems(c *gin.Context) {
+	c.JSON(http.StatusOK, gorm.GetAllLearnItems())
 }
 
-func getLearnContentByTypeIDHandler(c *gin.Context) {
+func getLearnItemByTypeIDHandler(c *gin.Context) {
 	id := c.Query("id")
 	dataType := c.Query("dataType")
 	glog.Info("ID: ", id)
@@ -60,16 +60,51 @@ func getLearnContentByTypeIDHandler(c *gin.Context) {
 	if err != nil {
 		glog.Error("There was an error in converting string to integer for datatype")
 	}
-	pros := gorm.GetAllLearnContentsByTypeID(intDataType, intID)
+	pros := gorm.GetAllLearnItemsByTypeID(intDataType, intID)
 
 	c.JSON(http.StatusOK, pros)
 }
 
-// func deleteLearnContentByIDHandler(c *gin.Context) {
+// func deleteLearnItemByIDHandler(c *gin.Context) {
 // 	id := c.Query("id")
 // 	intID, err := strconv.Atoi(id)
 // 	if err != nil {
 // 		glog.Error("There was an error in converting string to integer")
 // 	}
-// 	gorm.DeleteLearnContentByID(intID)
+// 	gorm.DeleteLearnItemByID(intID)
 // }
+
+func updateLearnItemyIDHandler(c *gin.Context) {
+	// Recieve problem Id
+	id := c.Query("id")
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+
+	// Recieve update problem info
+	form := gorm.LearnItemForm{}
+	c.Bind(&form)
+
+	// Check Token Validity
+	err = gorm.CheckToken(form.Username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
+	}
+
+	// Get problem in db
+	l := gorm.LearnItem{}
+	l.GetLearnItemByID(uint(intID))
+
+	// Check if user is actually op
+	if l.Username != form.Username {
+		c.JSON(401, err.Error())
+		return
+	}
+
+	//update problem
+	l.UpdateLearnItem(form)
+
+}

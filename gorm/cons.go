@@ -39,20 +39,20 @@ API
 
 //CreateCon : Creates a con
 func CreateCon(form ConForm) {
-	p := Con{}
+	c := Con{}
 	intType, _ := strconv.Atoi(form.Type)
-	p.Type = intType
+	c.Type = intType
 	intTypeID, _ := strconv.Atoi(form.TypeID)
-	p.TypeID = intTypeID
-	p.Username = form.Username
-	p.Description = form.Description
-	p.Rank = 1
-	db.Create(&p)
+	c.TypeID = intTypeID
+	c.Username = form.Username
+	c.Description = form.Description
+	c.Rank = 1
+	db.Create(&c)
 }
 
 //GetConByID : Returns a Suggestion based on an int ID
-func (p *Con) GetConByID(id uint) {
-	err := db.Where("id = ?", id).First(&p)
+func (c *Con) GetConByID(id uint) {
+	err := db.Where("id = ?", id).First(&c)
 	if err == nil {
 		glog.Info("There was an error")
 	}
@@ -60,47 +60,58 @@ func (p *Con) GetConByID(id uint) {
 
 //GetAllCons : Return all Cons
 func GetAllCons() []Con {
-	p := []Con{}
-	err := db.Order("created_at desc").Find(&p)
+	c := []Con{}
+	err := db.Order("created_at desc").Find(&c)
 	if err == nil {
 		glog.Info("There was an error")
 	}
-	return p
+	return c
 }
 
 //GetAllConsByTypeID : Use typeID because questions are for both problems and solutions
 func GetAllConsByTypeID(dataType int, typeID int) []Con {
-	p := []Con{}
-	err := db.Order("created_at desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&p)
+	c := []Con{}
+	err := db.Order("created_at desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&c)
 	if err == nil {
 		glog.Info("There was an error")
 	}
 
-	return p
+	return c
 }
 
 //DeleteConByID : //DELETE
 func DeleteConByID(form ConDeleteForm) error {
-	p := Con{}
-	p.GetConByID(uint(form.ID))
-	if p.Username == form.Username {
-		db.Delete(&p)
+	c := Con{}
+	c.GetConByID(uint(form.ID))
+	if c.Username == form.Username {
+		db.Delete(&c)
 		return nil
 	}
 	return errors.New("UnAuthorized User")
 }
 
+// UpdateCon : Updates a problem with problemForm as input
+func (c *Con) UpdateCon(form ConForm) {
+	err := db.First(&c)
+	if err == nil {
+		glog.Error("There was an error")
+	}
+
+	c.Description = form.Description
+	db.Save(&c)
+}
+
 //VoteCon : ~
-func (p *Con) VoteCon(id int) {
-	err := db.Where("id = ?", id).Find(&p)
+func (c *Con) VoteCon(id int) {
+	err := db.Where("id = ?", id).Find(&c)
 	if err == nil {
 		glog.Info("There was an error")
 	}
-	p.Rank++
-	db.Model(&p).Update("rank", p.Rank)
+	c.Rank++
+	db.Model(&c).Update("rank", c.Rank)
 
 	var totalVotes = 0
-	questions := GetAllConsByTypeID(p.Type, p.TypeID)
+	questions := GetAllConsByTypeID(c.Type, c.TypeID)
 	for i := 0; i < len(questions); i++ {
 		totalVotes += questions[i].Rank
 	}
