@@ -66,6 +66,41 @@ func getFreeFormByTypeIDHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, freeForms)
 }
 
+func updateFreeFormByIDHandler(c *gin.Context) {
+	// Recieve problem Id
+	id := c.Query("id")
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+
+	// Recieve update problem info
+	form := gorm.FreeFormForm{}
+	c.Bind(&form)
+
+	// Check Token Validity
+	err = gorm.CheckToken(form.Username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
+	}
+
+	// Get problem in db
+	f := gorm.FreeForm{}
+	f.GetFreeFormByID(uint(intID))
+
+	// Check if user is actually op
+	if f.Username != form.Username {
+		c.JSON(401, err.Error())
+		return
+	}
+
+	//update problem
+	f.UpdateFreeForm(form)
+
+}
+
 func deleteFreeFormByIDHandler(c *gin.Context) {
 	id := c.Query("id")
 	intID, err := strconv.Atoi(id)
