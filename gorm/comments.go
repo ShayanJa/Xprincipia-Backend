@@ -68,6 +68,17 @@ func GetAllCommentsBySuggestionID(suggestionID int) []Comment {
 	return c
 }
 
+// UpdateComment : Updates a problem with problemForm as input
+func (c *Comment) UpdateComment(form CommentForm) {
+	err := db.First(&c)
+	if err == nil {
+		glog.Error("There was an error")
+	}
+
+	c.Description = form.Description
+	db.Save(&c)
+}
+
 //DeleteCommentByID : //DELETE
 func DeleteCommentByID(id int) {
 	c := Comment{}
