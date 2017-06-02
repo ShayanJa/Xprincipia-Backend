@@ -68,7 +68,7 @@ func GetAllResources() []Resource {
 	return r
 }
 
-//GetAllResourcesByTypeID : Use typeID because questions are for both problems and solutions
+//GetAllResourcesByTypeID : Use typeID because resources are for both problems and solutions
 func GetAllResourcesByTypeID(dataType int, typeID int) []Resource {
 	r := []Resource{}
 	err := db.Order("created_at desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&r)
@@ -90,6 +90,17 @@ func DeleteResourceByID(form ResourceDeleteForm) error {
 	return errors.New("UnAuthorized User")
 }
 
+// UpdateResource : //UPDATE METHOD
+func (r *Resource) UpdateResource(form ResourceForm) {
+	err := db.First(&r)
+	if err == nil {
+		glog.Error("There was an error")
+	}
+
+	r.Description = form.Description
+	db.Save(&r)
+}
+
 //VoteResource : ~
 func (r *Resource) VoteResource(id int) {
 	err := db.Where("id = ?", id).Find(&r)
@@ -100,14 +111,14 @@ func (r *Resource) VoteResource(id int) {
 	db.Model(&r).Update("rank", r.Rank)
 
 	var totalVotes = 0
-	questions := GetAllResourcesByTypeID(r.Type, r.TypeID)
-	for i := 0; i < len(questions); i++ {
-		totalVotes += questions[i].Rank
+	resources := GetAllResourcesByTypeID(r.Type, r.TypeID)
+	for i := 0; i < len(resources); i++ {
+		totalVotes += resources[i].Rank
 	}
 
-	for i := 0; i < len(questions); i++ {
-		var percentRank = float32(questions[i].Rank) / float32(totalVotes)
-		db.Model(&questions[i]).Update("percent_rank", percentRank)
+	for i := 0; i < len(resources); i++ {
+		var percentRank = float32(resources[i].Rank) / float32(totalVotes)
+		db.Model(&resources[i]).Update("percent_rank", percentRank)
 	}
 
 }
