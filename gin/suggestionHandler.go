@@ -75,7 +75,7 @@ func deleteSuggestionByIDHandler(c *gin.Context) {
 	gorm.DeleteSuggestionByID(intID)
 }
 
-func updateSuggestionyIDHandler(c *gin.Context) {
+func updateSuggestionByIDHandler(c *gin.Context) {
 	// Recieve problem Id
 	id := c.Query("id")
 	intID, err := strconv.Atoi(id)
@@ -96,16 +96,16 @@ func updateSuggestionyIDHandler(c *gin.Context) {
 	}
 
 	// Get problem in db
-	p := gorm.Suggestion{}
-	p.GetSuggestionByID(uint(intID))
+	s := gorm.Suggestion{}
+	s.GetSuggestionByID(uint(intID))
 
 	// Check if user is actually op
-	if p.Username != form.Username {
+	if s.Username != form.Username {
 		c.JSON(401, err.Error())
 		return
 	}
 
 	//update problem
-	p.UpdateSuggestion(form)
+	s.UpdateSuggestion(form)
 
 }
