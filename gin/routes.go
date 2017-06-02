@@ -101,7 +101,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/answers/all", getAllAnswers)
 		auth.POST("/answers/create", postAnswer)
 		auth.DELETE("/answers/ID", deleteAnswerByIDHandler)
-		auth.PUT("answers/update")
+		auth.PUT("answers/update", updateAnswerByIDHandler)
 
 		//Comments API
 		auth.GET("/comments/ID", getCommentByIDHandler)
