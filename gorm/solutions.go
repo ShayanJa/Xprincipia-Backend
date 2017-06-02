@@ -90,6 +90,19 @@ func CreateSolution(form SolutionForm) {
 	db.Create(&s)
 }
 
+// UpdateSolution : Updates a problem with problemForm as input
+func (s *Solution) UpdateSolution(form SolutionForm) {
+	err := db.First(&s)
+	if err == nil {
+		glog.Error("There was an error")
+	}
+
+	s.Description = form.Description
+	s.Summary = form.Summary
+	s.Title = form.Title
+	db.Save(&s)
+}
+
 //DeleteSolutionByID : //DELETE
 func DeleteSolutionByID(id int) {
 	s := Solution{}
