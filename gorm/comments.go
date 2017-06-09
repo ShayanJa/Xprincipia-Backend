@@ -1,10 +1,10 @@
 package gorm
 
 import (
-	"strconv"
-
+	"errors"
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
+	"strconv"
 )
 
 //Comment : Struct containing a question
@@ -22,6 +22,12 @@ type CommentForm struct {
 	Username     string
 	SuggestionID string
 	Description  string
+}
+
+//CommentDeleteForm : ~
+type CommentDeleteForm struct {
+	Username string
+	ID       int
 }
 
 /*
@@ -80,10 +86,14 @@ func (c *Comment) UpdateComment(form CommentForm) {
 }
 
 //DeleteCommentByID : //DELETE
-func DeleteCommentByID(id int) {
+func DeleteCommentByID(form CommentDeleteForm) error {
 	c := Comment{}
-	c.GetCommentByID(uint(id))
-	db.Delete(&c)
+	c.GetCommentByID(uint(form.ID))
+	if c.Username == form.Username {
+		db.Delete(&c)
+		return nil
+	}
+	return errors.New("UnAuthorized User")
 }
 
 //VoteComment : ~

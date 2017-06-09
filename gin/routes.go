@@ -111,6 +111,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/comments/all", getAllComments)
 		auth.POST("/comments/create", postComment)
 		auth.PUT("/comments/update", updateCommentByIDHandler)
+		auth.DELETE("/comment/delete", deleteCommentByIDHandler)
 
 		//FreeForm API
 		auth.GET("/freeForms/ID", getFreeFormByIDHandler)
