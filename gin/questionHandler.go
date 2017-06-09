@@ -66,17 +66,23 @@ func getAllQuestions(c *gin.Context) {
 }
 
 func deleteQuestionByIDHandler(c *gin.Context) {
-	form := gorm.QuestionDeleteForm{}
-	c.Bind(&form)
+	id := c.Query("id")
+	username := c.Query("username")
 
 	// Check Token Validity
-	err := gorm.CheckToken(form.Username, c.Request.Header["Authorization"][0])
+	err := gorm.CheckToken(username, c.Request.Header["Authorization"][0])
 	if err != nil {
 		//if Token not in table
 		c.JSON(401, err.Error())
 		return
 	}
 
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+
+	form := gorm.QuestionDeleteForm{ID: intID, Username: username}
 	gorm.DeleteQuestionByID(form)
 }
 

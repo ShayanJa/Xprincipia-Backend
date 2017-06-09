@@ -88,6 +88,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/questions/all", getAllQuestions)
 		auth.POST("/questions/create", postQuestion)
 		auth.PUT("/questions/update", updateQuestionyIDHandler)
+		auth.DELETE("/questions/delete", deleteQuestionByIDHandler)
 
 		//Suggestions API
 		auth.GET("/suggestions/ID", getSuggestionByIDHandler)
