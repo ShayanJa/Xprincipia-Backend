@@ -75,6 +75,17 @@ func DeleteAnswerByID(id int) {
 	db.Delete(&a)
 }
 
+// UpdateAnswer : //UPDATE METHOD
+func (a *Answer) UpdateAnswer(form AnswerForm) {
+	err := db.First(&a)
+	if err == nil {
+		glog.Error("There was an error")
+	}
+
+	a.Description = form.Description
+	db.Save(&a)
+}
+
 //VoteAnswer : ~
 func (a *Answer) VoteAnswer(id int) {
 	err := db.Where("id = ?", id).Find(&a)

@@ -31,7 +31,7 @@ func postAnswer(c *gin.Context) {
 
 func getAnswerByIDHandler(c *gin.Context) {
 	id := c.Query("id")
-	glog.Info("Getting Suggestion with ID : ", id)
+	glog.Info("Getting Answer with ID : ", id)
 
 	answer := gorm.Answer{}
 	intID, err := strconv.Atoi(id)
@@ -65,4 +65,39 @@ func deleteAnswerByIDHandler(c *gin.Context) {
 		glog.Error("There was an error in converting string to integer")
 	}
 	gorm.DeleteAnswerByID(intID)
+}
+
+func updateAnswerByIDHandler(c *gin.Context) {
+	// Recieve problem Id
+	id := c.Query("id")
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+
+	// Recieve update problem info
+	form := gorm.AnswerForm{}
+	c.Bind(&form)
+
+	// Check Token Validity
+	err = gorm.CheckToken(form.Username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
+	}
+
+	// Get problem in db
+	a := gorm.Answer{}
+	a.GetAnswerByID(uint(intID))
+
+	// Check if user is actually op
+	if a.Username != form.Username {
+		c.JSON(401, err.Error())
+		return
+	}
+
+	//update Answer
+	a.UpdateAnswer(form)
+
 }

@@ -72,6 +72,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/solutions/all", getAllSolutions)
 		auth.GET("/solutions/problemID", getSolutionsByProblemIDHandler)
 		auth.POST("/solutions/create", postSolution)
+		auth.PUT("/solutions/update", updateSolutionByIDHandler)
 
 		//Problems API
 		auth.GET("/problems/ID", getProblemByIDHandler)
@@ -79,61 +80,75 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/problems/subproblems", getAllSubProblems)
 		auth.POST("/problems/create", postProblem)
 		auth.GET("/problems/search", searchProblemDB)
+		auth.PUT("problems/update", updateProblemByIDHandler)
 
 		//Questions API
 		auth.GET("/questions/ID", getQuestionByIDHandler)
 		auth.GET("/questions/typeID", getQuestionByTypeIDHandler)
 		auth.GET("/questions/all", getAllQuestions)
 		auth.POST("/questions/create", postQuestion)
+		auth.PUT("/questions/update", updateQuestionyIDHandler)
+		auth.DELETE("/questions/delete", deleteQuestionByIDHandler)
 
 		//Suggestions API
 		auth.GET("/suggestions/ID", getSuggestionByIDHandler)
 		auth.GET("/suggestions/typeID", getSuggestionByTypeIDHandler)
 		auth.GET("/suggestions/all", getAllSuggestions)
 		auth.POST("/suggestions/create", postSuggestion)
+		auth.PUT("/suggestions/update", updateSuggestionByIDHandler)
+		auth.DELETE("/suggestions/delete", deleteSuggestionByIDHandler)
 
 		//Answers API
 		auth.GET("/answers/ID", getAnswerByIDHandler)
 		auth.GET("/answers/questionID", getAnswersByQuestionIDHandler)
 		auth.GET("/answers/all", getAllAnswers)
 		auth.POST("/answers/create", postAnswer)
-		auth.DELETE("/answers/ID", deleteAnswerByIDHandler)
+		auth.PUT("answers/update", updateAnswerByIDHandler)
+		auth.DELETE("/answers/delete", deleteAnswerByIDHandler)
 
 		//Comments API
 		auth.GET("/comments/ID", getCommentByIDHandler)
 		auth.GET("/comments/suggestionID", getCommentsBySuggestionIDHandler)
 		auth.GET("/comments/all", getAllComments)
 		auth.POST("/comments/create", postComment)
+		auth.PUT("/comments/update", updateCommentByIDHandler)
+		auth.DELETE("/comment/delete", deleteCommentByIDHandler)
 
 		//FreeForm API
 		auth.GET("/freeForms/ID", getFreeFormByIDHandler)
 		auth.GET("/freeForms/typeID", getFreeFormByTypeIDHandler)
 		auth.GET("/freeForms/all", getAllFreeForms)
 		auth.POST("/freeForms/create", postFreeForm)
+		auth.PUT("/freeForms/update", updateFreeFormByIDHandler)
+		auth.DELETE("/freeForm/delete", deleteFreeFormByIDHandler)
 
 		//Pro API
 		auth.GET("/pros/ID", getProByIDHandler)
 		auth.GET("/pros/typeID", getProByTypeIDHandler)
 		auth.GET("/pros/all", getAllPros)
 		auth.POST("/pros/create", postPro)
+		auth.PUT("/pros/update", updateProByIDHandler)
 
 		//Pro API
 		auth.GET("/cons/ID", getConByIDHandler)
 		auth.GET("/cons/typeID", getConByTypeIDHandler)
 		auth.GET("/cons/all", getAllCons)
 		auth.POST("/cons/create", postCon)
+		auth.PUT("/cons/update", updateConByIDHandler)
 
-		//Learn Content API
-		auth.GET("/learnItems/ID", getLearnContentByIDHandler)
-		auth.GET("/learnItems/typeID", getLearnContentByTypeIDHandler)
-		auth.GET("/learnItems/all", getAllLearnContents)
-		auth.POST("/learnItems/create", postLearnContent)
+		//Learn Item API
+		auth.GET("/learnItems/ID", getLearnItemByIDHandler)
+		auth.GET("/learnItems/typeID", getLearnItemByTypeIDHandler)
+		auth.GET("/learnItems/all", getAllLearnItems)
+		auth.POST("/learnItems/create", postLearnItem)
+		auth.PUT("learnItems/update", updateLearnItemyIDHandler)
 
 		//Resource API
 		auth.GET("/resouces/ID", getResourceByIDHandler)
 		auth.GET("/resources/typeID", getResourceByTypeIDHandler)
 		auth.GET("/resources/all", getAllResources)
 		auth.POST("/resources/create", postResource)
+		auth.PUT("/resources/update")
 
 		//Vote API
 		auth.POST("/vote/create", postVote)

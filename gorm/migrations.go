@@ -40,8 +40,11 @@ func runMigrations(db *gorm.DB) bool {
 	glog.Info("CREATING PRO TABLE...")
 	db.AutoMigrate(&Pro{})
 
+	glog.Info("CREATING CON TABLE...")
+	db.AutoMigrate(&Pro{})
+
 	glog.Info("CREATING LEARN ITEMS TABLE...")
-	db.AutoMigrate(&LearnContent{})
+	db.AutoMigrate(&LearnItem{})
 
 	glog.Info("CREATING RESOURCE TABLE...")
 	db.AutoMigrate(&Resource{})

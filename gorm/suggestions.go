@@ -101,3 +101,14 @@ func (s *Suggestion) VoteSuggestion(id int) {
 	}
 
 }
+
+// UpdateSuggestion : Updates a problem with problemForm as input
+func (s *Suggestion) UpdateSuggestion(form SuggestionForm) {
+	err := db.First(&s)
+	if err == nil {
+		glog.Error("There was an error")
+	}
+
+	s.Description = form.Description
+	db.Save(&s)
+}

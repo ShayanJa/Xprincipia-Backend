@@ -44,7 +44,7 @@ func CreateFreeForm(form FreeFormForm) {
 	return
 }
 
-//GetFreeFormByID : Returns a Suggestion based on an int ID
+//GetFreeFormByID : Returns a FreeForm based on an int ID
 func (f *FreeForm) GetFreeFormByID(id uint) {
 	err := db.Where("id = ?", id).First(&f)
 	if err == nil {
@@ -78,6 +78,17 @@ func DeleteFreeFormByID(id int) {
 	f := FreeForm{}
 	f.GetFreeFormByID(uint(id))
 	db.Delete(&f)
+}
+
+// UpdateFreeForm : Updates a problem with problemForm as input
+func (f *FreeForm) UpdateFreeForm(form FreeFormForm) {
+	err := db.First(&f)
+	if err == nil {
+		glog.Error("There was an error")
+	}
+
+	f.Description = form.Description
+	db.Save(&f)
 }
 
 //VoteFreeForm : ~

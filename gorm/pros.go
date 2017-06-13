@@ -50,7 +50,7 @@ func CreatePro(form ProForm) {
 	db.Create(&p)
 }
 
-//GetProByID : Returns a Suggestion based on an int ID
+//GetProByID : Returns a Pro based on an int ID
 func (p *Pro) GetProByID(id uint) {
 	err := db.Where("id = ?", id).First(&p)
 	if err == nil {
@@ -88,6 +88,17 @@ func DeleteProByID(form ProDeleteForm) error {
 		return nil
 	}
 	return errors.New("UnAuthorized User")
+}
+
+// UpdatePro : Updates a problem with problemForm as input
+func (p *Pro) UpdatePro(form ProForm) {
+	err := db.First(&p)
+	if err == nil {
+		glog.Error("There was an error")
+	}
+
+	p.Description = form.Description
+	db.Save(&p)
 }
 
 //VotePro : ~
