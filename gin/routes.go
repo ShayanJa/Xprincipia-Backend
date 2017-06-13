@@ -120,6 +120,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/freeForms/all", getAllFreeForms)
 		auth.POST("/freeForms/create", postFreeForm)
 		auth.PUT("/freeForms/update", updateFreeFormByIDHandler)
+		auth.DELETE("/freeForm/delete", deleteFreeFormByIDHandler)
 
 		//Pro API
 		auth.GET("/pros/ID", getProByIDHandler)
