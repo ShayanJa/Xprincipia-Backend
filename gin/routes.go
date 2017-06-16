@@ -128,6 +128,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/pros/all", getAllPros)
 		auth.POST("/pros/create", postPro)
 		auth.PUT("/pros/update", updateProByIDHandler)
+		auth.DELETE("/pros/delete", deleteProByIDHandler)
 
 		//Pro API
 		auth.GET("/cons/ID", getConByIDHandler)
