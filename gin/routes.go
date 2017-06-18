@@ -152,6 +152,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/resources/all", getAllResources)
 		auth.POST("/resources/create", postResource)
 		auth.PUT("/resources/update")
+		auth.DELETE("/resources/delete", deleteResourceByIDHandler)
 
 		//Vote API
 		auth.POST("/vote/create", postVote)

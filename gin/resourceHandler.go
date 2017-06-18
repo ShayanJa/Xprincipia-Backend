@@ -66,7 +66,7 @@ func getResourceByTypeIDHandler(c *gin.Context) {
 }
 
 func updateResourceyIDHandler(c *gin.Context) {
-	// Recieve problem Id
+	// Recieve resoucse Id
 	id := c.Query("id")
 	intID, err := strconv.Atoi(id)
 	if err != nil {
@@ -100,11 +100,23 @@ func updateResourceyIDHandler(c *gin.Context) {
 
 }
 
-// func deleteResourceByIDHandler(c *gin.Context) {
-// 	id := c.Query("id")
-// 	intID, err := strconv.Atoi(id)
-// 	if err != nil {
-// 		glog.Error("There was an error in converting string to integer")
-// 	}
-// 	gorm.DeleteResourceByID(intID)
-// }
+func deleteResourceByIDHandler(c *gin.Context) {
+	id := c.Query("id")
+	username := c.Query("username")
+
+	// Check Token Validity
+	err := gorm.CheckToken(username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
+	}
+
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+
+	form := gorm.ResourceDeleteForm{ID: intID, Username: username}
+	gorm.DeleteResourceByID(form)
+}
