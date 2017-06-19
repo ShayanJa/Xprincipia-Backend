@@ -3,6 +3,7 @@ package gorm
 import (
 	"strconv"
 
+	"errors"
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
 )
@@ -35,6 +36,12 @@ type SolutionForm struct {
 	Evidence    string `json:"evidence" form:"evidence"`
 	Experiments string `json:"experiments" form:"experiments"`
 	References  string `json:"references" form:"references"`
+}
+
+//SolutionDeleteForm : ~
+type SolutionDeleteForm struct {
+	Username string
+	ID       int
 }
 
 //SolutionVoteForm : Vote form
@@ -104,10 +111,14 @@ func (s *Solution) UpdateSolution(form SolutionForm) {
 }
 
 //DeleteSolutionByID : //DELETE
-func DeleteSolutionByID(id int) {
-	s := Solution{}
-	s.GetSolutionByID(uint(id))
-	db.Delete(&s)
+func DeleteSolutionByID(form SolutionDeleteForm) error {
+	p := Solution{}
+	p.GetSolutionByID(uint(form.ID))
+	if p.OriginalPosterUsername == form.Username {
+		db.Delete(&p)
+		return nil
+	}
+	return errors.New("UnAuthorized User")
 }
 
 //VoteSolution : ~

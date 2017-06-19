@@ -73,6 +73,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/solutions/problemID", getSolutionsByProblemIDHandler)
 		auth.POST("/solutions/create", postSolution)
 		auth.PUT("/solutions/update", updateSolutionByIDHandler)
+		auth.DELETE("/solutions/delete", deleteSolutionByIDHandler)
 
 		//Problems API
 		auth.GET("/problems/ID", getProblemByIDHandler)
