@@ -18,41 +18,32 @@ func SetRoutes(router *gin.Engine) {
 	router.GET("/solutions/ID", getSolutionByID)
 	router.GET("/solutions/all", getAllSolutions)
 	router.GET("/solutions/problemID", getSolutionsByProblemIDHandler)
-	router.POST("/solutions/create", postSolution)
 
 	//Problems API
 	router.GET("/problems/ID", getProblemByIDHandler)
 	router.GET("/problems/all", getAllProblems)
 	router.GET("/problems/subproblems", getAllSubProblems)
-	router.POST("/problems/create", postProblem)
 	router.GET("/problems/search", searchProblemDB)
 
 	//Questions API
 	router.GET("/questions/ID", getQuestionByIDHandler)
 	router.GET("/questions/typeID", getQuestionByTypeIDHandler)
 	router.GET("/questions/all", getAllQuestions)
-	router.POST("/questions/create", postQuestion)
 
 	//Suggestions API
 	router.GET("/suggestions/ID", getSuggestionByIDHandler)
 	router.GET("/suggestions/typeID", getSuggestionByTypeIDHandler)
 	router.GET("/suggestions/all", getAllSuggestions)
-	router.POST("/suggestions/create", postSuggestion)
 
 	//Answers API
 	router.GET("/answers/ID", getAnswerByIDHandler)
 	router.GET("/answers/questionID", getAnswersByQuestionIDHandler)
 	router.GET("/answers/all", getAllAnswers)
-	router.POST("/answers/create", postAnswer)
-	router.DELETE("/answers/ID", deleteAnswerByIDHandler)
 
 	//Comments API
 	router.GET("/comments/ID", getCommentByIDHandler)
 	router.GET("/comments/questionID", getCommentsBySuggestionIDHandler)
 	router.GET("/comments/all", getAllComments)
-	router.POST("/comments/create", postComment)
-
-	router.POST("/vote/create", postVote)
 
 	// //Authentication Middleware
 	auth := router.Group("/auth")
