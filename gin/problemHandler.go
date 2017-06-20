@@ -82,15 +82,24 @@ func searchProblemDB(c *gin.Context) {
 }
 
 func deleteProblemByIDHandler(c *gin.Context) {
-
-	//TODO use a form Here instead of query
 	id := c.Query("id")
+	username := c.Query("username")
+
+	// Check Token Validity
+	err := gorm.CheckToken(username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
+	}
+
 	intID, err := strconv.Atoi(id)
 	if err != nil {
 		glog.Error("There was an error in converting string to integer")
 	}
 
-	gorm.DeleteProblemByID(intID)
+	form := gorm.ProblemDeleteForm{ID: intID, Username: username}
+	gorm.DeleteProblemByID(form)
 }
 
 func updateProblemByIDHandler(c *gin.Context) {

@@ -39,6 +39,11 @@ type ProblemForm struct {
 	References   string
 }
 
+type ProblemDeleteForm struct {
+	Username string
+	ID       int
+}
+
 // GetProblemByID : returns a solution by its id
 func (p *Problem) GetProblemByID(id uint) {
 	err := db.Where("id = ?", id).First(&p)
@@ -143,10 +148,14 @@ func QueryProblems(q string) []Problem {
 // }
 
 //DeleteProblemByID : //DELETE
-func DeleteProblemByID(id int) {
+func DeleteProblemByID(form ProblemDeleteForm) error {
 	p := Problem{}
-	p.GetProblemByID(uint(id))
-	db.Delete(&p)
+	p.GetProblemByID(uint(form.ID))
+	if p.OriginalPosterUsername == form.Username {
+		db.Delete(&p)
+		return nil
+	}
+	return errors.New("UnAuthorized User")
 }
 
 //VoteProblem : ~

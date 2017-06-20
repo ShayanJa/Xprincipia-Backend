@@ -18,41 +18,32 @@ func SetRoutes(router *gin.Engine) {
 	router.GET("/solutions/ID", getSolutionByID)
 	router.GET("/solutions/all", getAllSolutions)
 	router.GET("/solutions/problemID", getSolutionsByProblemIDHandler)
-	router.POST("/solutions/create", postSolution)
 
 	//Problems API
 	router.GET("/problems/ID", getProblemByIDHandler)
 	router.GET("/problems/all", getAllProblems)
 	router.GET("/problems/subproblems", getAllSubProblems)
-	router.POST("/problems/create", postProblem)
 	router.GET("/problems/search", searchProblemDB)
 
 	//Questions API
 	router.GET("/questions/ID", getQuestionByIDHandler)
 	router.GET("/questions/typeID", getQuestionByTypeIDHandler)
 	router.GET("/questions/all", getAllQuestions)
-	router.POST("/questions/create", postQuestion)
 
 	//Suggestions API
 	router.GET("/suggestions/ID", getSuggestionByIDHandler)
 	router.GET("/suggestions/typeID", getSuggestionByTypeIDHandler)
 	router.GET("/suggestions/all", getAllSuggestions)
-	router.POST("/suggestions/create", postSuggestion)
 
 	//Answers API
 	router.GET("/answers/ID", getAnswerByIDHandler)
 	router.GET("/answers/questionID", getAnswersByQuestionIDHandler)
 	router.GET("/answers/all", getAllAnswers)
-	router.POST("/answers/create", postAnswer)
-	router.DELETE("/answers/ID", deleteAnswerByIDHandler)
 
 	//Comments API
 	router.GET("/comments/ID", getCommentByIDHandler)
 	router.GET("/comments/questionID", getCommentsBySuggestionIDHandler)
 	router.GET("/comments/all", getAllComments)
-	router.POST("/comments/create", postComment)
-
-	router.POST("/vote/create", postVote)
 
 	// //Authentication Middleware
 	auth := router.Group("/auth")
@@ -73,6 +64,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/solutions/problemID", getSolutionsByProblemIDHandler)
 		auth.POST("/solutions/create", postSolution)
 		auth.PUT("/solutions/update", updateSolutionByIDHandler)
+		auth.DELETE("/solutions/delete", deleteSolutionByIDHandler)
 
 		//Problems API
 		auth.GET("/problems/ID", getProblemByIDHandler)
@@ -80,7 +72,8 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/problems/subproblems", getAllSubProblems)
 		auth.POST("/problems/create", postProblem)
 		auth.GET("/problems/search", searchProblemDB)
-		auth.PUT("problems/update", updateProblemByIDHandler)
+		auth.PUT("/problems/update", updateProblemByIDHandler)
+		auth.DELETE("/problems/delete", deleteProblemByIDHandler)
 
 		//Questions API
 		auth.GET("/questions/ID", getQuestionByIDHandler)
@@ -128,6 +121,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/pros/all", getAllPros)
 		auth.POST("/pros/create", postPro)
 		auth.PUT("/pros/update", updateProByIDHandler)
+		auth.DELETE("/pros/delete", deleteProByIDHandler)
 
 		//Pro API
 		auth.GET("/cons/ID", getConByIDHandler)
@@ -135,6 +129,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/cons/all", getAllCons)
 		auth.POST("/cons/create", postCon)
 		auth.PUT("/cons/update", updateConByIDHandler)
+		auth.DELETE("/cons/delete", deleteConByIDHandler)
 
 		//Learn Item API
 		auth.GET("/learnItems/ID", getLearnItemByIDHandler)
@@ -142,6 +137,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/learnItems/all", getAllLearnItems)
 		auth.POST("/learnItems/create", postLearnItem)
 		auth.PUT("learnItems/update", updateLearnItemyIDHandler)
+		auth.DELETE("learnItem/delete")
 
 		//Resource API
 		auth.GET("/resouces/ID", getResourceByIDHandler)
@@ -149,6 +145,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/resources/all", getAllResources)
 		auth.POST("/resources/create", postResource)
 		auth.PUT("/resources/update")
+		auth.DELETE("/resources/delete", deleteResourceByIDHandler)
 
 		//Vote API
 		auth.POST("/vote/create", postVote)
