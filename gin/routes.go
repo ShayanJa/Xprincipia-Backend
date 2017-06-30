@@ -140,7 +140,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.DELETE("learnItem/delete")
 
 		//Resource API
-		auth.GET("/resouces/ID", getResourceByIDHandler)
+		auth.GET("/resources/ID", getResourceByIDHandler)
 		auth.GET("/resources/typeID", getResourceByTypeIDHandler)
 		auth.GET("/resources/all", getAllResources)
 		auth.POST("/resources/create", postResource)
