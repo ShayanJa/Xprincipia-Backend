@@ -137,7 +137,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/learnItems/all", getAllLearnItems)
 		auth.POST("/learnItems/create", postLearnItem)
 		auth.PUT("learnItems/update", updateLearnItemyIDHandler)
-		auth.DELETE("learnItem/delete")
+		auth.DELETE("learnItem/delete", deleteLearnItemByIDHandler)
 
 		//Resource API
 		auth.GET("/resources/ID", getResourceByIDHandler)
