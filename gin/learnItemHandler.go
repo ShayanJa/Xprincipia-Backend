@@ -60,19 +60,31 @@ func getLearnItemByTypeIDHandler(c *gin.Context) {
 	if err != nil {
 		glog.Error("There was an error in converting string to integer for datatype")
 	}
-	pros := gorm.GetAllLearnItemsByTypeID(intDataType, intID)
+	learnItems := gorm.GetAllLearnItemsByTypeID(intDataType, intID)
 
-	c.JSON(http.StatusOK, pros)
+	c.JSON(http.StatusOK, learnItems)
 }
 
-// func deleteLearnItemByIDHandler(c *gin.Context) {
-// 	id := c.Query("id")
-// 	intID, err := strconv.Atoi(id)
-// 	if err != nil {
-// 		glog.Error("There was an error in converting string to integer")
-// 	}
-// 	gorm.DeleteLearnItemByID(intID)
-// }
+func deleteLearnItemByIDHandler(c *gin.Context) {
+	id := c.Query("id")
+	username := c.Query("username")
+
+	// Check Token Validity
+	err := gorm.CheckToken(username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
+	}
+
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+
+	form := gorm.LearnItemDeleteForm{ID: intID, Username: username}
+	gorm.DeleteLearnItemByID(form)
+}
 
 func updateLearnItemyIDHandler(c *gin.Context) {
 	// Recieve problem Id
