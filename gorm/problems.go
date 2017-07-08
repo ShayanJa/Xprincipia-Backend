@@ -39,6 +39,7 @@ type ProblemForm struct {
 	References   string
 }
 
+// ProblemDeleteForm :
 type ProblemDeleteForm struct {
 	Username string
 	ID       int

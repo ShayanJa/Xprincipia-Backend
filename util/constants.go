@@ -19,6 +19,10 @@ const (
 	LEARNITEM = 7
 	//RESOURCE : int def of resource
 	RESOURCE = 8
+	//PRO : int def of pro
+	PRO = 9
+	//CON : int def of cons
+	CON = 10
 
 	//PAGINGCONSTANT : Number of items on page
 	PAGINGCONSTANT = 10

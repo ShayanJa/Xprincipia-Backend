@@ -6,12 +6,14 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// LoginAttempt :
 type LoginAttempt struct {
 	gorm.Model
 	Username string
 	Token    string
 }
 
+// LoginAttemptForm :
 type LoginAttemptForm struct {
 	Username string
 	Token    string
@@ -28,7 +30,7 @@ func CreateLoginAttempt(username string, token string) {
 
 }
 
-// CheckLoginAttempt : Check for table entry
+// CheckToken : Check for table entry
 func CheckToken(username string, token string) error {
 	l := LoginAttempt{}
 	db.Where(" username = ? AND token = ? ", username, token).Find(&l)

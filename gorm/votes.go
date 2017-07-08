@@ -64,6 +64,12 @@ func CreateVote(form VoteForm) bool {
 	case v.Type == util.RESOURCE:
 		r := Resource{}
 		r.VoteResource(v.TypeID)
+	case v.Type == util.PRO:
+		p := Pro{}
+		p.VotePro(v.TypeID)
+	case v.Type == util.CON:
+		r := Con{}
+		r.VoteCon(v.TypeID)
 	}
 
 	return true
