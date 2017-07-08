@@ -55,6 +55,15 @@ func CreateVote(form VoteForm) bool {
 	case v.Type == util.COMMENT:
 		c := Comment{}
 		c.VoteComment(v.TypeID)
+	case v.Type == util.FREEFORM:
+		f := FreeForm{}
+		f.VoteFreeForm(v.TypeID)
+	case v.Type == util.LEARNITEM:
+		l := LearnItem{}
+		l.VoteLearnItem(v.TypeID)
+	case v.Type == util.RESOURCE:
+		r := Resource{}
+		r.VoteResource(v.TypeID)
 	}
 
 	return true

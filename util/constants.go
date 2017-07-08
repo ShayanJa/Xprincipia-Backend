@@ -15,6 +15,11 @@ const (
 	COMMENT = 5
 	//FREEFORM : int def of freeform
 	FREEFORM = 6
+	//LEARNITEM : int def of learnItem
+	LEARNITEM = 7
+	//RESOURCE : int def of resource
+	RESOURCE = 8
+
 	//PAGINGCONSTANT : Number of items on page
 	PAGINGCONSTANT = 10
 )

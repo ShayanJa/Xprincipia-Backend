@@ -111,14 +111,14 @@ func (l *LearnItem) VoteLearnItem(id int) {
 	db.Model(&l).Update("rank", l.Rank)
 
 	var totalVotes = 0
-	questions := GetAllLearnItemsByTypeID(l.Type, l.TypeID)
-	for i := 0; i < len(questions); i++ {
-		totalVotes += questions[i].Rank
+	learnItems := GetAllLearnItemsByTypeID(l.Type, l.TypeID)
+	for i := 0; i < len(learnItems); i++ {
+		totalVotes += learnItems[i].Rank
 	}
 
-	for i := 0; i < len(questions); i++ {
-		var percentRank = float32(questions[i].Rank) / float32(totalVotes)
-		db.Model(&questions[i]).Update("percent_rank", percentRank)
+	for i := 0; i < len(learnItems); i++ {
+		var percentRank = float32(learnItems[i].Rank) / float32(totalVotes)
+		db.Model(&learnItems[i]).Update("percent_rank", percentRank)
 	}
 
 }

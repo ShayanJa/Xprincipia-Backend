@@ -41,7 +41,7 @@ func runMigrations(db *gorm.DB) bool {
 	db.AutoMigrate(&Pro{})
 
 	glog.Info("CREATING CON TABLE...")
-	db.AutoMigrate(&Pro{})
+	db.AutoMigrate(&Con{})
 
 	glog.Info("CREATING LEARN ITEMS TABLE...")
 	db.AutoMigrate(&LearnItem{})
