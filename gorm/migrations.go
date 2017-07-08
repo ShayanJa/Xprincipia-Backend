@@ -49,6 +49,9 @@ func runMigrations(db *gorm.DB) bool {
 	glog.Info("CREATING RESOURCE TABLE...")
 	db.AutoMigrate(&Resource{})
 
+	glog.Info("CREATING FEEDBACK TABLE...")
+	db.AutoMigrate(&Feedback{})
+
 	glog.Info("CREATING VOTE TABLE...")
 	db.AutoMigrate(&Vote{})
 
