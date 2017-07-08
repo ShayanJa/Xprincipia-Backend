@@ -19,7 +19,7 @@ type LearnItem struct {
 	PercentRank float32
 }
 
-//LearnLearnItemForm : Form to make LearnItem Struct
+// LearnItemForm : Form to make LearnItem Struct
 type LearnItemForm struct {
 	Type        string
 	TypeID      string
