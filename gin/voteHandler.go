@@ -29,3 +29,16 @@ func postVote(c *gin.Context) {
 	c.Status(403)
 	return
 }
+
+// func getVotesByTypeID(c *gin.Context) {
+// 	c.Query()
+// }
+
+func isVotedOn(c *gin.Context) {
+	Type := int(c.Query("type"))
+	typeID := int(c.Query("typeID"))
+	username := c.Query("username")
+
+	result := gorm.IsVotedOn(Type, typeID, username)
+	c.JSON(http.StatusOK, result)
+}

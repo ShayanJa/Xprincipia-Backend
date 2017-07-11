@@ -82,3 +82,19 @@ func GetNumberOfVotesByTypeID(id int) int {
 	db.Where("type_id = ?", id).Find(&v)
 	return len(v)
 }
+
+// GetVotesByTypeID(typeID, type){
+// 	v := []
+
+// }
+
+// IsVotedOn : ~
+func IsVotedOn(Type int, typeID int, username string) bool {
+	v := Vote{}
+	db.Where("type_id = ? AND type = ? AND username = ?", typeID, Type, username).First(&v)
+
+	if v.ID != 0 {
+		return true
+	}
+	return false
+}
