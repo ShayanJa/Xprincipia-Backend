@@ -38,7 +38,7 @@ func postVote(c *gin.Context) {
 func isVotedOn(c *gin.Context) {
 
 	Type, err := strconv.Atoi(c.Query("type"))
-	typeID, err := strconv.Atoi(c.Query("typeid"))
+	typeID, err := strconv.Atoi(c.Query("typeID"))
 	if err != nil {
 		glog.Info("error")
 	}
