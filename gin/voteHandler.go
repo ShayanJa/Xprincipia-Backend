@@ -1,10 +1,11 @@
 package gin
 
 import (
-	"net/http"
-	"work/xprincipia/backend/gorm"
-
 	"github.com/gin-gonic/gin"
+	"github.com/golang/glog"
+	"net/http"
+	"strconv"
+	"work/xprincipia/backend/gorm"
 )
 
 func postVote(c *gin.Context) {
@@ -35,8 +36,12 @@ func postVote(c *gin.Context) {
 // }
 
 func isVotedOn(c *gin.Context) {
-	Type := int(c.Query("type"))
-	typeID := int(c.Query("typeID"))
+
+	Type, err := strconv.Atoi(c.Query("type"))
+	typeID, err := strconv.Atoi(c.Query("typeid"))
+	if err != nil {
+		glog.Info("error")
+	}
 	username := c.Query("username")
 
 	result := gorm.IsVotedOn(Type, typeID, username)
