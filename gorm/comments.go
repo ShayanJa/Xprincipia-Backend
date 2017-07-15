@@ -57,7 +57,7 @@ func (c *Comment) GetCommentByID(id uint) {
 //GetAllComments : get all suggestions
 func GetAllComments() []Comment {
 	c := []Comment{}
-	err := db.Order("created_at desc").Find(&c)
+	err := db.Order("rank desc").Find(&c)
 	if err == nil {
 		glog.Info("There was an error")
 	}
