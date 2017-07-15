@@ -47,7 +47,7 @@ func CreatePro(form ProForm) {
 	p.TypeID = intTypeID
 	p.Username = form.Username
 	p.Description = form.Description
-	p.Rank = 1
+	p.Rank = 0
 	db.Create(&p)
 }
 
@@ -117,14 +117,17 @@ func (p *Pro) VotePro(id int, vote bool) {
 	db.Model(&p).Update("rank", p.Rank)
 
 	var totalVotes = 0
-	questions := GetAllProsByTypeID(p.Type, p.TypeID)
-	for i := 0; i < len(questions); i++ {
-		totalVotes += questions[i].Rank
+	pros := GetAllProsByTypeID(p.Type, p.TypeID)
+	for i := 0; i < len(pros); i++ {
+		totalVotes += pros[i].Rank
 	}
 
-	for i := 0; i < len(questions); i++ {
-		var percentRank = float32(questions[i].Rank) / float32(totalVotes)
-		db.Model(&questions[i]).Update("percent_rank", percentRank)
+	for i := 0; i < len(pros); i++ {
+		var percentRank = float32(0.0)
+		if totalVotes != 0 {
+			percentRank = float32(pros[i].Rank) / float32(totalVotes)
+		}
+		db.Model(&pros[i]).Update("percent_rank", percentRank)
 	}
 
 }
