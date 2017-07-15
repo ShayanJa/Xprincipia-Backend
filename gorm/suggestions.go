@@ -56,7 +56,7 @@ func (s *Suggestion) GetSuggestionByID(id uint) {
 //GetAllSuggestions : get all suggestions
 func GetAllSuggestions() []Suggestion {
 	s := []Suggestion{}
-	err := db.Order("created_at desc").Find(&s)
+	err := db.Order("rank desc").Find(&s)
 	if err == nil {
 		glog.Info("There was an error")
 	}
@@ -66,7 +66,7 @@ func GetAllSuggestions() []Suggestion {
 //GetAllSuggestionsByTypeID :
 func GetAllSuggestionsByTypeID(dataType int, typeID int) []Suggestion {
 	s := []Suggestion{}
-	err := db.Order("created_at desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&s)
+	err := db.Order("rank desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&s)
 	if err == nil {
 		glog.Info("There was an error")
 	}

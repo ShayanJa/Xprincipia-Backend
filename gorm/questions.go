@@ -72,7 +72,7 @@ func GetAllQuestions() []Question {
 //GetAllQuestionsByTypeID : Use typeID because questions are for both problems and solutions
 func GetAllQuestionsByTypeID(dataType int, typeID int) []Question {
 	q := []Question{}
-	err := db.Order("created_at desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&q)
+	err := db.Order("rank desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&q)
 	if err == nil {
 		glog.Info("There was an error")
 	}

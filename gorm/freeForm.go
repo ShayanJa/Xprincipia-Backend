@@ -66,7 +66,7 @@ func GetAllFreeForms() []FreeForm {
 //GetAllFreeFormsByTypeID :
 func GetAllFreeFormsByTypeID(dataType int, typeID int) []FreeForm {
 	f := []FreeForm{}
-	err := db.Order("created_at desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&f)
+	err := db.Order("rank desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&f)
 	if err == nil {
 		glog.Info("There was an error")
 	}

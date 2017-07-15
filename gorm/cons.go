@@ -62,7 +62,7 @@ func (c *Con) GetConByID(id uint) {
 //GetAllCons : Return all Cons
 func GetAllCons() []Con {
 	c := []Con{}
-	err := db.Order("created_at desc").Find(&c)
+	err := db.Order("rank desc").Find(&c)
 	if err == nil {
 		glog.Info("There was an error")
 	}
