@@ -72,7 +72,7 @@ func GetAllLearnItems() []LearnItem {
 //GetAllLearnItemsByTypeID : Use typeID because questions are for both problems and solutions
 func GetAllLearnItemsByTypeID(dataType int, typeID int) []LearnItem {
 	l := []LearnItem{}
-	err := db.Order("created_at desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&l)
+	err := db.Order("rank desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&l)
 	if err == nil {
 		glog.Info("There was an error")
 	}

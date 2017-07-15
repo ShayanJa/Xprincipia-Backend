@@ -72,7 +72,7 @@ func GetAllResources() []Resource {
 //GetAllResourcesByTypeID : Use typeID because resources are for both problems and solutions
 func GetAllResourcesByTypeID(dataType int, typeID int) []Resource {
 	r := []Resource{}
-	err := db.Order("created_at desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&r)
+	err := db.Order("rank desc").Where("type_id = ? AND type = ?", typeID, dataType).Find(&r)
 	if err == nil {
 		glog.Info("There was an error")
 	}
