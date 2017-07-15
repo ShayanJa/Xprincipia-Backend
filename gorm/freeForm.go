@@ -5,6 +5,7 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
+	"work/xprincipia/backend/util"
 )
 
 //FreeForm : Struct containing a question
@@ -92,12 +93,19 @@ func (f *FreeForm) UpdateFreeForm(form FreeFormForm) {
 }
 
 //VoteFreeForm : ~
-func (f *FreeForm) VoteFreeForm(id int) {
+func (f *FreeForm) VoteFreeForm(id int, vote bool) {
 	err := db.Where("id = ?", id).Find(&f)
 	if err == nil {
 		glog.Info("There was an error")
 	}
-	f.Rank++
+
+	//check if upVote or downVote
+	if vote == util.VOTEUP {
+		f.Rank++
+	} else {
+		f.Rank--
+	}
+
 	db.Model(&f).Update("rank", f.Rank)
 
 	var totalVotes = 0

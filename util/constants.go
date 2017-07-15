@@ -27,3 +27,10 @@ const (
 	//PAGINGCONSTANT : Number of items on page
 	PAGINGCONSTANT = 10
 )
+
+const (
+	//VOTEUP : bool to up vote
+	VOTEUP = true
+	//VOTEDOWN : bool to down vote
+	VOTEDOWN = false
+)

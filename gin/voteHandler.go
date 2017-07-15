@@ -48,3 +48,23 @@ func isVotedOn(c *gin.Context) {
 	result := gorm.IsVotedOn(Type, typeID, username)
 	c.JSON(http.StatusOK, result)
 }
+
+func deleteVote(c *gin.Context) {
+	Type, err := strconv.Atoi(c.Query("type"))
+	typeID, err := strconv.Atoi(c.Query("typeID"))
+	if err != nil {
+		glog.Info("error")
+	}
+	username := c.Query("username")
+
+	// Check Token Validity
+	err = gorm.CheckToken(username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
+	}
+	gorm.DeleteVote(Type, typeID, username)
+	c.Status(http.StatusOK)
+	return
+}

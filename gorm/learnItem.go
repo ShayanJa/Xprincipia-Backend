@@ -6,6 +6,7 @@ import (
 	"errors"
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
+	"work/xprincipia/backend/util"
 )
 
 //LearnItem : Struct containing a learnItem
@@ -102,12 +103,19 @@ func (l *LearnItem) UpdateLearnItem(form LearnItemForm) {
 }
 
 //VoteLearnItem : ~
-func (l *LearnItem) VoteLearnItem(id int) {
+func (l *LearnItem) VoteLearnItem(id int, vote bool) {
 	err := db.Where("id = ?", id).Find(&l)
 	if err == nil {
 		glog.Info("There was an error")
 	}
-	l.Rank++
+
+	//check if upVote or downVote
+	if vote == util.VOTEUP {
+		l.Rank++
+	} else {
+		l.Rank--
+	}
+
 	db.Model(&l).Update("rank", l.Rank)
 
 	var totalVotes = 0

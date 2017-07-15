@@ -5,6 +5,7 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
+	"work/xprincipia/backend/util"
 )
 
 //Suggestion : Struct containing a question
@@ -81,12 +82,17 @@ func DeleteSuggestionByID(id int) {
 }
 
 //VoteSuggestion : ~
-func (s *Suggestion) VoteSuggestion(id int) {
+func (s *Suggestion) VoteSuggestion(id int, vote bool) {
 	err := db.Where("id = ?", id).Find(&s)
 	if err == nil {
 		glog.Info("There was an error")
 	}
-	s.Rank++
+	//check if upVote or downVote
+	if vote == util.VOTEUP {
+		s.Rank++
+	} else {
+		s.Rank--
+	}
 	db.Model(&s).Update("rank", s.Rank)
 
 	var totalVotes = 0
