@@ -39,37 +39,37 @@ func CreateVote(form VoteForm) bool {
 	switch {
 	case v.Type == util.SOLUTION:
 		s := Solution{}
-		s.VoteSolution(v.TypeID)
+		s.VoteSolution(v.TypeID, util.VOTEUP)
 	case v.Type == util.PROBLEM:
 		p := Problem{}
-		p.VoteProblem(v.TypeID)
+		p.VoteProblem(v.TypeID, util.VOTEUP)
 	case v.Type == util.QUESTION:
 		q := Question{}
-		q.VoteQuestion(v.TypeID)
+		q.VoteQuestion(v.TypeID, util.VOTEUP)
 	case v.Type == util.SUGGESTION:
 		s := Suggestion{}
-		s.VoteSuggestion(v.TypeID)
+		s.VoteSuggestion(v.TypeID, util.VOTEUP)
 	case v.Type == util.ANSWER:
 		a := Answer{}
-		a.VoteAnswer(v.TypeID)
+		a.VoteAnswer(v.TypeID, util.VOTEUP)
 	case v.Type == util.COMMENT:
 		c := Comment{}
-		c.VoteComment(v.TypeID)
+		c.VoteComment(v.TypeID, util.VOTEUP)
 	case v.Type == util.FREEFORM:
 		f := FreeForm{}
-		f.VoteFreeForm(v.TypeID)
+		f.VoteFreeForm(v.TypeID, util.VOTEUP)
 	case v.Type == util.LEARNITEM:
 		l := LearnItem{}
-		l.VoteLearnItem(v.TypeID)
+		l.VoteLearnItem(v.TypeID, util.VOTEUP)
 	case v.Type == util.RESOURCE:
 		r := Resource{}
-		r.VoteResource(v.TypeID)
+		r.VoteResource(v.TypeID, util.VOTEUP)
 	case v.Type == util.PRO:
 		p := Pro{}
-		p.VotePro(v.TypeID)
+		p.VotePro(v.TypeID, util.VOTEUP)
 	case v.Type == util.CON:
 		r := Con{}
-		r.VoteCon(v.TypeID)
+		r.VoteCon(v.TypeID, util.VOTEUP)
 	}
 
 	return true
@@ -97,4 +97,52 @@ func IsVotedOn(Type int, typeID int, username string) bool {
 		return true
 	}
 	return false
+}
+
+//DeleteVote : Delete vote
+func DeleteVote(Type int, typeID int, username string) {
+	v := Vote{}
+	db.Where("type_id = ? AND type = ? AND username = ?", typeID, Type, username).First(&v)
+	if v.ID != 0 {
+		db.Delete(&v)
+
+	}
+	//Check type of vote
+	switch {
+	case v.Type == util.SOLUTION:
+		s := Solution{}
+		s.VoteSolution(v.TypeID, util.VOTEDOWN)
+	case v.Type == util.PROBLEM:
+		p := Problem{}
+		p.VoteProblem(v.TypeID, util.VOTEDOWN)
+	case v.Type == util.QUESTION:
+		q := Question{}
+		q.VoteQuestion(v.TypeID, util.VOTEDOWN)
+	case v.Type == util.SUGGESTION:
+		s := Suggestion{}
+		s.VoteSuggestion(v.TypeID, util.VOTEDOWN)
+	case v.Type == util.ANSWER:
+		a := Answer{}
+		a.VoteAnswer(v.TypeID, util.VOTEDOWN)
+	case v.Type == util.COMMENT:
+		c := Comment{}
+		c.VoteComment(v.TypeID, util.VOTEDOWN)
+	case v.Type == util.FREEFORM:
+		f := FreeForm{}
+		f.VoteFreeForm(v.TypeID, util.VOTEDOWN)
+	case v.Type == util.LEARNITEM:
+		l := LearnItem{}
+		l.VoteLearnItem(v.TypeID, util.VOTEDOWN)
+	case v.Type == util.RESOURCE:
+		r := Resource{}
+		r.VoteResource(v.TypeID, util.VOTEDOWN)
+	case v.Type == util.PRO:
+		p := Pro{}
+		p.VotePro(v.TypeID, util.VOTEDOWN)
+	case v.Type == util.CON:
+		r := Con{}
+		r.VoteCon(v.TypeID, util.VOTEDOWN)
+	}
+
+	return
 }

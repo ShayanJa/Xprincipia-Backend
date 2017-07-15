@@ -6,6 +6,7 @@ import (
 	"errors"
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
+	"work/xprincipia/backend/util"
 )
 
 //Pro : Struct containing a pro
@@ -102,12 +103,17 @@ func (p *Pro) UpdatePro(form ProForm) {
 }
 
 //VotePro : ~
-func (p *Pro) VotePro(id int) {
+func (p *Pro) VotePro(id int, vote bool) {
 	err := db.Where("id = ?", id).Find(&p)
 	if err == nil {
 		glog.Info("There was an error")
 	}
-	p.Rank++
+	//check if upVote or downVote
+	if vote == util.VOTEUP {
+		p.Rank++
+	} else {
+		p.Rank--
+	}
 	db.Model(&p).Update("rank", p.Rank)
 
 	var totalVotes = 0

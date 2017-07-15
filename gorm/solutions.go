@@ -6,6 +6,7 @@ import (
 	"errors"
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
+	"work/xprincipia/backend/util"
 )
 
 // Solution : Generic Problem Solution
@@ -122,12 +123,17 @@ func DeleteSolutionByID(form SolutionDeleteForm) error {
 }
 
 //VoteSolution : ~
-func (s *Solution) VoteSolution(id int) {
+func (s *Solution) VoteSolution(id int, vote bool) {
 	err := db.Where("id = ?", id).Find(&s)
 	if err == nil {
 		glog.Info("There was an error")
 	}
-	s.Rank++
+	//check if upVote or downVote
+	if vote == util.VOTEUP {
+		s.Rank++
+	} else {
+		s.Rank--
+	}
 	db.Model(&s).Update("rank", s.Rank)
 
 	var totalVotes = 0

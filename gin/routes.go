@@ -153,6 +153,7 @@ func SetRoutes(router *gin.Engine) {
 		//Vote API
 		auth.POST("/vote/create", postVote)
 		auth.GET("/vote/isVotedOn", isVotedOn)
+		auth.DELETE("/vote/delete", deleteVote)
 
 		//Save Token API
 		auth.POST("/saveToken", saveToken)

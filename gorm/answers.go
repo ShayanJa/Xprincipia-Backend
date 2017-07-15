@@ -5,6 +5,7 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
+	"work/xprincipia/backend/util"
 )
 
 //Answer : Struct containing a question
@@ -35,7 +36,7 @@ func CreateAnswer(form AnswerForm) {
 	intQuestionID, _ := strconv.Atoi(form.QuestionID)
 	a.QuestionID = intQuestionID
 	a.Description = form.Description
-	a.Rank = 1
+	a.Rank = 0
 	db.Create(&a)
 }
 
@@ -86,13 +87,20 @@ func (a *Answer) UpdateAnswer(form AnswerForm) {
 	db.Save(&a)
 }
 
-//VoteAnswer : ~
-func (a *Answer) VoteAnswer(id int) {
+//VoteAnswer : vote paramater takes in true or false to
+//denote and upvote or a downvote
+func (a *Answer) VoteAnswer(id int, vote bool) {
 	err := db.Where("id = ?", id).Find(&a)
 	if err == nil {
 		glog.Info("There was an error")
 	}
-	a.Rank++
+	//check if upVote or downVote
+	if vote == util.VOTEUP {
+		a.Rank++
+	} else {
+		a.Rank--
+	}
+
 	db.Model(&a).Update("rank", a.Rank)
 
 	var totalVotes = 0
