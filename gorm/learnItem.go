@@ -47,7 +47,7 @@ func CreateLearnItem(form LearnItemForm) {
 	l.TypeID = intTypeID
 	l.Username = form.Username
 	l.Description = form.Description
-	l.Rank = 1
+	l.Rank = 0
 	db.Create(&l)
 }
 
@@ -125,7 +125,10 @@ func (l *LearnItem) VoteLearnItem(id int, vote bool) {
 	}
 
 	for i := 0; i < len(learnItems); i++ {
-		var percentRank = float32(learnItems[i].Rank) / float32(totalVotes)
+		var percentRank = float32(0.0)
+		if totalVotes != 0 {
+			percentRank = float32(learnItems[i].Rank) / float32(totalVotes)
+		}
 		db.Model(&learnItems[i]).Update("percent_rank", percentRank)
 	}
 
