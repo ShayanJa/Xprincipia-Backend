@@ -40,7 +40,7 @@ func CreateSuggestion(form SuggestionForm) {
 	intTypeID, _ := strconv.Atoi(form.TypeID)
 	s.TypeID = intTypeID
 	s.Description = form.Description
-	s.Rank = 1
+	s.Rank = 0
 	db.Create(&s)
 	return
 }
@@ -102,7 +102,10 @@ func (s *Suggestion) VoteSuggestion(id int, vote bool) {
 	}
 
 	for i := 0; i < len(suggestions); i++ {
-		var percentRank = float32(suggestions[i].Rank) / float32(totalVotes)
+		var percentRank = float32(0.0)
+		if totalVotes != 0 {
+			percentRank = float32(suggestions[i].Rank) / float32(totalVotes)
+		}
 		db.Model(&suggestions[i]).Update("percent_rank", percentRank)
 	}
 

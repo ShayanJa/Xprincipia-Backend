@@ -93,7 +93,7 @@ func CreateSolution(form SolutionForm) {
 	s.Evidence = form.Evidence
 	s.Experiments = form.Experiments
 	s.References = form.References
-	s.Rank = 1
+	s.Rank = 0
 
 	db.Create(&s)
 }
@@ -143,7 +143,10 @@ func (s *Solution) VoteSolution(id int, vote bool) {
 	}
 
 	for i := 0; i < len(solutions); i++ {
-		var percentRank = float32(solutions[i].Rank) / float32(totalVotes)
+		var percentRank = float32(0.0)
+		if totalVotes != 0 {
+			percentRank = float32(solutions[i].Rank) / float32(totalVotes)
+		}
 		db.Model(&solutions[i]).Update("percent_rank", percentRank)
 	}
 

@@ -47,7 +47,7 @@ func CreateResource(form ResourceForm) {
 	r.TypeID = intTypeID
 	r.Username = form.Username
 	r.Description = form.Description
-	r.Rank = 1
+	r.Rank = 0
 	db.Create(&r)
 }
 
@@ -123,7 +123,10 @@ func (r *Resource) VoteResource(id int, vote bool) {
 	}
 
 	for i := 0; i < len(resources); i++ {
-		var percentRank = float32(resources[i].Rank) / float32(totalVotes)
+		var percentRank = float32(0.0)
+		if totalVotes != 0 {
+			percentRank = float32(resources[i].Rank) / float32(totalVotes)
+		}
 		db.Model(&resources[i]).Update("percent_rank", percentRank)
 	}
 
