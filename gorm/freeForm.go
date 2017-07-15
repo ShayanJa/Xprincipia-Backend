@@ -56,7 +56,7 @@ func (f *FreeForm) GetFreeFormByID(id uint) {
 //GetAllFreeForms : get all suggestions
 func GetAllFreeForms() []FreeForm {
 	f := []FreeForm{}
-	err := db.Order("created_at desc").Find(&f)
+	err := db.Order("rank desc").Find(&f)
 	if err == nil {
 		glog.Info("There was an error")
 	}

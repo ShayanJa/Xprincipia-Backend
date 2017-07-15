@@ -51,7 +51,7 @@ func (a *Answer) GetAnswerByID(id uint) {
 //GetAllAnswers : get all suggestions //READ
 func GetAllAnswers() []Answer {
 	a := []Answer{}
-	err := db.Order("created_at desc").Find(&a)
+	err := db.Order("rank desc").Find(&a)
 	if err == nil {
 		glog.Info("There was an error")
 	}
