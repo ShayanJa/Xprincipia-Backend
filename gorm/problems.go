@@ -70,7 +70,7 @@ func CreateProblem(form ProblemForm) error {
 	case form.Title == "":
 		return errors.New("Title is empty: Please fill in field")
 	case form.Summary == "":
-		return errors.New("Summary is empty: Please fill in field")
+		return errors.New("Additional Information is empty: Please fill in field")
 	}
 
 	//Create Problem with Form Items
@@ -84,6 +84,7 @@ func CreateProblem(form ProblemForm) error {
 	p.Description = form.Description
 	p.References = form.References
 	p.Requirements = form.Requirements
+	p.Rank = 1
 	db.Create(&p)
 	return nil
 }
