@@ -84,7 +84,6 @@ func CreateProblem(form ProblemForm) error {
 	p.Description = form.Description
 	p.References = form.References
 	p.Requirements = form.Requirements
-	p.Rank = 0
 	db.Create(&p)
 	return nil
 }
