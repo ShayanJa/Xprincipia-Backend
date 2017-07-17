@@ -45,6 +45,7 @@ func populateDBtestData(db *gorm.DB) {
 		Field:          "Consciousness",
 		Summary:        "The name Amazon is said to arise from a war Francisco de Orellana fought with the Tapuyas and other tribes. The women of the tribe fought alongside the men, as was their custom.[3] Orellana derived the name Amazonas from the Amazons of Greek mythology, described by Herodotus and Diodorus.",
 		Description:    "The Amazon rainforest (Portuguese: Floresta Amazônica or Amazônia; Spanish: Selva Amazónica, Amazonía or usually Amazonia; French: Forêt amazonienne; Dutch: Amazoneregenwoud), also known in English as Amazonia or the Amazon Jungle, is a moist broadleaf forest that covers most of the Amazon basin of South America. This basin encompasses 7,000,000 square kilometres (2,700,000 sq mi), of which 5,500,000 square kilometres (2,100,000 sq mi) are covered by the rainforest. This region includes territory belonging to nine nations. The majority of the forest is contained within Brazil, with 60% of the rainforest, followed by Peru with 13%, Colombia with 10%, and with minor amounts in Venezuela, Ecuador, Bolivia, Guyana, Suriname and French Guiana. States or departments in four nations contain 'Amazonas' in their names. The Amazon represents over half of the planet's remaining rainforests,[1] and comprises the largest and most biodiverse tract of tropical rainforest in the world, with an estimated 390 billion individual trees divided into 16,000 species.[2]",
+		Rank:           1,
 	}
 	db.Create(&problem)
 
@@ -55,6 +56,7 @@ func populateDBtestData(db *gorm.DB) {
 		Title:          "How Quantum Cryptology Works",
 		Summary:        "Despite all of the security it offers, quantum cryptology also has a few fundamental flaws. Chief among these flaws is the length under which the system will work: It?s too short.",
 		Description:    "When we use the Internet, we're not always just clicking around and passively taking in information, such as reading news articles or blog posts -- a great deal of our time online involves sending others our own information. Ordering something over the Internet, whether it's a book, a CD or anything else from an online vendor, or signing up for an online account, requires entering in a good deal of sensitive personal information. A typical transaction might include not only our names, e-mail addresses and physical address and phone number, but also passwords and personal identification numbers (PINs).",
+		Rank:           1,
 	}
 	db.Create(&problem2)
 
@@ -65,6 +67,7 @@ func populateDBtestData(db *gorm.DB) {
 		Title:          "Naked singularity",
 		Summary:        "In general relativity, a naked singularity is a gravitational singularity without an event horizon. In a black hole, the singularity is completely enclosed by a boundary known as the event horizon, inside which the gravitational force of the singularity is so strong that light cannot escape. Hence, objects inside the event horizon?including the singularity itself?cannot be directly observed. A naked singularity, by contrast, is observable from the outside.",
 		Description:    "The theoretical existence of naked singularities is important because their existence would mean that it would be possible to observe the collapse of an object to infinite density. It would also cause foundational problems for general relativity, because general relativity cannot make predictions about the future evolution of space-time near a singularity. In generic black holes, this is not a problem, as an outside viewer cannot observe the space-time within the event horizon.ome research has suggested that if loop quantum gravity is correct, then naked singularities could exist in nature,[1][2][3] implying that the cosmic censorship hypothesis does not hold. Numerical calculations[4] and some other arguments[5] have also hinted at this possibility.At LIGO, first observation of gravitational waves were detected after the collision two black holes, known as event GW150914. This event did not produce a naked singularity based on observation.[6]",
+		Rank:           1,
 	}
 	db.Create(&problem3)
 
@@ -75,6 +78,7 @@ func populateDBtestData(db *gorm.DB) {
 		Title:          "High-yield investment program",
 		Summary:        "A high-yield investment program (HYIP) is a type of Ponzi scheme, an investment scam that promises unsustainably high return on investment by paying previous investors with the money invested by new investors.",
 		Description:    "Operators generally set up a website offering an 'investment program' which promises very high returns, such as 1% per day (3778% APY when returns are compounded every day), disclosing little or no detail about the underlying management, location, or other aspects of how money is to be invested. The U.S. Securities and Exchange Commission (SEC) has said that 'these fraudulent schemes involve the purported issuance, trading, or use of so-called 'prime' bank, 'prime' European bank or 'prime' world bank financial instruments, or other 'high yield investment programs.' (HYIP's) The fraud artists … seek to mislead investors by suggesting that well regarded and financially sound institutions participate in these bogus programs.'[1] In 2010, the Financial Industry Regulatory Authority (FINRA) warned that '[t]he con artists behind HYIPs are experts at using social media — including YouTube, Twitter and Facebook — to lure investors and create the illusion of social consensus that these investments are legitimate'",
+		Rank:           1,
 	}
 	db.Create(&problem4)
 
@@ -87,6 +91,7 @@ func populateDBtestData(db *gorm.DB) {
 		Description:    "Models of consciousness should be distinguished from so-called neural correlates of consciousness (Crick & Koch 1990). While the identification of correlations between aspects of brain activity and aspects of consciousness may constrain the specification of neurobiologically plausible models, such correlations do not by themselves provide explanatory links between neural activity and consciousness. Models should also be distinguished from theories that do not propose any mechanistic implementation (e.g., Rosenthal’s ‘higher-order thought’ theories, Rosenthal 2005). Consciousness models are valuable precisely to the extent that they propose such explanatory links (Seth, 2009). This article summarizes models that include computational, informational, or neurodynamic elements that propose explanatory links between neural properties and phenomenal properties.",
 		Requirements:   "Must include computational, informational, or neurodynamic elements that propose explanatory links between neural properties and phenomenal properties",
 		References:     "Seth, A. K. & Baars, B. J. 2005 Neural Darwinism and consciousness. Consciousness and Cognition 14, 140-168. Seth, A. K., Baars, B. J. & Edelman, D. B. 2005 Criteria for consciousness in humans and other mammals. Consciousness and Cognition 14, 119-139. Seth, Anil. 'Models of Consciousness.' Scholarpedia. N.p., n.d. Web. 05 Apr. 2017. ",
+		Rank:           1,
 	}
 	db.Create(&problem5)
 
