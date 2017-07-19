@@ -5,7 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
 	"github.com/itsjamie/gin-cors"
-	"os"
 	"os/exec"
 	"time"
 )
