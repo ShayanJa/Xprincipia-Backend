@@ -70,7 +70,7 @@ func CreateProblem(form ProblemForm) error {
 	case form.Title == "":
 		return errors.New("Title is empty: Please fill in field")
 	case form.Summary == "":
-		return errors.New("Summary is empty: Please fill in field")
+		return errors.New("Additional Information is empty: Please fill in field")
 	}
 
 	//Create Problem with Form Items
@@ -84,7 +84,7 @@ func CreateProblem(form ProblemForm) error {
 	p.Description = form.Description
 	p.References = form.References
 	p.Requirements = form.Requirements
-	p.Rank = 0
+	p.Rank = 1
 	db.Create(&p)
 	return nil
 }
@@ -163,7 +163,7 @@ func DeleteProblemByID(form ProblemDeleteForm) error {
 
 //VoteProblem : ~
 func (p *Problem) VoteProblem(id int, vote bool) {
-	err := db.Where("id = ?", id).Find(&p)
+	err := db.Where("id = ?", id).First(&p)
 	if err == nil {
 		glog.Error("There was an error")
 	}
@@ -182,11 +182,9 @@ func (p *Problem) VoteProblem(id int, vote bool) {
 	}
 
 	for i := 0; i < len(problems); i++ {
-		var percentRank = float32(0.0)
-		if totalVotes != 0 {
-			percentRank = float32(problems[i].Rank) / float32(totalVotes)
-		}
+		var percentRank = float32(problems[i].Rank) / float32(totalVotes)
 		db.Model(&problems[i]).Update("percent_rank", percentRank)
+
 	}
 
 }

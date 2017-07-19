@@ -64,13 +64,13 @@ func CreateUser(form RegistrationForm) error {
 	//Validate register form
 	switch {
 	case form.Username == "":
-		return errors.New("Username Field is empty")
+		return errors.New("Please enter a username. ")
 	case form.Email == "":
-		return errors.New("Email Field is empty")
+		return errors.New("Please enter an email address. ")
 	case form.FullName == "":
-		return errors.New("FullName Field is empty")
+		return errors.New("Please enter your full name. ")
 	case len(form.Password) < 8:
-		return errors.New("Password must be longer than 8")
+		return errors.New("Please enter a password with at least 8 characters. ")
 	}
 
 	//check DB if Username is already taken

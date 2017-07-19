@@ -2,11 +2,12 @@ package gin
 
 import (
 	"fmt"
-	"os/exec"
-
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
 	"github.com/itsjamie/gin-cors"
+	"os"
+	"os/exec"
+	"time"
 )
 
 //Global router
@@ -21,11 +22,11 @@ func RunRouter() {
 	// Accept CORS Headers
 	router := gin.New()
 	router.Use(cors.Middleware(cors.Config{
-		Origins:        "*",
-		Methods:        "GET, POST, PUT, DELETE",
-		RequestHeaders: "Origin, Authorization, Content-Type",
-		ExposedHeaders: "",
-		// MaxAge:          50 * time.Second,
+		Origins:         "*",
+		Methods:         "GET, POST, PUT, DELETE",
+		RequestHeaders:  "Origin, Authorization, Content-Type",
+		ExposedHeaders:  "",
+		MaxAge:          50 * time.Second,
 		Credentials:     true,
 		ValidateHeaders: false,
 	}))

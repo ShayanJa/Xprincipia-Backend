@@ -15,7 +15,7 @@ var authMiddleware = &jwt.GinJWTMiddleware{
 	Realm:      "test zone",
 	Key:        []byte("secret key"),
 	Timeout:    time.Hour,
-	MaxRefresh: time.Hour,
+	MaxRefresh: time.Hour * 168,
 	Authenticator: func(userId string, password string, c *gin.Context) (string, bool) {
 		//  
 		user := gorm.User{}
