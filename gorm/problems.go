@@ -84,6 +84,7 @@ func CreateProblem(form ProblemForm) error {
 	p.Description = form.Description
 	p.References = form.References
 	p.Requirements = form.Requirements
+	p.Rank = 1
 	db.Create(&p)
 	return nil
 }
@@ -162,7 +163,7 @@ func DeleteProblemByID(form ProblemDeleteForm) error {
 
 //VoteProblem : ~
 func (p *Problem) VoteProblem(id int, vote bool) {
-	err := db.Where("id = ?", id).Find(&p)
+	err := db.Where("id = ?", id).First(&p)
 	if err == nil {
 		glog.Error("There was an error")
 	}
