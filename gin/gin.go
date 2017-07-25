@@ -26,7 +26,7 @@ func RunRouter() {
 		Methods:         "GET, POST, PUT, DELETE",
 		RequestHeaders:  "Origin, Authorization, Content-Type",
 		ExposedHeaders:  "",
-		MaxAge:          50 * time.Second,
+		MaxAge:          10000 * time.Second,
 		Credentials:     true,
 		ValidateHeaders: false,
 	}))
