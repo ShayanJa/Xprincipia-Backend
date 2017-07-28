@@ -8,6 +8,9 @@ func SetRoutes(router *gin.Engine) {
 	// //Index Routes
 	router.GET("/", indexHandler)
 
+	router.GET("/hello", helloHandler)
+	router.GET("/refresh_token", routerMiddleware.RefreshHandler)
+
 	//User API
 	router.GET("/users/createdSolutions", getAllCreatedSolutions)
 	router.GET("/users/followedSolutions", getAllFollowedSolutions)
@@ -23,7 +26,6 @@ func SetRoutes(router *gin.Engine) {
 	router.GET("/problems/ID", getProblemByIDHandler)
 	router.GET("/problems/all", getAllProblems)
 	router.GET("/problems/subproblems", getAllSubProblems)
-	router.GET("/problems/search", searchProblemDB)
 
 	//Questions API
 	router.GET("/questions/ID", getQuestionByIDHandler)
@@ -42,8 +44,33 @@ func SetRoutes(router *gin.Engine) {
 
 	//Comments API
 	router.GET("/comments/ID", getCommentByIDHandler)
-	router.GET("/comments/questionID", getCommentsBySuggestionIDHandler)
+	router.GET("/comments/suggestionID", getCommentsBySuggestionIDHandler)
 	router.GET("/comments/all", getAllComments)
+
+	//FreeForm API
+	router.GET("/freeForms/ID", getFreeFormByIDHandler)
+	router.GET("/freeForms/typeID", getFreeFormByTypeIDHandler)
+	router.GET("/freeForms/all", getAllFreeForms)
+
+	//Pro API
+	router.GET("/pros/ID", getProByIDHandler)
+	router.GET("/pros/typeID", getProByTypeIDHandler)
+	router.GET("/pros/all", getAllPros)
+
+	//Pro API
+	router.GET("/cons/ID", getConByIDHandler)
+	router.GET("/cons/typeID", getConByTypeIDHandler)
+	router.GET("/cons/all", getAllCons)
+
+	//Learn Item API
+	router.GET("/learnItems/ID", getLearnItemByIDHandler)
+	router.GET("/learnItems/typeID", getLearnItemByTypeIDHandler)
+	router.GET("/learnItems/all", getAllLearnItems)
+
+	//Resource API
+	router.GET("/resources/ID", getResourceByIDHandler)
+	router.GET("/resources/typeID", getResourceByTypeIDHandler)
+	router.GET("/resources/all", getAllResources)
 
 	// //Authentication Middleware
 	auth := router.Group("/auth")
