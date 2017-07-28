@@ -8,9 +8,6 @@ func SetRoutes(router *gin.Engine) {
 	// //Index Routes
 	router.GET("/", indexHandler)
 
-	router.GET("/hello", helloHandler)
-	router.GET("/refresh_token", routerMiddleware.RefreshHandler)
-
 	//User API
 	router.GET("/users/createdSolutions", getAllCreatedSolutions)
 	router.GET("/users/followedSolutions", getAllFollowedSolutions)
