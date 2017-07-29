@@ -1,5 +1,6 @@
 package util
 
+//Type Constants
 const (
 	//PROBLEM : int def of prob
 	PROBLEM = 0
@@ -23,14 +24,18 @@ const (
 	PRO = 9
 	//CON : int def of cons
 	CON = 10
-
-	//PAGINGCONSTANT : Number of items on page
-	PAGINGCONSTANT = 10
 )
 
+//Voting Constants
 const (
 	//VOTEUP : bool to up vote
 	VOTEUP = true
 	//VOTEDOWN : bool to down vote
 	VOTEDOWN = false
+)
+
+//Paging Constant
+const (
+	//PAGINGCONSTANT : Number of items on page
+	PAGINGCONSTANT = 10
 )
