@@ -102,24 +102,39 @@ func (p *Problem) UpdateProblem(form ProblemForm) {
 	db.Save(&p)
 }
 
-// //GetAllProblems : Returns all problem objects
-// func GetAllProblems(pageNumber int) []Problem {
-// 	p := []Problem{}
-// 	err := db.Where("parent_id < ?", 1).Where("id > ? AND id < ?", util.PAGINGCONSTANT*pageNumber, util.PAGINGCONSTANT*(1+pageNumber)).Find(&p)
-// 	if err == nil {
-// 		glog.Error("There was an error")
-// 	}
-// 	return p
-// }
-
 //GetAllProblems : Returns all problem objects
 func GetAllProblems() []Problem {
 	p := []Problem{}
-	err := db.Where("parent_id < ?", 1).Find(&p)
+	err := db.Find(&p)
 	if err == nil {
 		glog.Error("There was an error")
 	}
 	return p
+}
+
+//GetAllProblemsByPage : Returns all problem objects
+func GetAllProblemsByPage(page int) []Problem {
+	p := []Problem{}
+	err := db.Find(&p)
+	if err == nil {
+		glog.Error("There was an error")
+	}
+
+	//Check to see if there are more problems than util.PAGINGCONSTANT
+	//if so set the pagingConstant to the number of problems
+	var pageConstant = 0
+	pagedProblems := []Problem{}
+	if len(p) < util.PAGINGCONSTANT {
+		pageConstant = len(p)
+	} else {
+		pageConstant = util.PAGINGCONSTANT
+	}
+
+	for i := (page * pageConstant); i < (pageConstant * (page + 1)); i++ {
+		pagedProblems = append(pagedProblems, p[i])
+	}
+
+	return pagedProblems
 }
 
 //GetSubProblemsByID : Get all subproblems to a parent ID,

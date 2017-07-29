@@ -28,9 +28,6 @@ func main() {
 	db := gorm.InitializeDB()
 	defer db.Close()
 
-	// //test
-	// glog.Info(gorm.IsVotedOnByTypeID(10, 5, "Shyshawn"))
-
 	//Start HTTP Network
 	gin.RunRouter()
 
