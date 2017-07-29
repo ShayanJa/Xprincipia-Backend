@@ -55,6 +55,9 @@ func runMigrations(db *gorm.DB) bool {
 	glog.Info("CREATING VOTE TABLE...")
 	db.AutoMigrate(&Vote{})
 
+	glog.Info("CREATING FLAG TABLE...")
+	db.AutoMigrate(&Flag{})
+
 	glog.Info("CREATING LOGINATTEMPTS TABLE...")
 	db.AutoMigrate(&LoginAttempt{})
 
