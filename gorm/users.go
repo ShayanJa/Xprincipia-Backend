@@ -25,6 +25,7 @@ type User struct {
 	FollowedProblemsIDs []Problem
 	VotedSolutionsIDs   []Solution
 	VotedProblemIDs     []Problem
+	Points              int
 	IsDisabled          bool
 }
 
@@ -222,4 +223,28 @@ func IsUserinDBbyUsername(username string) bool {
 		return false
 	}
 	return true
+}
+
+/* Points API */
+
+//AddPoints : add points to user
+func (u *User) AddPoints(points int) {
+	err := db.First(&u)
+	if err == nil {
+		glog.Error("There was an error")
+	}
+
+	u.Points += points
+	db.Save(&u)
+
+}
+
+//GetPoints : get points of the user
+func (u *User) GetPoints() int {
+	err := db.First(&u)
+	if err == nil {
+		glog.Error("There was an error")
+	}
+	return u.Points
+
 }
