@@ -15,7 +15,7 @@ type Resource struct {
 	Type        int
 	TypeID      int
 	Username    string
-	Description string
+	Description string `gorm:"size:10000"`
 	Rank        int
 	PercentRank float32
 }
