@@ -49,7 +49,7 @@ func RunRouter() {
 
 	//HTTPS
 	glog.Info("Listening and serving HTTPS on ", port)
-	err = http.ListenAndServeTLS(":"+port, "certificates/cert.pem", "certificates/key.pem", router)
+	err = http.ListenAndServeTLS(":"+port, "certificates/cert.pem", "certificates/privkey.pem", router)
 
 	//HTTP
 	//Run Router on specified port
