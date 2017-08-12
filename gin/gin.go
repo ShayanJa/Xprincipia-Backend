@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"
 	"github.com/itsjamie/gin-cors"
+	"net/http"
 	"os/exec"
 	"time"
 )
@@ -46,6 +47,11 @@ func RunRouter() {
 	}
 	glog.Info(string(out))
 
+	//HTTPS
+	glog.Info("Listening and serving HTTPS on ", port)
+	err = http.ListenAndServeTLS(":"+port, "certificates/cert.pem", "certificates/key.pem", router)
+
+	//HTTP
 	//Run Router on specified port
-	router.Run(":" + port)
+	// router.Run(":" + port)
 }
