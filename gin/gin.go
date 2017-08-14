@@ -17,7 +17,7 @@ var router *gin.Engine
 func RunRouter() {
 	//Get enviromental data
 	port := "10000" //os.Getenv("ROUTER_PORT")
-
+	dockerEntryPoint := "src/work/xprincipia/backend"
 	// Gin router config
 	// Accept CORS Headers
 	router := gin.New()
@@ -40,7 +40,7 @@ func RunRouter() {
 	// router.LoadHTMLGlob("templates/*")
 
 	// Display LOGO
-	cmd := "cat util/logo.txt"
+	cmd := "cat " + dockerEntryPoint + "/util/logo.txt"
 	out, err := exec.Command("bash", "-c", cmd).Output()
 	if err != nil {
 		glog.Info(fmt.Sprintf("Failed to execute command: %s", cmd))
@@ -49,7 +49,8 @@ func RunRouter() {
 
 	//HTTPS
 	glog.Info("Listening and serving HTTPS on ", port)
-	err = http.ListenAndServeTLS(":"+port, "certificates/cert.pem", "certificates/privkey.pem", router)
+	err = http.ListenAndServeTLS(":"+port, dockerEntryPoint+"/certificates/cert.pem", dockerEntryPoint+"/certificates/privkey.pem", router)
+	glog.Info(err)
 
 	//HTTP
 	//Run Router on specified port

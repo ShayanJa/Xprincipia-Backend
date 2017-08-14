@@ -14,7 +14,7 @@ services:
     # based off the golang:1.6.1-alpine image
 
     #Docker hub image
-    image: xprincipia/backend
+    image: xprincipia/backend:v3SSL
 
     # Local host build
     # build:
@@ -22,7 +22,7 @@ services:
 
     #   dockerfile: dockerfile
     ports:
-      - 10000:10000
+      - 443:10000
     links: 
       - mysql
     restart: always
