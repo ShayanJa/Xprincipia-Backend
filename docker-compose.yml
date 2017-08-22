@@ -14,7 +14,7 @@ services:
     # based off the golang:1.6.1-alpine image
 
     #Docker hub image
-    image: xprincipia/backend:v3SSL
+    image: xprincipia/backend:v3
 
     # Local host build
     # build:
