@@ -148,7 +148,7 @@ func GetSubProblemsByID(parentID int) []Problem {
 //QueryProblems : Return problems that are related to the query String
 func QueryProblems(q string) []Problem {
 	p := []Problem{}
-	err := db.Where("title LIKE ?", "%"+q+"%").Find(&p)
+	err := db.Where("title LIKE ?", "%"+q+"%").Order("rank desc").Find(&p)
 	if err == nil {
 		glog.Info("There was an error")
 	}
