@@ -112,6 +112,16 @@ func GetAllProblems() []Problem {
 	return p
 }
 
+//GetAllProblemsWithLimit : Returns all problem objects
+func GetAllProblemsWithLimit(limit int) []Problem {
+	p := []Problem{}
+	err := db.Limit(limit).Find(&p)
+	if err == nil {
+		glog.Error("There was an error")
+	}
+	return p
+}
+
 //GetAllProblemsByPage : Returns all problem objects
 func GetAllProblemsByPage(page int) []Problem {
 	p := []Problem{}
@@ -149,6 +159,16 @@ func GetSubProblemsByID(parentID int) []Problem {
 func QueryProblems(q string) []Problem {
 	p := []Problem{}
 	err := db.Where("title LIKE ?", "%"+q+"%").Order("rank desc").Find(&p)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+	return p
+}
+
+//QueryLast10Problems : Return problems that are related to the query String
+func QueryLast10Problems(q string) []Problem {
+	p := []Problem{}
+	err := db.Limit(10).Where("title LIKE ?", "%"+q+"%").Order("rank desc").Find(&p)
 	if err == nil {
 		glog.Info("There was an error")
 	}
