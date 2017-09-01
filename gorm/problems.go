@@ -18,7 +18,7 @@ type Problem struct {
 	Title                  string `gorm:"size:151"`
 	Field                  string `gorm:"size:151"`
 	Summary                string `gorm:"size:1500"`
-	Description            string `gorm:"size:10000"`
+	Description            string `gorm:"size:100000"`
 	Requirements           string `gorm:"size:1500"`
 	References             string `gorm:"size:1500"`
 	Rank                   int
