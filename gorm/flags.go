@@ -8,7 +8,7 @@ type Flag struct {
 	Type        int
 	TypeID      int
 	Username    string
-	Description string `gorm:"size:10000"`
+	Description string `gorm:"size:100000"`
 }
 
 //FlagForm : ~

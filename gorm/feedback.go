@@ -10,7 +10,7 @@ import (
 type Feedback struct {
 	gorm.Model
 	Username    string
-	Description string `gorm:"size:10000"`
+	Description string `gorm:"size:100000"`
 }
 
 //FeedbackForm : Form to make Feedback Struct

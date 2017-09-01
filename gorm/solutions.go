@@ -17,7 +17,7 @@ type Solution struct {
 	OriginalPosterUsername string
 	Title                  string `gorm:"size:151"`
 	Summary                string `gorm:"size:1500"`
-	Description            string `gorm:"size:10000"`
+	Description            string `gorm:"size:100000"`
 	Evidence               string `gorm:"size:1500"`
 	Experiments            string `gorm:"size:1500"`
 	References             string `gorm:"size:1500"`

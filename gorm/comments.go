@@ -13,7 +13,7 @@ type Comment struct {
 	gorm.Model
 	SuggestionID int
 	Username     string
-	Description  string `gorm:"size:10000"`
+	Description  string `gorm:"size:100000"`
 	Rank         int
 	PercentRank  float32
 }
