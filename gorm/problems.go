@@ -21,8 +21,9 @@ type Problem struct {
 	Description            string `gorm:"size:100000"`
 	Requirements           string `gorm:"size:1500"`
 	References             string `gorm:"size:1500"`
-	Rank                   int
+	Rank                   uint
 	PercentRank            float32
+	Private                uint
 	SubProblems            []Problem
 	Suggestions            []Suggestion
 	Questions              []Question
@@ -38,6 +39,7 @@ type ProblemForm struct {
 	Description  string
 	Requirements string
 	References   string
+	Private      string
 }
 
 // ProblemDeleteForm :
@@ -85,6 +87,8 @@ func CreateProblem(form ProblemForm) error {
 	p.References = form.References
 	p.Requirements = form.Requirements
 	p.Rank = 0
+	intPrivate, _ := strconv.Atoi(form.Private)
+	p.Private = uint(intPrivate)
 	db.Create(&p)
 	return nil
 }
@@ -205,17 +209,15 @@ func (p *Problem) VoteProblem(id int, vote bool) {
 	if vote == util.VOTEUP {
 		p.Rank++
 	} else {
-		p.Rank--
-	}
-
-	//Check if rank is below zero to prevent negatie votes
-	if p.Rank < 0 {
-		p.Rank = 0
+		//Check if rank is below zero to prevent negatie votes
+		if p.Rank > 0 {
+			p.Rank--
+		}
 	}
 
 	db.Model(&p).Update("rank", p.Rank)
 
-	var totalVotes = 0
+	totalVotes := uint(0)
 	problems := GetSubProblemsByID(int(p.ParentID))
 	for i := 0; i < len(problems); i++ {
 		totalVotes += problems[i].Rank
