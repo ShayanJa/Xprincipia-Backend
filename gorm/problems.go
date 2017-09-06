@@ -210,9 +210,10 @@ func (p *Problem) VoteProblem(id int, vote bool) {
 		p.Rank++
 	} else {
 		//Check if rank is below zero to prevent negatie votes
-		if p.Rank > 0 {
-			p.Rank--
+		if p.Rank <= 0 {
+			return
 		}
+		p.Rank--
 	}
 
 	db.Model(&p).Update("rank", p.Rank)
@@ -225,16 +226,10 @@ func (p *Problem) VoteProblem(id int, vote bool) {
 
 	for i := 0; i < len(problems); i++ {
 		var percentRank = float32(0.0)
-		if totalVotes != 0 {
+		if totalVotes > 0 {
+			//Verify percentRank is never below zero
 			percentRank = float32(problems[i].Rank) / float32(totalVotes)
+			db.Model(&problems[i]).Update("percent_rank", percentRank)
 		}
-
-		//Verify percentRank is never below zero
-		if percentRank < 0 {
-			percentRank = 0
-		}
-		db.Model(&problems[i]).Update("percent_rank", percentRank)
-
 	}
-
 }
