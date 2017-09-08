@@ -21,8 +21,9 @@ type Problem struct {
 	Description            string `gorm:"size:100000"`
 	Requirements           string `gorm:"size:1500"`
 	References             string `gorm:"size:1500"`
-	Rank                   int
+	Rank                   uint
 	PercentRank            float32
+	Private                bool
 	SubProblems            []Problem
 	Suggestions            []Suggestion
 	Questions              []Question
@@ -38,6 +39,7 @@ type ProblemForm struct {
 	Description  string
 	Requirements string
 	References   string
+	Private      bool
 }
 
 // ProblemDeleteForm :
@@ -85,6 +87,35 @@ func CreateProblem(form ProblemForm) error {
 	p.References = form.References
 	p.Requirements = form.Requirements
 	p.Rank = 0
+	p.Private = false
+	db.Create(&p)
+	return nil
+}
+
+//CreatePrivateProblem : Creates a private problem from a problemForm
+func CreatePrivateProblem(form ProblemForm) error {
+
+	//Handle form Field Errors
+	switch {
+	case form.Title == "":
+		return errors.New("Title is empty: Please fill in field")
+	case form.Summary == "":
+		return errors.New("Additional Information is empty: Please fill in field")
+	}
+
+	//Create Problem with Form Items
+	p := Problem{}
+	p.OriginalPosterUsername = form.Username
+	intID, _ := strconv.Atoi(form.ParentID)
+	p.ParentID = intID
+	p.Title = form.Title
+	p.Field = form.Field
+	p.Summary = form.Summary
+	p.Description = form.Description
+	p.References = form.References
+	p.Requirements = form.Requirements
+	p.Rank = 0
+	p.Private = true
 	db.Create(&p)
 	return nil
 }
@@ -155,6 +186,11 @@ func GetSubProblemsByID(parentID int) []Problem {
 	return p
 }
 
+//IsPrivate : returns true if the problem is private
+func (p *Problem) IsPrivate() bool {
+	return p.Private
+}
+
 //QueryProblems : Return problems that are related to the query String
 func QueryProblems(q string) []Problem {
 	p := []Problem{}
@@ -205,17 +241,16 @@ func (p *Problem) VoteProblem(id int, vote bool) {
 	if vote == util.VOTEUP {
 		p.Rank++
 	} else {
+		//Check if rank is below zero to prevent negatie votes
+		if p.Rank <= 0 {
+			return
+		}
 		p.Rank--
-	}
-
-	//Check if rank is below zero to prevent negatie votes
-	if p.Rank < 0 {
-		p.Rank = 0
 	}
 
 	db.Model(&p).Update("rank", p.Rank)
 
-	var totalVotes = 0
+	totalVotes := uint(0)
 	problems := GetSubProblemsByID(int(p.ParentID))
 	for i := 0; i < len(problems); i++ {
 		totalVotes += problems[i].Rank
@@ -223,16 +258,10 @@ func (p *Problem) VoteProblem(id int, vote bool) {
 
 	for i := 0; i < len(problems); i++ {
 		var percentRank = float32(0.0)
-		if totalVotes != 0 {
+		if totalVotes > 0 {
+			//Verify percentRank is never below zero
 			percentRank = float32(problems[i].Rank) / float32(totalVotes)
+			db.Model(&problems[i]).Update("percent_rank", percentRank)
 		}
-
-		//Verify percentRank is never below zero
-		if percentRank < 0 {
-			percentRank = 0
-		}
-		db.Model(&problems[i]).Update("percent_rank", percentRank)
-
 	}
-
 }

@@ -96,6 +96,7 @@ func SetRoutes(router *gin.Engine) {
 		auth.GET("/problems/all", getAllProblems)
 		auth.GET("/problems/subproblems", getAllSubProblems)
 		auth.POST("/problems/create", postProblem)
+		auth.POST("/problems/create/private", postPrivateProblem)
 		auth.GET("/problems/search", searchProblemDB)
 		auth.PUT("/problems/update", updateProblemByIDHandler)
 		auth.DELETE("/problems/delete", deleteProblemByIDHandler)
