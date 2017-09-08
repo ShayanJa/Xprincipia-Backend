@@ -23,7 +23,7 @@ type Problem struct {
 	References             string `gorm:"size:1500"`
 	Rank                   uint
 	PercentRank            float32
-	Private                uint
+	Private                bool
 	SubProblems            []Problem
 	Suggestions            []Suggestion
 	Questions              []Question
@@ -39,7 +39,7 @@ type ProblemForm struct {
 	Description  string
 	Requirements string
 	References   string
-	Private      string
+	Private      bool
 }
 
 // ProblemDeleteForm :
@@ -87,8 +87,35 @@ func CreateProblem(form ProblemForm) error {
 	p.References = form.References
 	p.Requirements = form.Requirements
 	p.Rank = 0
-	intPrivate, _ := strconv.Atoi(form.Private)
-	p.Private = uint(intPrivate)
+	p.Private = false
+	db.Create(&p)
+	return nil
+}
+
+//CreatePrivateProblem : Creates a private problem from a problemForm
+func CreatePrivateProblem(form ProblemForm) error {
+
+	//Handle form Field Errors
+	switch {
+	case form.Title == "":
+		return errors.New("Title is empty: Please fill in field")
+	case form.Summary == "":
+		return errors.New("Additional Information is empty: Please fill in field")
+	}
+
+	//Create Problem with Form Items
+	p := Problem{}
+	p.OriginalPosterUsername = form.Username
+	intID, _ := strconv.Atoi(form.ParentID)
+	p.ParentID = intID
+	p.Title = form.Title
+	p.Field = form.Field
+	p.Summary = form.Summary
+	p.Description = form.Description
+	p.References = form.References
+	p.Requirements = form.Requirements
+	p.Rank = 0
+	p.Private = true
 	db.Create(&p)
 	return nil
 }
@@ -157,6 +184,11 @@ func GetSubProblemsByID(parentID int) []Problem {
 	p := []Problem{}
 	db.Where("parent_id = ?", parentID).Order("rank desc").Find(&p)
 	return p
+}
+
+//IsPrivate : returns true if the problem is private
+func (p *Problem) IsPrivate() bool {
+	return p.Private
 }
 
 //QueryProblems : Return problems that are related to the query String
