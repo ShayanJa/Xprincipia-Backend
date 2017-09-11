@@ -39,7 +39,15 @@ API
 */
 
 //CreateQuestion : Creates a question
-func CreateQuestion(form QuestionForm) {
+func CreateQuestion(form QuestionForm) error {
+
+	//Handle form Field Errors
+	switch {
+	case form.Description == "":
+		return errors.New("Description is empty: Please fill in field")
+	}
+
+	//Create Question
 	q := Question{}
 	intType, _ := strconv.Atoi(form.Type)
 	q.Type = intType
@@ -49,6 +57,8 @@ func CreateQuestion(form QuestionForm) {
 	q.Description = form.Description
 	q.Rank = 1
 	db.Create(&q)
+
+	return nil
 }
 
 //GetQuestionByID : Returns a Suggestion based on an int ID
@@ -66,6 +76,7 @@ func GetAllQuestions() []Question {
 	if err == nil {
 		glog.Info("There was an error")
 	}
+
 	return q
 }
 

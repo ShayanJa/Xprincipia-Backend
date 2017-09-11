@@ -56,8 +56,10 @@ func postProblem(c *gin.Context) {
 		return
 	}
 
+	// Create Problem
 	err = gorm.CreateProblem(form)
 	if err != nil {
+		// return error response if it exists
 		glog.Error(err)
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
@@ -67,8 +69,6 @@ func postProblem(c *gin.Context) {
 }
 
 func postPrivateProblem(c *gin.Context) {
-	c.Header("Access-Control-Allow-Origin", "*")
-	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 
 	form := gorm.ProblemForm{}
 	c.Bind(&form)
@@ -81,8 +81,10 @@ func postPrivateProblem(c *gin.Context) {
 		return
 	}
 
+	// Create Private Problem
 	err = gorm.CreatePrivateProblem(form)
 	if err != nil {
+		// return error response if it exists
 		glog.Error(err)
 		c.JSON(http.StatusBadRequest, err.Error())
 		return

@@ -3,6 +3,7 @@ package gorm
 import (
 	"strconv"
 
+	"errors"
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
 	"work/xprincipia/backend/util"
@@ -31,8 +32,16 @@ type SuggestionForm struct {
 API
 */
 
-//CreateSuggestion : Creates a question
-func CreateSuggestion(form SuggestionForm) {
+//CreateSuggestion : Creates a suggestion
+func CreateSuggestion(form SuggestionForm) error {
+
+	//Handle form Field Errors
+	switch {
+	case form.Description == "":
+		return errors.New("Description is empty: Please fill in field")
+	}
+
+	//Create Suggestion
 	s := Suggestion{}
 	s.Username = form.Username
 	intType, _ := strconv.Atoi(form.Type)
@@ -42,7 +51,8 @@ func CreateSuggestion(form SuggestionForm) {
 	s.Description = form.Description
 	s.Rank = 0
 	db.Create(&s)
-	return
+
+	return nil
 }
 
 //GetSuggestionByID : Returns a Suggestion based on an int ID
@@ -72,6 +82,17 @@ func GetAllSuggestionsByTypeID(dataType int, typeID int) []Suggestion {
 	}
 
 	return s
+}
+
+// UpdateSuggestion : Updates a problem with problemForm as input
+func (s *Suggestion) UpdateSuggestion(form SuggestionForm) {
+	err := db.First(&s)
+	if err == nil {
+		glog.Error("There was an error")
+	}
+
+	s.Description = form.Description
+	db.Save(&s)
 }
 
 //DeleteSuggestionByID : //DELETE
@@ -109,15 +130,4 @@ func (s *Suggestion) VoteSuggestion(id int, vote bool) {
 		db.Model(&suggestions[i]).Update("percent_rank", percentRank)
 	}
 
-}
-
-// UpdateSuggestion : Updates a problem with problemForm as input
-func (s *Suggestion) UpdateSuggestion(form SuggestionForm) {
-	err := db.First(&s)
-	if err == nil {
-		glog.Error("There was an error")
-	}
-
-	s.Description = form.Description
-	db.Save(&s)
 }
