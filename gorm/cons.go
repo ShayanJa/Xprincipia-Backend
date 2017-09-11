@@ -124,7 +124,7 @@ func (c *Con) VoteCon(id int, vote bool) {
 
 	for i := 0; i < len(questions); i++ {
 		var percentRank = float32(0.0)
-		if totalVotes != 0 {
+		if totalVotes > 0 {
 			percentRank = float32(questions[i].Rank) / float32(totalVotes)
 		}
 		db.Model(&questions[i]).Update("percent_rank", percentRank)
