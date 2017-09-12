@@ -39,7 +39,15 @@ API
 */
 
 //CreateQuestion : Creates a question
-func CreateQuestion(form QuestionForm) {
+func CreateQuestion(form QuestionForm) error {
+
+	//Handle form Field Errors
+	switch {
+	case form.Description == "":
+		return errors.New("Description is empty: Please fill in field")
+	}
+
+	//Create Question
 	q := Question{}
 	intType, _ := strconv.Atoi(form.Type)
 	q.Type = intType
@@ -49,6 +57,8 @@ func CreateQuestion(form QuestionForm) {
 	q.Description = form.Description
 	q.Rank = 1
 	db.Create(&q)
+
+	return nil
 }
 
 //GetQuestionByID : Returns a Suggestion based on an int ID
@@ -66,6 +76,7 @@ func GetAllQuestions() []Question {
 	if err == nil {
 		glog.Info("There was an error")
 	}
+
 	return q
 }
 
@@ -80,17 +91,6 @@ func GetAllQuestionsByTypeID(dataType int, typeID int) []Question {
 	return q
 }
 
-//DeleteQuestionByID : //DELETE
-func DeleteQuestionByID(form QuestionDeleteForm) error {
-	q := Question{}
-	q.GetQuestionByID(uint(form.ID))
-	if q.Username == form.Username {
-		db.Delete(&q)
-		return nil
-	}
-	return errors.New("UnAuthorized User")
-}
-
 // UpdateQuestion : Updates a problem with problemForm as input
 func (q *Question) UpdateQuestion(form QuestionForm) {
 	err := db.First(&q)
@@ -100,6 +100,17 @@ func (q *Question) UpdateQuestion(form QuestionForm) {
 
 	q.Description = form.Description
 	db.Save(&q)
+}
+
+//DeleteQuestionByID : //DELETE
+func DeleteQuestionByID(form QuestionDeleteForm) error {
+	q := Question{}
+	q.GetQuestionByID(uint(form.ID))
+	if q.Username == form.Username {
+		db.Delete(&q)
+		return nil
+	}
+	return errors.New("UnAuthorized User")
 }
 
 //VoteQuestion : ~
@@ -123,7 +134,10 @@ func (q *Question) VoteQuestion(id int, vote bool) {
 	}
 
 	for i := 0; i < len(questions); i++ {
-		var percentRank = float32(questions[i].Rank) / float32(totalVotes)
+		var percentRank = float32(0.0)
+		if totalVotes > 0 {
+			percentRank = float32(questions[i].Rank) / float32(totalVotes)
+		}
 		db.Model(&questions[i]).Update("percent_rank", percentRank)
 	}
 

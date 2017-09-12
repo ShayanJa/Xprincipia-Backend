@@ -36,7 +36,14 @@ API
 */
 
 //CreateComment : Creates a question
-func CreateComment(form CommentForm) {
+func CreateComment(form CommentForm) error {
+
+	//Handle form Field Errors
+	switch {
+	case form.Description == "":
+		return errors.New("Description is empty: Please fill in field")
+	}
+
 	c := Comment{}
 	c.Username = form.Username
 	intCommentID, _ := strconv.Atoi(form.SuggestionID)
@@ -44,6 +51,8 @@ func CreateComment(form CommentForm) {
 	c.Description = form.Description
 	c.Rank = 0
 	db.Create(&c)
+
+	return nil
 }
 
 //GetCommentByID : Returns a Suggestion based on an int ID
@@ -119,7 +128,7 @@ func (c *Comment) VoteComment(id int, vote bool) {
 
 	for i := 0; i < len(comments); i++ {
 		var percentRank = float32(0.0)
-		if totalVotes != 0 {
+		if totalVotes > 0 {
 			percentRank = float32(comments[i].Rank) / float32(totalVotes)
 		}
 		db.Model(&comments[i]).Update("percent_rank", percentRank)

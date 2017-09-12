@@ -1,10 +1,10 @@
 package gorm
 
 import (
-	"strconv"
-
+	"errors"
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
+	"strconv"
 	"work/xprincipia/backend/util"
 )
 
@@ -29,8 +29,16 @@ type AnswerForm struct {
 API
 */
 
-//CreateAnswer : Creates a question
-func CreateAnswer(form AnswerForm) {
+//CreateAnswer : Creates a answer
+func CreateAnswer(form AnswerForm) error {
+
+	//Handle form Field Errors
+	switch {
+	case form.Description == "":
+		return errors.New("Description is empty: Please fill in field")
+	}
+
+	//Create Answer
 	a := Answer{}
 	a.Username = form.Username
 	intQuestionID, _ := strconv.Atoi(form.QuestionID)
@@ -38,6 +46,8 @@ func CreateAnswer(form AnswerForm) {
 	a.Description = form.Description
 	a.Rank = 0
 	db.Create(&a)
+
+	return nil
 }
 
 //GetAnswerByID : Returns a Suggestion based on an int ID
@@ -69,13 +79,6 @@ func GetAllAnswersByQuestionID(questionID int) []Answer {
 	return a
 }
 
-//DeleteAnswerByID : //DELETE
-func DeleteAnswerByID(id int) {
-	a := Answer{}
-	a.GetAnswerByID(uint(id))
-	db.Delete(&a)
-}
-
 // UpdateAnswer : //UPDATE METHOD
 func (a *Answer) UpdateAnswer(form AnswerForm) {
 	err := db.First(&a)
@@ -85,6 +88,13 @@ func (a *Answer) UpdateAnswer(form AnswerForm) {
 
 	a.Description = form.Description
 	db.Save(&a)
+}
+
+//DeleteAnswerByID : //DELETE
+func DeleteAnswerByID(id int) {
+	a := Answer{}
+	a.GetAnswerByID(uint(id))
+	db.Delete(&a)
 }
 
 //VoteAnswer : vote paramater takes in true or false to
@@ -111,7 +121,7 @@ func (a *Answer) VoteAnswer(id int, vote bool) {
 
 	for i := 0; i < len(answers); i++ {
 		var percentRank = float32(0.0)
-		if totalVotes != 0 {
+		if totalVotes > 0 {
 			percentRank = float32(answers[i].Rank) / float32(totalVotes)
 		}
 		db.Model(&answers[i]).Update("percent_rank", percentRank)

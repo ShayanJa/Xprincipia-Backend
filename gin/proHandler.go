@@ -10,8 +10,6 @@ import (
 )
 
 func postPro(c *gin.Context) {
-	c.Header("Access-Control-Allow-Origin", "*")
-	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 
 	form := gorm.ProForm{}
 	c.Bind(&form)
@@ -65,27 +63,6 @@ func getProByTypeIDHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, pros)
 }
 
-func deleteProByIDHandler(c *gin.Context) {
-	id := c.Query("id")
-	username := c.Query("username")
-
-	// Check Token Validity
-	err := gorm.CheckToken(username, c.Request.Header["Authorization"][0])
-	if err != nil {
-		//if Token not in table
-		c.JSON(401, err.Error())
-		return
-	}
-
-	intID, err := strconv.Atoi(id)
-	if err != nil {
-		glog.Error("There was an error in converting string to integer")
-	}
-
-	form := gorm.ProDeleteForm{ID: intID, Username: username}
-	gorm.DeleteProByID(form)
-}
-
 func updateProByIDHandler(c *gin.Context) {
 	// Recieve problem Id
 	id := c.Query("id")
@@ -119,4 +96,25 @@ func updateProByIDHandler(c *gin.Context) {
 	//update problem
 	p.UpdatePro(form)
 
+}
+
+func deleteProByIDHandler(c *gin.Context) {
+	id := c.Query("id")
+	username := c.Query("username")
+
+	// Check Token Validity
+	err := gorm.CheckToken(username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
+	}
+
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+
+	form := gorm.ProDeleteForm{ID: intID, Username: username}
+	gorm.DeleteProByID(form)
 }

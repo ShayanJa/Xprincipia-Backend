@@ -9,8 +9,6 @@ import (
 )
 
 func postQuestion(c *gin.Context) {
-	// c.Header("Access-Control-Allow-Origin", "*")
-	// c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 
 	form := gorm.QuestionForm{}
 	c.Bind(&form)
@@ -24,7 +22,15 @@ func postQuestion(c *gin.Context) {
 		return
 	}
 
-	gorm.CreateQuestion(form)
+	// Create Question
+	err = gorm.CreateQuestion(form)
+	if err != nil {
+		// return error response if it exists
+		glog.Error(err)
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+	c.Status(http.StatusOK)
 }
 
 func getQuestionByIDHandler(c *gin.Context) {

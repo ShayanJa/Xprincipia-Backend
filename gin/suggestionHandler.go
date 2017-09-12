@@ -10,8 +10,6 @@ import (
 )
 
 func postSuggestion(c *gin.Context) {
-	c.Header("Access-Control-Allow-Origin", "*")
-	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 
 	form := gorm.SuggestionForm{}
 	c.Bind(&form)
@@ -24,7 +22,14 @@ func postSuggestion(c *gin.Context) {
 		return
 	}
 
-	gorm.CreateSuggestion(form)
+	// Create Suggestion
+	err = gorm.CreateSuggestion(form)
+	if err != nil {
+		// return error response if it exists
+		glog.Error(err)
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
 	c.Status(http.StatusOK)
 }
 
@@ -66,15 +71,6 @@ func getSuggestionByTypeIDHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, suggestions)
 }
 
-func deleteSuggestionByIDHandler(c *gin.Context) {
-	id := c.Query("id")
-	intID, err := strconv.Atoi(id)
-	if err != nil {
-		glog.Error("There was an error in converting string to integer")
-	}
-	gorm.DeleteSuggestionByID(intID)
-}
-
 func updateSuggestionByIDHandler(c *gin.Context) {
 	// Recieve problem Id
 	id := c.Query("id")
@@ -105,7 +101,28 @@ func updateSuggestionByIDHandler(c *gin.Context) {
 		return
 	}
 
-	//update problem
+	//update suggestion
 	s.UpdateSuggestion(form)
 
+}
+
+func deleteSuggestionByIDHandler(c *gin.Context) {
+	id := c.Query("id")
+	username := c.Query("username")
+
+	// Check Token Validity
+	err := gorm.CheckToken(username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
+	}
+
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+
+	form := gorm.SuggestionDeleteForm{ID: intID, Username: username}
+	gorm.DeleteSuggestionByID(form)
 }

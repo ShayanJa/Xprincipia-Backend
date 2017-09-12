@@ -10,8 +10,6 @@ import (
 )
 
 func postAnswer(c *gin.Context) {
-	c.Header("Access-Control-Allow-Origin", "*")
-	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
 
 	form := gorm.AnswerForm{}
 	c.Bind(&form)
@@ -25,7 +23,14 @@ func postAnswer(c *gin.Context) {
 		return
 	}
 
-	gorm.CreateAnswer(form)
+	// Create Answer
+	err = gorm.CreateAnswer(form)
+	if err != nil {
+		// return error response if it exists
+		glog.Error(err)
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
 	c.Status(http.StatusOK)
 }
 
@@ -56,15 +61,6 @@ func getAnswersByQuestionIDHandler(c *gin.Context) {
 	}
 	answers := gorm.GetAllAnswersByQuestionID(intID)
 	c.JSON(http.StatusOK, answers)
-}
-
-func deleteAnswerByIDHandler(c *gin.Context) {
-	id := c.Query("id")
-	intID, err := strconv.Atoi(id)
-	if err != nil {
-		glog.Error("There was an error in converting string to integer")
-	}
-	gorm.DeleteAnswerByID(intID)
 }
 
 func updateAnswerByIDHandler(c *gin.Context) {
@@ -100,4 +96,13 @@ func updateAnswerByIDHandler(c *gin.Context) {
 	//update Answer
 	a.UpdateAnswer(form)
 
+}
+
+func deleteAnswerByIDHandler(c *gin.Context) {
+	id := c.Query("id")
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+	gorm.DeleteAnswerByID(intID)
 }
