@@ -91,17 +91,6 @@ func GetAllQuestionsByTypeID(dataType int, typeID int) []Question {
 	return q
 }
 
-//DeleteQuestionByID : //DELETE
-func DeleteQuestionByID(form QuestionDeleteForm) error {
-	q := Question{}
-	q.GetQuestionByID(uint(form.ID))
-	if q.Username == form.Username {
-		db.Delete(&q)
-		return nil
-	}
-	return errors.New("UnAuthorized User")
-}
-
 // UpdateQuestion : Updates a problem with problemForm as input
 func (q *Question) UpdateQuestion(form QuestionForm) {
 	err := db.First(&q)
@@ -111,6 +100,17 @@ func (q *Question) UpdateQuestion(form QuestionForm) {
 
 	q.Description = form.Description
 	db.Save(&q)
+}
+
+//DeleteQuestionByID : //DELETE
+func DeleteQuestionByID(form QuestionDeleteForm) error {
+	q := Question{}
+	q.GetQuestionByID(uint(form.ID))
+	if q.Username == form.Username {
+		db.Delete(&q)
+		return nil
+	}
+	return errors.New("UnAuthorized User")
 }
 
 //VoteQuestion : ~

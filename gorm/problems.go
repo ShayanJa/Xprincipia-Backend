@@ -12,6 +12,7 @@ import (
 // Problem : User generated problem
 type Problem struct {
 	gorm.Model
+	ParentType             int
 	ParentID               int
 	OriginalPoster         User `gorm:"ForeignKey:OriginalPosterUsername;AssociationForeignKey:Username" json:"originalPoster" form:"originalPoster"`
 	OriginalPosterUsername string
@@ -32,6 +33,7 @@ type Problem struct {
 //ProblemForm : form to create problem
 type ProblemForm struct {
 	Username     string
+	ParentType   string
 	ParentID     string
 	Title        string
 	Field        string
@@ -64,6 +66,17 @@ func (p *Problem) GetProblemByTitle(title string) {
 	}
 }
 
+//GetAllProblemsByParentID :
+func GetAllProblemsByParentID(parentType int, parentID int) []Problem {
+	p := []Problem{}
+	err := db.Order("rank desc").Where("parent_id = ? AND parent_type = ?", parentID, parentType).Find(&p)
+	if err == nil {
+		glog.Info("There was an error")
+	}
+
+	return p
+}
+
 //CreateProblem : Creates a problem from a problemForm
 func CreateProblem(form ProblemForm) error {
 
@@ -78,6 +91,8 @@ func CreateProblem(form ProblemForm) error {
 	//Create Problem with Form Items
 	p := Problem{}
 	p.OriginalPosterUsername = form.Username
+	parentType, _ := strconv.Atoi(form.ParentType)
+	p.ParentType = parentType
 	intID, _ := strconv.Atoi(form.ParentID)
 	p.ParentID = intID
 	p.Title = form.Title
@@ -106,6 +121,8 @@ func CreatePrivateProblem(form ProblemForm) error {
 	//Create Problem with Form Items
 	p := Problem{}
 	p.OriginalPosterUsername = form.Username
+	parentType, _ := strconv.Atoi(form.ParentType)
+	p.ParentType = parentType
 	intID, _ := strconv.Atoi(form.ParentID)
 	p.ParentID = intID
 	p.Title = form.Title

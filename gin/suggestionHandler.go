@@ -108,9 +108,21 @@ func updateSuggestionByIDHandler(c *gin.Context) {
 
 func deleteSuggestionByIDHandler(c *gin.Context) {
 	id := c.Query("id")
+	username := c.Query("username")
+
+	// Check Token Validity
+	err := gorm.CheckToken(username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
+	}
+
 	intID, err := strconv.Atoi(id)
 	if err != nil {
 		glog.Error("There was an error in converting string to integer")
 	}
-	gorm.DeleteSuggestionByID(intID)
+
+	form := gorm.SuggestionDeleteForm{ID: intID, Username: username}
+	gorm.DeleteSuggestionByID(form)
 }

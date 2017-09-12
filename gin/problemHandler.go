@@ -23,6 +23,25 @@ func getProblemByIDHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, problem)
 }
 
+func getProblemsByTypeIDHandler(c *gin.Context) {
+	id := c.Query("id")
+	dataType := c.Query("dataType")
+	glog.Info("ID: ", id)
+	glog.Info("dataType: ", dataType)
+
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer for id")
+	}
+	intDataType, err := strconv.Atoi(dataType)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer for datatype")
+	}
+	problems := gorm.GetAllProblemsByParentID(intDataType, intID)
+
+	c.JSON(http.StatusOK, problems)
+}
+
 func getAllProblems(c *gin.Context) {
 	c.JSON(http.StatusOK, gorm.GetAllProblemsWithLimit(10))
 }
@@ -107,27 +126,6 @@ func searchProblemDB(c *gin.Context) {
 
 }
 
-func deleteProblemByIDHandler(c *gin.Context) {
-	id := c.Query("id")
-	username := c.Query("username")
-
-	// Check Token Validity
-	err := gorm.CheckToken(username, c.Request.Header["Authorization"][0])
-	if err != nil {
-		//if Token not in table
-		c.JSON(401, err.Error())
-		return
-	}
-
-	intID, err := strconv.Atoi(id)
-	if err != nil {
-		glog.Error("There was an error in converting string to integer")
-	}
-
-	form := gorm.ProblemDeleteForm{ID: intID, Username: username}
-	gorm.DeleteProblemByID(form)
-}
-
 func updateProblemByIDHandler(c *gin.Context) {
 	// Recieve problem Id
 	id := c.Query("id")
@@ -161,4 +159,25 @@ func updateProblemByIDHandler(c *gin.Context) {
 	//update problem
 	p.UpdateProblem(form)
 
+}
+
+func deleteProblemByIDHandler(c *gin.Context) {
+	id := c.Query("id")
+	username := c.Query("username")
+
+	// Check Token Validity
+	err := gorm.CheckToken(username, c.Request.Header["Authorization"][0])
+	if err != nil {
+		//if Token not in table
+		c.JSON(401, err.Error())
+		return
+	}
+
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		glog.Error("There was an error in converting string to integer")
+	}
+
+	form := gorm.ProblemDeleteForm{ID: intID, Username: username}
+	gorm.DeleteProblemByID(form)
 }

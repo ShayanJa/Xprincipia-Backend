@@ -28,6 +28,12 @@ type SuggestionForm struct {
 	Description string
 }
 
+//SuggestionDeleteForm : ~
+type SuggestionDeleteForm struct {
+	Username string
+	ID       int
+}
+
 /*
 API
 */
@@ -96,10 +102,14 @@ func (s *Suggestion) UpdateSuggestion(form SuggestionForm) {
 }
 
 //DeleteSuggestionByID : //DELETE
-func DeleteSuggestionByID(id int) {
+func DeleteSuggestionByID(form SuggestionDeleteForm) error {
 	s := Suggestion{}
-	s.GetSuggestionByID(uint(id))
-	db.Delete(&s)
+	s.GetSuggestionByID(uint(form.ID))
+	if s.Username == form.Username {
+		db.Delete(&s)
+		return nil
+	}
+	return errors.New("UnAuthorized User")
 }
 
 //VoteSuggestion : ~
