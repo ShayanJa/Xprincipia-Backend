@@ -6,7 +6,7 @@ import (
 	"errors"
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
-	"work/xprincipia/backend/util"
+	"../util"
 )
 
 //Con : Struct containing a con

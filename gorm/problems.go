@@ -6,7 +6,7 @@ import (
 	"errors"
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
-	"work/xprincipia/backend/util"
+	"../util"
 )
 
 // Problem : User generated problem

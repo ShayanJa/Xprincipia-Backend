@@ -5,7 +5,7 @@ import (
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
 	"golang.org/x/crypto/bcrypt"
-	"work/xprincipia/backend/util"
+	"../util"
 )
 
 //User : ~

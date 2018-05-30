@@ -5,7 +5,7 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
-	"work/xprincipia/backend/util"
+	"../util"
 )
 
 //FreeForm : Struct containing a question

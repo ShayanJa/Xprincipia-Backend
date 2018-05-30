@@ -3,7 +3,7 @@ package gin
 import (
 	"net/http"
 	"strconv"
-	"work/xprincipia/backend/gorm"
+	"../gorm"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang/glog"

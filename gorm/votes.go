@@ -2,7 +2,7 @@ package gorm
 
 import "github.com/jinzhu/gorm"
 import "github.com/golang/glog"
-import "work/xprincipia/backend/util"
+import "../util"
 
 //Vote : ~
 type Vote struct {

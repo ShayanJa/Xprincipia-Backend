@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"log"
-	"work/xprincipia/backend/gin"
-	"work/xprincipia/backend/gorm"
+	"./gin"
+	"./gorm"
 
 	"github.com/golang/glog"
 	"github.com/joho/godotenv"

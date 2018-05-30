@@ -3,7 +3,7 @@ package tests
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
-	"work/xprincipia/backend/gorm"
+	"../gorm"
 )
 
 /*

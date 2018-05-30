@@ -4,7 +4,7 @@ import (
 	database "github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
 	"log"
-	"work/xprincipia/backend/gorm"
+	"../gorm"
 )
 
 //sets up the db for testing

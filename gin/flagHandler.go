@@ -2,7 +2,7 @@ package gin
 
 import (
 	"github.com/gin-gonic/gin"
-	"work/xprincipia/backend/gorm"
+	"../gorm"
 )
 
 func postFlag(c *gin.Context) {

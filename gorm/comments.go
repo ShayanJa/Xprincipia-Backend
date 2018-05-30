@@ -5,7 +5,7 @@ import (
 	"github.com/golang/glog"
 	"github.com/jinzhu/gorm"
 	"strconv"
-	"work/xprincipia/backend/util"
+	"../util"
 )
 
 //Comment : Struct containing a question

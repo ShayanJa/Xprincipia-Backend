@@ -5,7 +5,7 @@ import (
 	"github.com/golang/glog"
 	"net/http"
 	"strconv"
-	"work/xprincipia/backend/gorm"
+	"../gorm"
 )
 
 func postQuestion(c *gin.Context) {
